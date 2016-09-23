@@ -1,0 +1,68 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".RegistrationFragment"
+             android:background="@drawable/air_time_travel">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="15dp"
+        android:background="#3c000000"
+        android:baselineAligned="false"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Регистрация"
+            android:id="@+id/textWindowRegistration"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#f9197a"
+            android:textSize="25dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextNameReg"
+            android:hint="Введите имя"
+            android:layout_gravity="center_horizontal"
+            android:enabled="true"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/editTextPasswordRegFirst"
+            android:layout_gravity="center_horizontal"
+            android:hint="Введите пароль"
+            android:enabled="true"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/editTextPasswordRegSecond"
+            android:layout_gravity="center_horizontal"
+            android:hint="Повторите пароль"
+            android:enabled="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Зарегистрироваться"
+            android:id="@+id/buttonReg"
+            android:layout_gravity="center_horizontal"
+            android:enabled="true"/>
+    </LinearLayout>
+</FrameLayout>

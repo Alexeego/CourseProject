@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="autoConnect"
+        android:summary="Включить авто-подключение к серверу при входе в приложение"
+        android:title="Авто-подключение">
+    </CheckBoxPreference>
+    <EditTextPreference
+        android:dependency="autoConnect"
+        android:key="ip"
+        android:summary="Задать IP-адрес сервера для автоматического подключения "
+        android:title="IP-адрес сервера">
+    </EditTextPreference>
+    <EditTextPreference
+        android:dependency="autoConnect"
+        android:key="port"
+        android:summary="Задать Порт сервера для автоматического подключения "
+        android:title="Порт сервера">
+    </EditTextPreference>
+</PreferenceScreen>

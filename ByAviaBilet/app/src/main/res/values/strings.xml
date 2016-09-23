@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">AirTicketBy</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="text_authorization">Авторизация</string>
+    <string name="text_status_ray">Статус:</string>
+    <string name="payment_place">Стоимость:</string>
+    <string name="currency">руб.</string>
+    <string name="over_cost_info_pay">Оплата производится по карте, пожалуйста, выберете тип рассчётной карты и укажите её номер.</string>
+    <string name="text_registration"><u>Регистрация</u></string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

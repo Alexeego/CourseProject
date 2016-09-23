@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_rays"
+            android:icon="@drawable/ic_menu_share"
+            android:title="Все рейсы" />
+        <item
+            android:id="@+id/nav_my_account"
+            android:icon="@drawable/ic_menu_send"
+            android:title="Мой аккаунт" />
+        <item
+            android:id="@+id/nav_my_tickets"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Мои билеты" />
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Настройки" />
+    </group>
+</menu>
