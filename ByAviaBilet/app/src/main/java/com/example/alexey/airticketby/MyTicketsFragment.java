@@ -58,11 +58,8 @@ public class MyTicketsFragment extends Fragment {
                     ((TextView)item.findViewById(R.id.textCoordinatesRayOnTicket)).setText(ray.coordinates.toString());
                     StatePlace state = ray.places[ticket.numberPlace].statePlace;
                     ((TextView)item.findViewById(R.id.textStatePlaceTicket)).setText(state == StatePlace.BOOK ? state.toString() : "Куплено");
-                    Toast.makeText(MainActivity.context, "1", Toast.LENGTH_SHORT).show();
                     ((TextView)item.findViewById(R.id.textIdRayOnTicket)).setText(String.valueOf((int) ray.id));
-                    Toast.makeText(MainActivity.context, "2", Toast.LENGTH_SHORT).show();
-                    ((TextView)item.findViewById(R.id.textNumberPlaceTicket)).setText(String.valueOf(ticket.numberPlace));
-                    Toast.makeText(MainActivity.context, "3", Toast.LENGTH_SHORT).show();
+                    ((TextView)item.findViewById(R.id.textNumberPlaceTicket)).setText(String.valueOf(ticket.numberPlace + 1));
 
                 } catch (Exception ignore){
                     Toast.makeText(MainActivity.context, "MY " + ignore.getMessage(), Toast.LENGTH_SHORT).show();

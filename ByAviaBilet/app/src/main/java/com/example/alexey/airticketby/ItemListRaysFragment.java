@@ -134,7 +134,7 @@ public class ItemListRaysFragment extends Fragment {
                 ((TextView) item.findViewById(R.id.textPaymentPlaceSpinnerItem))
                         .setText(String.format("%.2f", MainWindowFragment.selectedRay.places[position].payment));
                 ((TextView) item.findViewById(R.id.textNumberPlaceSpinnerItem))
-                        .setText(String.valueOf(MainWindowFragment.selectedRay.places[position].number));
+                        .setText(String.valueOf(MainWindowFragment.selectedRay.places[position].number + 1));
                 ((TextView) item.findViewById(R.id.textStatePlaceOnRay))
                         .setText(MainWindowFragment.selectedRay.places[position].statePlace.toString());
                 final CheckBox checkBox = (CheckBox) item.findViewById(R.id.checkBoxChoosePlace);

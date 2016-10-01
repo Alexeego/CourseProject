@@ -190,7 +190,7 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
             int numberPlace = Connection.transformFromJson(new TypeReference<Ticket>() {
             }, json).numberPlace;
             Toast.makeText(MainActivity.context, "Место №"
-                    + numberPlace
+                    + (numberPlace + 1)
                     + " забронировано", Toast.LENGTH_SHORT).show();
             try {
                 ItemListRaysFragment.textCostPlace.setText(
@@ -206,7 +206,7 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
             Ticket ticket = Connection.transformFromJson(new TypeReference<Ticket>() {
             }, json);
             Toast.makeText(MainActivity.context, "Место №"
-                    + ticket.numberPlace
+                    + (ticket.numberPlace + 1)
                     + " не удалось забронировать", Toast.LENGTH_SHORT).show();
         } catch (IOException ignored) {
         }
