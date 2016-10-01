@@ -68,8 +68,21 @@ public class Ray {
         this.places = new Place[numberPlaces];
         double cost = Math.random() * 101;
         for(int i = 0; i < numberPlaces;) {
-            this.places[i] = new Place(cost, ++i);
+            this.places[i] = new Place(cost, i++);
         }
+    }
+
+    public static Place[] initPlaces(int count, double ePayment, int bSince, int bTo, double bPayment, int pSince, int pTo, double pPayment){
+        Place[] places = new Place[count];
+        for (int i = 0; i < count;){
+            if(i >= bSince && i <= bTo){
+                places[i] = new Place(TypeClass.BUSINESS, bPayment, i++);
+            } else if(i >= pSince && i <= pTo){
+                places[i] = new Place(TypeClass.PRIME, pPayment, i++);
+            } else
+                places[i] = new Place(TypeClass.ECONOMY, ePayment, i++);
+        }
+        return places;
     }
 
     @Override

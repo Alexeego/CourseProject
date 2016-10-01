@@ -1,5 +1,8 @@
 package client;
 
+import frames.AbstractFrame;
+import frames.AddNewRayFrame;
+
 /**
  * Created by Alexey on 09.07.2016.
  */
@@ -15,7 +18,21 @@ public class ClientController {
         model.authorization(name, password);
     }
 
+    public void sendInfoMessage(String text) {
+        model.sendInfoMessage(text);
+    }
+
+    public void addNewRay() {
+        model.addNewRay();
+    }
+
+    public void toBackPressed(AbstractFrame abstractFrame) {
+        model.toBackPressed(abstractFrame);
+    }
+
+
     public static void main(String[] args) {
         ClientController clientController = new ClientController();
     }
+
 }

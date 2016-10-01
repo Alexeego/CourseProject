@@ -26,6 +26,8 @@ public class AuthorizationFrame extends AbstractFrame {
 
         textInfoName = new JTextArea("Введите логин");
         textInfoPass = new JTextArea("Введите пароль");
+        textInfoName.setEditable(false);
+        textInfoPass.setEditable(false);
         textFieldName = new JTextField(20);
         textFieldPass = new JTextField(20);
         buttonAuthorization = new JButton("Вход");

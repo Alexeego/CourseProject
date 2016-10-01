@@ -34,11 +34,11 @@ public class Server {
         rays.add(new Ray(new Coordinates("Russia", "Moscow"), StateRay.READY, new Date("09/22/2016"), 30, "0LH", 100));
         rays.add(new Ray(new Coordinates("Australia", "Sidney"), new Date("03/15/2017"), 250, "TY14", 50));
         Place[] places = new Place[5];
-        places[0] = new Place(TypeClass.BUSINESS, 300, 1);
-        places[1] = new Place(TypeClass.BUSINESS, 300, 2);
-        places[2] = new Place(TypeClass.PRIME, 500, 3);
-        places[3] = new Place(40, 4);
-        places[4] = new Place(TypeClass.PRIME, 500, 5);
+        places[0] = new Place(TypeClass.BUSINESS, 300, 0);
+        places[1] = new Place(TypeClass.BUSINESS, 300, 1);
+        places[2] = new Place(TypeClass.PRIME, 500, 2);
+        places[3] = new Place(40, 3);
+        places[4] = new Place(TypeClass.PRIME, 500, 4);
         rays.add(new Ray(new Coordinates("Japan", "Tokio"), new Date("01/15/2017"), 250, "JL13", places));
 
         allUsers.put("a", new User("a", "a", true));

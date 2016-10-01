@@ -22,6 +22,8 @@ public enum MessageType {
     RAY_LIST,
     GET_TICKETS_LIST,
     MY_TICKETS_LIST,
+    // Edit Rays
+    ADD_NEW_RAY,
     // Book places
     BOOK_PLACES_TRY,
     BOOK_PLACES_OK,

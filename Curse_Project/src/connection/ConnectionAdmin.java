@@ -1,5 +1,6 @@
 package connection;
 
+import server.Server;
 import user.User;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class ConnectionAdmin extends Connection {
             switch (message.getMessageType()){
                 case DATA: {
                     System.out.println(message.getData());
-                    send(new Message(MessageType.DATA, "Сервер принял приветствие"));
+                    Server.sendBroadcastMessage(message);
                     break;
                 }
             }

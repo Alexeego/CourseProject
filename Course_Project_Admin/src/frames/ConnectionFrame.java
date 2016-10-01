@@ -29,6 +29,8 @@ public class ConnectionFrame extends AbstractFrame {
 
         textInfoIp = new JTextArea("Введите IP-адрес сервера");
         textInfoPort = new JTextArea("Введите порт сервера");
+        textInfoIp.setEditable(false);
+        textInfoPort.setEditable(false);
         textFieldIp = new JTextField(20);
         textFieldPort = new JTextField(20);
         buttonTryConnection = new JButton("Подключиться");

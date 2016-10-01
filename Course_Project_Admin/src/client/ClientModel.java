@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import connection.Connection;
 import connection.Message;
 import connection.MessageType;
+import frames.AbstractFrame;
+import frames.AddNewRayFrame;
 import frames.AuthorizationFrame;
 import user.User;
 
@@ -25,12 +27,13 @@ public class ClientModel {
         this.view = view;
     }
 
-
     public enum ConnectionState{
         TRY_CONNECTION,
         AUTHORIZATION,
         REGISTRATION,
-        CONNECTED
+        CONNECTED,
+        // Others in connected
+        ADD_NEW_RAY
     }
     private ConnectionState nowConnectionState = ConnectionState.TRY_CONNECTION;
 
@@ -62,10 +65,10 @@ public class ClientModel {
     private Connection connection = null;
     private User user = null;
 
-
     private ExecutorService executor = Executors.newFixedThreadPool(1);
 
     public void connectionToServer(String ip, int port) {
+        // Try connect
         Future<Connection> future = executor.submit(() -> {
             Socket socket = new Socket();
             socket.connect(new InetSocketAddress(InetAddress.getByName(ip), port), 5000);
@@ -73,12 +76,15 @@ public class ClientModel {
             connection.connect();
             return connection;
         });
+        // Wait
         while (!future.isDone()) {
             Thread.yield();
         }
         try {
+            // Test connection
             connection = future.get();
-            view.showMessageInfo("Соединение установлено");
+
+            //view.showMessageInfo("Соединение установлено", null);
             connectAuthorization();
             view.updateWindow(nowConnectionState);
 
@@ -92,11 +98,14 @@ public class ClientModel {
                 }
             });
 
-        } catch (Exception ignored) {
-            System.out.println(ignored);
+        } catch (Exception exception) {
+            view.showMessageError("Не удалось установить соединение", "Неудачная попытка соединения");
             close();
         }
     }
+
+    /////////////////////////////////////////////////////////////////////////
+    // Methods for Sending to server anything
 
     public void authorization(String name, String password){
         try {
@@ -106,6 +115,29 @@ public class ClientModel {
         }
     }
 
+
+    public void sendInfoMessage(String text) {
+        try {
+            connection.send(new Message(MessageType.DATA, text));
+        } catch (IOException e) {
+            connectError();
+        }
+    }
+
+
+    public void addNewRay() {
+        view.updateWindow(ConnectionState.ADD_NEW_RAY);
+    }
+
+
+    public void toBackPressed(AbstractFrame abstractFrame) {
+        if(abstractFrame instanceof AddNewRayFrame)
+            view.updateWindow(nowConnectionState);
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+    // Loop and other methods
 
     public void loop() throws IOException, ClassNotFoundException {
         while (!Thread.currentThread().isInterrupted() && connection != null){
@@ -126,7 +158,8 @@ public class ClientModel {
             case USER_ACCEPTED: {
                 user = Connection.transformFromJson(new TypeReference<User>() {}, message.getData());
                 connectSuccess();
-                view.showMessageInfo("Ура. Вы авторизованы " + user.name, "Авторизация");
+                view.updateWindow(nowConnectionState);
+                view.showMessageInfo("Ура. Вы авторизованы " + user.name, MessageType.USER_ACCEPTED, "Авторизация");
                 break;
             }
             case USER_NOT_FOUNDED: {
@@ -138,7 +171,7 @@ public class ClientModel {
     public void communicationConnect(Message message){
         switch (message.getMessageType()) {
             case DATA: {
-                view.showMessageInfo(message.getData());
+                view.showMessageInfo(message.getData(), MessageType.DATA);
                 break;
             }
         }

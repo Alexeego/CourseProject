@@ -1,48 +1,52 @@
 package client;
 
-import connection.Connection;
+import connection.MessageType;
 import frames.*;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * Created by Alexey on 21.09.2016.
  */
-public class ClientView extends JFrame{
+public class ClientView extends JFrame {
     private final ClientController clientController;
 
-    private JPanel nowPanel = null;
+    private AbstractFrame nowPanel = null;
 
     public ClientView(ClientController clientController) {
         this.clientController = clientController;
         initializationWindow();
     }
 
-    private void initializationWindow(){
-        setSize(300, 200);
+    private void initializationWindow() {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
+        setSize(300, 200);
         setFrame(new ConnectionFrame(clientController));
 
         setVisible(true);
     }
 
-    public void showMessageInfo(String message, String... title){
-        JOptionPane.showMessageDialog(this, message, title.length > 0 ? title[0] : "Инфо", JOptionPane.INFORMATION_MESSAGE);
+    public void showMessageInfo(String message, MessageType type, String... title) {
+        if (type != null)
+            nowPanel.event(type, message);
+        else
+            JOptionPane.showMessageDialog(this, message, title.length > 0 ? title[0] : "Инфо", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void showMessageError(String message, String... title){
+    public void showMessageError(String message, String... title) {
         JOptionPane.showMessageDialog(this, message, title.length > 0 ? title[0] : "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    protected void updateWindow(ClientModel.ConnectionState nowConnectionState){
-        switch (nowConnectionState){
+    protected void updateWindow(ClientModel.ConnectionState nowConnectionState) {
+        switch (nowConnectionState) {
             case TRY_CONNECTION:
+                setSize(300, 200);
                 setFrame(new ConnectionFrame(clientController));
                 break;
             case AUTHORIZATION:
+                setSize(300, 200);
                 setFrame(new AuthorizationFrame(clientController));
                 break;
             case REGISTRATION: {
@@ -50,14 +54,21 @@ public class ClientView extends JFrame{
                 break;
             }
             case CONNECTED: {
-                setFrame(new ConnectionFrame(clientController));
+                setSize(800, 500);
+                setFrame(new MainFrame(clientController));
+                break;
+            }
+            case ADD_NEW_RAY: {
+                setSize(400, 550);
+                setFrame(new AddNewRayFrame(clientController));
                 break;
             }
         }
     }
 
-    protected void setFrame(AbstractFrame frame){
-        if(nowPanel != null) {
+    protected void setFrame(AbstractFrame frame) {
+        setLocationRelativeTo(null);
+        if (nowPanel != null) {
             remove(nowPanel);
         }
         nowPanel = frame;
