@@ -63,6 +63,16 @@ public class Ray {
         this.places = places;
     }
 
+    public Ray(Ray ray) {
+        this.coordinates = ray.coordinates;
+        this.stateRay = ray.stateRay;
+        this.timeSending = ray.timeSending;
+        this.timeInWay = ray.timeInWay * 60000;
+        this.numberRay = ray.numberRay;
+        this.numberPlaces = ray.numberPlaces;
+        this.places = ray.places;
+    }
+
 
     private void initPlaces(){
         this.places = new Place[numberPlaces];

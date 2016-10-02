@@ -28,7 +28,7 @@ public class ConnectionFrame extends AbstractFrame {
         setLayout(new FlowLayout());
         setBackground(Color.DARK_GRAY);
 
-        Font font = new Font("Verdana", Font.ITALIC, 11);
+        Font font = new Font("Verdana", Font.ITALIC | Font.BOLD, 13);
 
         labelInfoIp = new JLabel("Введите IP-адрес сервера");
         labelInfoIp.setFont(font);

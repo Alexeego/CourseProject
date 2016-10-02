@@ -1,18 +1,22 @@
 package frames;
 
 import client.ClientController;
+import ray.Coordinates;
 import ray.Ray;
 
 import javax.swing.*;
 import java.awt.*;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by Alexey on 01.10.2016.
  */
-public class AddNewRayFrame extends AbstractFrame{
+public class AddNewRayFrame extends AbstractFrame {
 
-    private JTextField textFieldNewRayCoordinates;
+    private JTextField textFieldNewRayCoordinatesCountry;
+    private JTextField textFieldNewRayCoordinatesCity;
     private JTextField textFieldNewRayTimeSending;
     private JTextField textFieldNewRayTimeInWay;
     private JTextField textFieldNewRayNumberRay;
@@ -45,14 +49,16 @@ public class AddNewRayFrame extends AbstractFrame{
         labelAreaInfoNewRay.setForeground(Color.WHITE);
         add(labelAreaInfoNewRay);
 
-        JLabel labelAreaInfoNewRayCoordinates = new JLabel("<html><span style = 'color: red;'>* </span>Куда направляется рейс (укажите через запятую ',')</html>");
+        JLabel labelAreaInfoNewRayCoordinates = new JLabel("<html><span style = 'color: red;'>* </span>Куда направляется рейс (Страна и Город)</html>");
         labelAreaInfoNewRayCoordinates.setFont(font);
         labelAreaInfoNewRayCoordinates.setForeground(Color.WHITE);
         add(labelAreaInfoNewRayCoordinates);
-        textFieldNewRayCoordinates = new JTextField(30);
-        add(textFieldNewRayCoordinates);
+        textFieldNewRayCoordinatesCountry = new JTextField(18);
+        add(textFieldNewRayCoordinatesCountry);
+        textFieldNewRayCoordinatesCity = new JTextField(18);
+        add(textFieldNewRayCoordinatesCity);
 
-        JLabel labelAreaInfoNewRayTimeSending = new JLabel("<html><span style = 'color: red;'>* </span>Дата отправления (укажите в формате 'ММ/дд/гггг')</html>");
+        JLabel labelAreaInfoNewRayTimeSending = new JLabel("<html><span style = 'color: red;'>* </span>Дата отправления (укажите в формате 'дд.мм.гггг')</html>");
         labelAreaInfoNewRayTimeSending.setFont(font);
         labelAreaInfoNewRayTimeSending.setForeground(Color.WHITE);
         add(labelAreaInfoNewRayTimeSending);
@@ -130,8 +136,45 @@ public class AddNewRayFrame extends AbstractFrame{
         add(buttonAddNewRay);
 
         buttonAddNewRay.addActionListener(event -> {
+            buttonAddNewRay.setEnabled(false);
             String number;
             try {
+                boolean valid = true;
+
+                // Coordinates
+                String country = textFieldNewRayCoordinatesCountry.getText();
+                String city = textFieldNewRayCoordinatesCity.getText();
+
+                if (country.isEmpty() || city.isEmpty())
+                    valid = false;
+
+                // DateSending
+                String dateString = textFieldNewRayTimeSending.getText();
+                Date dateSending = null;
+                if (valid)
+                    if (!dateString.matches("^\\d{1,2}\\.\\d{1,2}\\.(\\d{2}|\\d{4})$")) {
+                        valid = false;
+                    } else {
+                        String[] dayAndMonthAndYear = dateString.split("\\.");
+                        dateSending = new Date(dayAndMonthAndYear[1] + "/" + dayAndMonthAndYear[0] + "/" + dayAndMonthAndYear[2]);
+                        if (!(Integer.parseInt(dayAndMonthAndYear[1]) == dateSending.getMonth() + 1
+                                && Integer.parseInt(dayAndMonthAndYear[0]) == dateSending.getDate()
+                                && Integer.parseInt(dayAndMonthAndYear[2]) == dateSending.getYear() + 1900)) {
+                            valid = false;
+                        }
+                    }
+
+                // TimeInWay
+                String timeInWay = textFieldNewRayTimeInWay.getText();
+                if (valid && !timeInWay.matches("^\\d+$"))
+                    valid = false;
+
+                // NumberRay
+                String numberRay = textFieldNewRayNumberRay.getText();
+                if(valid && numberRay.isEmpty())
+                    valid = false;
+
+                // Places
                 int count = (number = textFieldNewRayCountPlaces.getText()).matches("^\\d+$") ? Integer.parseInt(number) : -1;
                 double ePayment = (number = textFieldNewRayEconomyPlacePayment.getText()).matches("^\\d+$") ? Double.parseDouble(number) : -1;
 
@@ -143,19 +186,23 @@ public class AddNewRayFrame extends AbstractFrame{
                 int pTo = (number = textFieldNewRayPrimePlacesTo.getText()).matches("^\\d+$") ? Integer.parseInt(number) : -1;
                 double pPayment = (number = textFieldNewRayPrimePlacePayment.getText()).matches("^\\d+$") ? Double.parseDouble(number) : -1;
 
-                boolean valid = true;
-                if(count == -1 || ePayment < 1)
+                if (valid && count == -1 || ePayment < 1)
                     valid = false;
-                if(valid && (bSince != -1 || bTo != -1) && !(bSince > 0 && bTo >= bSince && bTo <= count && (bTo < pSince || bSince > pTo) && bPayment > 0))
+                if (valid && (bSince != -1 || bTo != -1) && !(bSince > 0 && bTo >= bSince && bTo <= count && (bTo < pSince || bSince > pTo) && bPayment > 0))
                     valid = false;
-                if(valid && (pSince != -1 || pTo != -1) && !(pSince > 0 && pTo >= pSince && pTo <= count && (pTo < bSince || pSince > bTo) && pPayment > 0))
+                if (valid && (pSince != -1 || pTo != -1) && !(pSince > 0 && pTo >= pSince && pTo <= count && (pTo < bSince || pSince > bTo) && pPayment > 0))
                     valid = false;
 
-                if(valid){
-                    System.out.println(Arrays.toString(Ray.initPlaces(count, ePayment, bSince, bTo, bPayment, pSince, pTo, pPayment)));
+                if (valid) {
+                    controller.addNewInitRay(new Ray(new Coordinates(country, city), dateSending, Long.parseLong(timeInWay), numberRay,
+                            Ray.initPlaces(count, ePayment, bSince, bTo, bPayment, pSince, pTo, pPayment)));
+                } else {
+                    buttonAddNewRay.setEnabled(true);
+                    JOptionPane.showMessageDialog(this, "<html>Пожалуйста заполните все поля помеченные <span style='color: red;'>*</span>" +
+                            ", а так же парные ячейки должны быть верно заполнены</html>", "Невнимательность - это плохо!", JOptionPane.INFORMATION_MESSAGE);
                 }
                 System.out.println("Валидность растановки мест: " + valid);
-            } catch (Exception exception){
+            } catch (Exception exception) {
                 System.out.println(exception);
             }
         });

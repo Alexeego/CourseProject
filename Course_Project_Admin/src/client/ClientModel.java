@@ -6,13 +6,15 @@ import connection.Message;
 import connection.MessageType;
 import frames.AbstractFrame;
 import frames.AddNewRayFrame;
-import frames.AuthorizationFrame;
+import ray.Ray;
 import user.User;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -62,6 +64,7 @@ public class ClientModel {
     }
     private final Object lock = new Object();
 
+    private ArrayList<Ray> rays = null;
     private Connection connection = null;
     private User user = null;
 
@@ -125,10 +128,18 @@ public class ClientModel {
     }
 
 
-    public void addNewRay() {
+    public void openWindowForAddNewRay() {
         view.updateWindow(ConnectionState.ADD_NEW_RAY);
     }
 
+
+    public void addNewInitRay(Ray ray) {
+        try {
+            connection.send(new Message(MessageType.ADD_NEW_RAY, Connection.transformToJson(ray)));
+        } catch (IOException e) {
+            connectError();
+        }
+    }
 
     public void toBackPressed(AbstractFrame abstractFrame) {
         if(abstractFrame instanceof AddNewRayFrame)
@@ -152,7 +163,7 @@ public class ClientModel {
         }
     }
 
-
+    ////////////////////////////////////// Authorization
     public void communicationAuthorization(Message message) throws IOException {
         switch (message.getMessageType()){
             case USER_ACCEPTED: {
@@ -168,15 +179,35 @@ public class ClientModel {
         }
     }
 
+    ////////////////////////////////////////////////// Connected
     public void communicationConnect(Message message){
         switch (message.getMessageType()) {
             case DATA: {
                 view.showMessageInfo(message.getData(), MessageType.DATA);
                 break;
             }
+            case RAY_LIST: {
+                initListRays(message.getData());
+                break;
+            }
+            case NEW_RAY_ADDED: {
+                view.showMessageInfo("Рейс успешно добавлен.", null, "Добавление рейса");
+                view.updateWindow(nowConnectionState);
+                break;
+            }
         }
     }
 
+    private void initListRays(String json) {
+        try {
+            rays = Connection.transformFromJson(new TypeReference<ArrayList<Ray>>() {}, json);
+            System.out.println(rays.size());
+        } catch (IOException ignore) {}
+    }
+
+
+
+    ///////////////////////////////////////////////////////// Close
     protected void close() {
         try {
             if (connection != null)

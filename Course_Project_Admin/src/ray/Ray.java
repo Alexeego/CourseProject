@@ -75,9 +75,9 @@ public class Ray {
     public static Place[] initPlaces(int count, double ePayment, int bSince, int bTo, double bPayment, int pSince, int pTo, double pPayment){
         Place[] places = new Place[count];
         for (int i = 0; i < count;){
-            if(i >= bSince && i <= bTo){
+            if(i + 1 >= bSince && i + 1 <= bTo){
                 places[i] = new Place(TypeClass.BUSINESS, bPayment, i++);
-            } else if(i >= pSince && i <= pTo){
+            } else if(i + 1 >= pSince && i + 1 <= pTo){
                 places[i] = new Place(TypeClass.PRIME, pPayment, i++);
             } else
                 places[i] = new Place(TypeClass.ECONOMY, ePayment, i++);

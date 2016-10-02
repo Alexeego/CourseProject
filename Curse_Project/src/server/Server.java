@@ -85,7 +85,7 @@ public class Server {
                             && (!(connection instanceof ConnectionAdmin) || userFromDB.isAdmin())) {
                         connectionMap.put(user, connection);
                         connection.send(new Message(MessageType.USER_ACCEPTED, answer.getData()));
-                        return user;
+                        return userFromDB;
                     } else {
                         connection.send(new Message(MessageType.USER_NOT_FOUNDED));
                         return null;

@@ -5,14 +5,25 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6f7bd46-f16f-4369-91c7-0ef5053201fc" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientController.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientController.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/AuthorizationFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/AuthorizationFrame.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/ConnectionFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/ConnectionFrame.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/MainFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/MainFrame.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Course_Project_Admin/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientController.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientView.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientView.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientModel.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientModel.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/connection/MessageType.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/connection/MessageType.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AddNewRayFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AddNewRayFrame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AuthorizationFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AuthorizationFrame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/ConnectionFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/ConnectionFrame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/MainFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/MainFrame.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/ray/Ray.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/ray/Ray.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connection/ConnectionAdmin.java" afterPath="$PROJECT_DIR$/src/connection/ConnectionAdmin.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connection/MessageType.java" afterPath="$PROJECT_DIR$/src/connection/MessageType.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ray/Ray.java" afterPath="$PROJECT_DIR$/src/ray/Ray.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/Server.java" afterPath="$PROJECT_DIR$/src/server/Server.java" />
     </list>
     <ignored path="Curse_Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,18 +56,18 @@
       <file leaf-file-name="MessageType.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/connection/MessageType.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
+            <state relative-caret-position="238">
+              <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Server.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Server.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/server/Server.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="130" column="30" selection-start-line="130" selection-start-column="30" selection-end-line="130" selection-end-column="30" />
+            <state relative-caret-position="106">
+              <caret line="130" column="0" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -67,11 +78,9 @@
       <file leaf-file-name="Ray.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ray/Ray.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1122">
-              <caret line="70" column="48" selection-start-line="70" selection-start-column="48" selection-end-line="70" selection-end-column="48" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+            <state relative-caret-position="48">
+              <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -79,11 +88,9 @@
       <file leaf-file-name="Connection.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/connection/Connection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
+            <state relative-caret-position="172">
               <caret line="51" column="67" selection-start-line="51" selection-start-column="67" selection-end-line="51" selection-end-column="67" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -106,14 +113,10 @@
       <file leaf-file-name="ConnectionAndroid.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/connection/ConnectionAndroid.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1309">
-              <caret line="98" column="68" selection-start-line="98" selection-start-column="68" selection-end-line="98" selection-end-column="68" />
+            <state relative-caret-position="206">
+              <caret line="122" column="39" selection-start-line="122" selection-start-column="39" selection-end-line="122" selection-end-column="39" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#614#615#0" expanded="false" />
-                <element signature="e#652#653#0" expanded="false" />
                 <element signature="method#sendUserTicketsList#0;class#ConnectionAndroid#0" expanded="false" />
-                <element signature="method#bookNumberPlaceTry#0;class#ConnectionAndroid#0" expanded="false" />
                 <element signature="method#bookNumberPlaceCancel#0;class#ConnectionAndroid#0" expanded="false" />
                 <element signature="method#bookPlacesTry#0;class#ConnectionAndroid#0" expanded="false" />
                 <element signature="method#buyPlacesTry#0;class#ConnectionAndroid#0" expanded="false" />
@@ -124,14 +127,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConnectionAdmin.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ConnectionAdmin.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/connection/ConnectionAdmin.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="41" column="31" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
+            <state relative-caret-position="261">
+              <caret line="53" column="35" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
               <folding>
-                <element signature="e#370#371#0" expanded="false" />
-                <element signature="e#408#409#0" expanded="false" />
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -174,15 +176,15 @@
         <option value="$PROJECT_DIR$/src/ticket/Ticket.java" />
         <option value="$PROJECT_DIR$/src/connection/Message.java" />
         <option value="$PROJECT_DIR$/src/Server.java" />
-        <option value="$PROJECT_DIR$/src/connection/MessageType.java" />
         <option value="$PROJECT_DIR$/../../../Programming/Web-developments/Course_Project_Admin/src/client/Client.java" />
         <option value="$PROJECT_DIR$/src/ray/TypeClass.java" />
         <option value="$PROJECT_DIR$/src/user/User.java" />
         <option value="$PROJECT_DIR$/src/connection/ConnectionAndroid.java" />
         <option value="$PROJECT_DIR$/src/connection/Connection.java" />
-        <option value="$PROJECT_DIR$/src/connection/ConnectionAdmin.java" />
-        <option value="$PROJECT_DIR$/src/ray/Ray.java" />
         <option value="$PROJECT_DIR$/src/server/Server.java" />
+        <option value="$PROJECT_DIR$/src/ray/Ray.java" />
+        <option value="$PROJECT_DIR$/src/connection/MessageType.java" />
+        <option value="$PROJECT_DIR$/src/connection/ConnectionAdmin.java" />
       </list>
     </option>
   </component>
@@ -847,7 +849,7 @@
       <workItem from="1475069865442" duration="2018000" />
       <workItem from="1475309455956" duration="1293000" />
       <workItem from="1475339355292" duration="3611000" />
-      <workItem from="1475417222769" duration="1245000" />
+      <workItem from="1475417222769" duration="4204000" />
     </task>
     <task id="LOCAL-00001" summary="Commit">
       <created>1474654258335</created>
@@ -874,7 +876,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="195454000" />
+    <option name="totallyTimeSpent" value="198413000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
@@ -887,8 +889,8 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3267974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25653595" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3267974" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25653595" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -920,7 +922,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="78" />
+      <option name="time" value="81" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1184,13 +1186,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.8.0_20/src.zip!/java/net/DualStackPlainSocketImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="111">
-          <caret line="282" column="22" selection-start-line="282" selection-start-column="22" selection-end-line="282" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ray/Place.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
@@ -1224,6 +1219,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
           <caret line="292" column="12" selection-start-line="292" selection-start-column="12" selection-end-line="292" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1231,14 +1227,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="291">
           <caret line="554" column="19" selection-start-line="554" selection-start-column="19" selection-end-line="554" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/connection/MessageType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1262,60 +1250,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/connection/Connection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="51" column="67" selection-start-line="51" selection-start-column="67" selection-end-line="51" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/connection/ConnectionAdmin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="41" column="31" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
-          <folding>
-            <element signature="e#370#371#0" expanded="false" />
-            <element signature="e#408#409#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ray/Ray.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1122">
-          <caret line="70" column="48" selection-start-line="70" selection-start-column="48" selection-end-line="70" selection-end-column="48" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ticket/Ticket.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="227">
           <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/connection/ConnectionAndroid.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1309">
-          <caret line="98" column="68" selection-start-line="98" selection-start-column="68" selection-end-line="98" selection-end-column="68" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#614#615#0" expanded="false" />
-            <element signature="e#652#653#0" expanded="false" />
-            <element signature="method#sendUserTicketsList#0;class#ConnectionAndroid#0" expanded="false" />
-            <element signature="method#bookNumberPlaceTry#0;class#ConnectionAndroid#0" expanded="false" />
-            <element signature="method#bookNumberPlaceCancel#0;class#ConnectionAndroid#0" expanded="false" />
-            <element signature="method#bookPlacesTry#0;class#ConnectionAndroid#0" expanded="false" />
-            <element signature="method#buyPlacesTry#0;class#ConnectionAndroid#0" expanded="false" />
-            <element signature="method#clearReadyTickets#0;class#ConnectionAndroid#0" expanded="false" />
-            <element signature="method#close#0;class#ConnectionAndroid#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1326,10 +1265,67 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/connection/Connection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="51" column="67" selection-start-line="51" selection-start-column="67" selection-end-line="51" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connection/ConnectionAndroid.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="122" column="39" selection-start-line="122" selection-start-column="39" selection-end-line="122" selection-end-column="39" />
+          <folding>
+            <element signature="method#sendUserTicketsList#0;class#ConnectionAndroid#0" expanded="false" />
+            <element signature="method#bookNumberPlaceCancel#0;class#ConnectionAndroid#0" expanded="false" />
+            <element signature="method#bookPlacesTry#0;class#ConnectionAndroid#0" expanded="false" />
+            <element signature="method#buyPlacesTry#0;class#ConnectionAndroid#0" expanded="false" />
+            <element signature="method#clearReadyTickets#0;class#ConnectionAndroid#0" expanded="false" />
+            <element signature="method#close#0;class#ConnectionAndroid#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ray/Ray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="75" column="0" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_20/src.zip!/java/net/DualStackPlainSocketImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="282" column="22" selection-start-line="282" selection-start-column="22" selection-end-line="282" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/server/Server.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="130" column="30" selection-start-line="130" selection-start-column="30" selection-end-line="130" selection-end-column="30" />
+        <state relative-caret-position="106">
+          <caret line="130" column="0" selection-start-line="130" selection-start-column="0" selection-end-line="130" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connection/MessageType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="25" column="16" selection-start-line="25" selection-start-column="16" selection-end-line="25" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connection/ConnectionAdmin.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="261">
+          <caret line="53" column="35" selection-start-line="53" selection-start-column="35" selection-end-line="53" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

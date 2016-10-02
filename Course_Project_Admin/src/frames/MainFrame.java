@@ -2,6 +2,7 @@ package frames;
 
 import client.ClientController;
 import connection.MessageType;
+import ray.Ray;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +17,8 @@ public class MainFrame extends AbstractFrame{
     private JButton buttonSendDataMessage;
 
     private JButton buttonAddNewRay;
+
+    private JList<Ray> rays;
 
     public MainFrame(ClientController controller) {
         super(controller);
@@ -45,8 +48,12 @@ public class MainFrame extends AbstractFrame{
         add(buttonAddNewRay);
 
         buttonAddNewRay.addActionListener(event -> {
-            controller.addNewRay();
+            controller.openWindowForAddNewRay();
         });
+
+
+        rays = new JList<>();
+
     }
 
     @Override

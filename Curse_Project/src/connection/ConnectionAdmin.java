@@ -1,5 +1,7 @@
 package connection;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import ray.Ray;
 import server.Server;
 import user.User;
 
@@ -33,14 +35,29 @@ public class ConnectionAdmin extends Connection {
         }
     }
 
+    private User user;
+
     @Override
     public void serverMainLoop(User user) throws IOException, ClassNotFoundException {
+        synchronized (Server.rays) {
+            send(new Message(MessageType.RAY_LIST, Connection.transformToJson(Server.rays)));
+        }
+        this.user = user;
         do{
             Message message = receive();
             switch (message.getMessageType()){
                 case DATA: {
                     System.out.println(message.getData());
                     Server.sendBroadcastMessage(message);
+                    break;
+                }
+                case ADD_NEW_RAY: {
+                    Ray ray = transformFromJson(new TypeReference<Ray>() {}, message.getData());
+                    synchronized (Server.rays){
+                        Server.rays.add(ray);
+                        send(new Message(MessageType.NEW_RAY_ADDED));
+                        Server.sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(Server.rays)));
+                    }
                     break;
                 }
             }
