@@ -54,12 +54,12 @@ public class ClientView extends JFrame {
                 break;
             }
             case CONNECTED: {
-                setSize(800, 500);
+                setSize(600, 400);
                 setFrame(new MainFrame(clientController));
                 break;
             }
             case ADD_NEW_RAY: {
-                setSize(400, 550);
+                setSize(450, 550);
                 setFrame(new AddNewRayFrame(clientController));
                 break;
             }

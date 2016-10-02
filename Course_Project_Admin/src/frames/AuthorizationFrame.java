@@ -10,10 +10,10 @@ import java.awt.*;
  */
 public class AuthorizationFrame extends AbstractFrame {
 
-    private JTextArea textInfoName;
-    private JTextArea textInfoPass;
+    private JLabel labelInfoName;
+    private JLabel labelInfoPass;
     private JTextField textFieldName;
-    private JTextField textFieldPass;
+    private JPasswordField textFieldPass;
     private JButton buttonAuthorization;
 
     public AuthorizationFrame(ClientController clientController) {
@@ -23,19 +23,25 @@ public class AuthorizationFrame extends AbstractFrame {
     @Override
     protected void initializationWindow() {
         setLayout(new FlowLayout());
+        setBackground(Color.DARK_GRAY);
 
-        textInfoName = new JTextArea("Введите логин");
-        textInfoPass = new JTextArea("Введите пароль");
-        textInfoName.setEditable(false);
-        textInfoPass.setEditable(false);
+        Font font = new Font("Verdana", Font.ITALIC, 11);
+
+        labelInfoName = new JLabel("Введите логин");
+        labelInfoName.setFont(font);
+        labelInfoName.setForeground(Color.WHITE);
+        add(labelInfoName);
         textFieldName = new JTextField(20);
-        textFieldPass = new JTextField(20);
-        buttonAuthorization = new JButton("Вход");
-
-        add(textInfoName);
         add(textFieldName);
-        add(textInfoPass);
+
+        labelInfoPass = new JLabel("Введите пароль");
+        labelInfoPass.setFont(font);
+        labelInfoPass.setForeground(Color.WHITE);
+        add(labelInfoPass);
+        textFieldPass = new JPasswordField(20);
         add(textFieldPass);
+
+        buttonAuthorization = new JButton("Вход");
         add(buttonAuthorization);
 
         buttonAuthorization.addActionListener(e -> {

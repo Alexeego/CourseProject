@@ -24,14 +24,16 @@ public class MainFrame extends AbstractFrame{
     @Override
     protected void initializationWindow() {
         setLayout(new FlowLayout());
+        setBackground(Color.DARK_GRAY);
 
         textAreaShowInformation = new JTextArea(10, 50);
         textAreaShowInformation.setEditable(false);
-        textFieldSendInformation = new JTextField(50);
-        buttonSendDataMessage = new JButton("Отправить информационное сообщение");
-
         add(new JScrollPane(textAreaShowInformation));
+
+        textFieldSendInformation = new JTextField(50);
         add(textFieldSendInformation);
+
+        buttonSendDataMessage = new JButton("Отправить информационное сообщение");
         add(buttonSendDataMessage);
 
         buttonSendDataMessage.addActionListener(event ->{

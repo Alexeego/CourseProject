@@ -1,7 +1,6 @@
 package client;
 
 import frames.AbstractFrame;
-import frames.AddNewRayFrame;
 
 /**
  * Created by Alexey on 09.07.2016.

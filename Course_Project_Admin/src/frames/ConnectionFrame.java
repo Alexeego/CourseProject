@@ -10,8 +10,8 @@ import java.awt.*;
  */
 public class ConnectionFrame extends AbstractFrame {
 
-    private JTextArea textInfoIp;
-    private JTextArea textInfoPort;
+    private JLabel labelInfoIp;
+    private JLabel labelInfoPort;
     private JTextField textFieldIp;
     private JTextField textFieldPort;
     private JButton buttonTryConnection;
@@ -26,23 +26,29 @@ public class ConnectionFrame extends AbstractFrame {
     @Override
     protected void initializationWindow() {
         setLayout(new FlowLayout());
+        setBackground(Color.DARK_GRAY);
 
-        textInfoIp = new JTextArea("Введите IP-адрес сервера");
-        textInfoPort = new JTextArea("Введите порт сервера");
-        textInfoIp.setEditable(false);
-        textInfoPort.setEditable(false);
+        Font font = new Font("Verdana", Font.ITALIC, 11);
+
+        labelInfoIp = new JLabel("Введите IP-адрес сервера");
+        labelInfoIp.setFont(font);
+        labelInfoIp.setForeground(Color.WHITE);
+        add(labelInfoIp);
         textFieldIp = new JTextField(20);
-        textFieldPort = new JTextField(20);
-        buttonTryConnection = new JButton("Подключиться");
-
         // TODO delete. For test
         textFieldIp.setText("127.0.0.1");
-        textFieldPort.setText("1329");
-
-        add(textInfoIp);
         add(textFieldIp);
-        add(textInfoPort);
+
+        labelInfoPort = new JLabel("Введите порт сервера");
+        labelInfoPort.setFont(font);
+        labelInfoPort.setForeground(Color.WHITE);
+        add(labelInfoPort);
+        textFieldPort = new JTextField(20);
+        // TODO delete. For test
+        textFieldPort.setText("1329");
         add(textFieldPort);
+
+        buttonTryConnection = new JButton("Подключиться");
         add(buttonTryConnection);
 
         buttonTryConnection.addActionListener(e -> {
