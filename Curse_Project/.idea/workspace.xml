@@ -5,36 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6f7bd46-f16f-4369-91c7-0ef5053201fc" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/example.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientController.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$1.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$2.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$ConnectionState.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$ConnectionState.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView$1.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/connection/MessageType.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/connection/MessageType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/AbstractFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/AbstractFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/AuthorizationFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/AuthorizationFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/ConnectionFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/ConnectionFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/MainFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/MainFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/RegistrationFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/RegistrationFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/ray/Ray.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/ray/Ray.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAdmin$1.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAdmin$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAdmin.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAdmin.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/MessageType.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/MessageType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/ray/Ray.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/ray/Ray.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/server/Server$Handler.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/server/Server$Handler.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/res/values/colors.xml" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/res/values/colors.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Course_Project_Admin/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientController.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientModel.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientView.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AbstractFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AbstractFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AddNewRayFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AddNewRayFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AuthorizationFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/AuthorizationFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/ConnectionFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/ConnectionFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/MainFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/MainFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/RegistrationFrame.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/frames/RegistrationFrame.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Curse_Project.iws" />
@@ -902,7 +874,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="1" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />

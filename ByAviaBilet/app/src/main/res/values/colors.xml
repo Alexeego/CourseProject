@@ -3,9 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorSending">#000000</color>
+    <color name="colorSending">#FF4081</color>
     <color name="colorComplete">#00d904</color>
-    <color name="colorCancel">#FF4081</color>
+    <color name="colorCancel">#ff000d</color>
     <color name="colorReady">#fdba00</color>
     <color name="colorNew">#4f7af1</color>
 
