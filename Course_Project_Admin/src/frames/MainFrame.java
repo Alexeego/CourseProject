@@ -50,10 +50,9 @@ public class MainFrame extends AbstractFrame {
         textFieldSendInformation = new JTextField(28);
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = GridBagConstraints.RELATIVE;
-        gridBagConstraints.gridheight = GridBagConstraints.REMAINDER ;
-        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER ;
+        gridBagConstraints.gridheight = GridBagConstraints.REMAINDER;
+        gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
         infoPanel.add(textFieldSendInformation, gridBagConstraints);
-
 
 
         JPanel buttonsPanel = new JPanel();
@@ -84,38 +83,48 @@ public class MainFrame extends AbstractFrame {
         }
 
         raysList = new JList<>(listModelRays);
+        raysList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        raysList.setCellRenderer(new DefaultListCellRenderer() {
+            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                JLabel label = (JLabel) component;
+                Ray ray = (Ray) value;
+                String itemList = "<html><style>\n" +
+                        "    div.wrapper {\n" +
+                        "        border: 4px double black;\n" +
+                        "        width:260px;\n" +
+                        "    }\n" +
+                        "</style>\n" +
+                        "<div class=\"wrapper\">\n" +
+                        "    <div>\n" +
+                        "<span style='color: blue; font-size: 15px;'>" +
+                        (int) ray.id +
+                        " </span><span style='font-size: 15px;'>" +
+                        ray.coordinates.toString() +
+                        " </span><br>\n" +
+                        "    <span>Дата отправления: " +
+                        new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss").format(ray.timeSending) +
+                        "</span><br>" +
+                        "<span>Время в пути: " +
+                        new SimpleDateFormat("HH:mm:ss").format(ray.timeInWay) +
+                        "</span><br>\n" +
+                        "    <span>Статус: </span><span style='color: " + colors[ray.stateRay.ordinal()] + ";'>" +
+                        ray.stateRay +
+                        "</span>\n" +
+                        "</div>" +
+                        "</html>";
+                label.setText(itemList);
+                return label;
+            }
+        });
+        raysList.addListSelectionListener(event -> {
+            if (!raysList.isSelectionEmpty()) {
+                JOptionPane.showMessageDialog(this, "Выбран " + raysList.getSelectedValue().coordinates);
+                raysList.clearSelection();
+            }
+        });
         add(new JScrollPane(raysList), BorderLayout.WEST);
-        raysList.setCellRenderer(new RayRenderer());
-    }
 
-    private class RayRenderer extends JLabel implements ListCellRenderer<Ray> {
-
-        @Override
-        public Component getListCellRendererComponent(JList<? extends Ray> list, Ray value, int index, boolean isSelected, boolean cellHasFocus) {
-            String itemList = "<html><style>\n" +
-                    "    .brd {\n" +
-                    "        border: 4px double black;\n" +
-                    "    }\n" +
-                    "</style>\n" +
-                    "<div class=\"brd\">\n" +
-                    "    <span style='color: blue; font-size: 15px;'>" +
-                    (int)value.id +
-                    " </span><span style='font-size: 15px;'>" +
-                    value.coordinates.toString() +
-                    " </span><br>\n" +
-                    "    <span>Дата отправления: " +
-                    new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss").format(value.timeSending) +
-                    "</span><br>" +
-                    "<span>Время в пути: "+
-                    new SimpleDateFormat("HH:mm:ss").format(value.timeInWay) +
-                    "</span><br>\n" +
-                    "    <span>Статус: </span><span style='color: "+ colors[value.stateRay.ordinal()]+";'>" +
-                    value.stateRay +
-                    "</span>\n" +
-                    "</div></html>";
-            setText(itemList);
-            return this;
-        }
     }
 
     private String[] colors = {"#4f7af1", "#fdba00", "#FF4081", "#00d904", "red"};
@@ -144,6 +153,6 @@ public class MainFrame extends AbstractFrame {
 
     @Override
     public Dimension getDimension() {
-        return new Dimension(600, 500);
+        return new Dimension(700, 500);
     }
 }
