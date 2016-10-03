@@ -212,4 +212,9 @@ public class AddNewRayFrame extends AbstractFrame {
         });
     }
 
+    @Override
+    public Dimension getDimension() {
+        return new Dimension(450, 550);
+    }
+
 }

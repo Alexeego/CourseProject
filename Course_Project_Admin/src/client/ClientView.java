@@ -40,26 +40,33 @@ public class ClientView extends JFrame {
     }
 
     protected void updateWindow(ClientModel.ConnectionState nowConnectionState) {
+        AbstractFrame frame;
         switch (nowConnectionState) {
             case TRY_CONNECTION:
-                setSize(300, 200);
-                setFrame(new ConnectionFrame(clientController));
+                frame = new ConnectionFrame(clientController);
+                setSize(frame.getDimension());
+                setFrame(frame);
                 break;
             case AUTHORIZATION:
-                setSize(300, 200);
-                setFrame(new AuthorizationFrame(clientController));
+                frame = new AuthorizationFrame(clientController);
+                setSize(frame.getDimension());
+                setFrame(frame);
                 break;
             case REGISTRATION: {
+                frame = new RegistrationFrame(clientController);
+                setSize(frame.getDimension());
                 setFrame(new RegistrationFrame(clientController));
                 break;
             }
             case CONNECTED: {
-                setSize(600, 400);
-                setFrame(new MainFrame(clientController));
+                frame = new MainFrame(clientController);
+                setSize(frame.getDimension());
+                setFrame(frame);
                 break;
             }
             case ADD_NEW_RAY: {
-                setSize(450, 550);
+                frame = new AddNewRayFrame(clientController);
+                setSize(frame.getDimension());
                 setFrame(new AddNewRayFrame(clientController));
                 break;
             }

@@ -4,6 +4,7 @@ import client.ClientController;
 import connection.MessageType;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Created by Alexey on 22.09.2016.
@@ -23,4 +24,6 @@ public abstract class AbstractFrame extends JPanel implements InfoListener{
     public void event(MessageType type, Object object) {
         // Void
     }
+
+    public abstract Dimension getDimension();
 }

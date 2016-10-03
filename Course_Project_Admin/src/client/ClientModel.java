@@ -64,6 +64,10 @@ public class ClientModel {
     }
     private final Object lock = new Object();
 
+    public List<Ray> getRays() {
+        return rays;
+    }
+
     private ArrayList<Ray> rays = null;
     private Connection connection = null;
     private User user = null;
@@ -201,7 +205,7 @@ public class ClientModel {
     private void initListRays(String json) {
         try {
             rays = Connection.transformFromJson(new TypeReference<ArrayList<Ray>>() {}, json);
-            System.out.println(rays.size());
+            view.showMessageInfo(null, MessageType.RAY_LIST);
         } catch (IOException ignore) {}
     }
 

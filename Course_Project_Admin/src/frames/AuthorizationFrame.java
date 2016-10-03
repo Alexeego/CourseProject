@@ -44,8 +44,11 @@ public class AuthorizationFrame extends AbstractFrame {
         buttonAuthorization = new JButton("Вход");
         add(buttonAuthorization);
 
-        buttonAuthorization.addActionListener(e -> {
-            controller.authorization(textFieldName.getText(), textFieldPass.getText());
-        });
+        buttonAuthorization.addActionListener(e -> controller.authorization(textFieldName.getText(), textFieldPass.getText()));
+    }
+
+    @Override
+    public Dimension getDimension() {
+        return new Dimension(300, 200);
     }
 }

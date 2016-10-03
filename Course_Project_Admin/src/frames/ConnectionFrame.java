@@ -61,4 +61,9 @@ public class ConnectionFrame extends AbstractFrame {
             }
         });
     }
+
+    @Override
+    public Dimension getDimension() {
+        return new Dimension(300, 200);
+    }
 }

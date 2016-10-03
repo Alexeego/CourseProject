@@ -3,6 +3,8 @@ package client;
 import frames.AbstractFrame;
 import ray.Ray;
 
+import java.util.List;
+
 /**
  * Created by Alexey on 09.07.2016.
  */
@@ -34,8 +36,11 @@ public class ClientController {
         model.addNewInitRay(ray);
     }
 
+    public List<Ray> getListRays() {
+        return model.getRays();
+    }
+
     public static void main(String[] args) {
         new ClientController();
     }
-
 }
