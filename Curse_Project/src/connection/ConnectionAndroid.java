@@ -92,7 +92,7 @@ class ConnectionAndroid extends Connection {
 
     private void sendUserTicketsList() throws IOException {
         send(new Message(MessageType.MY_TICKETS_LIST,
-                transformToJson(Server.boughtOrBookTickets.stream().filter(ticket -> ticket.userName.equals(user.name))
+                transformToJson(Server.boughtOrBookTickets.stream().filter(ticket -> ticket.userName.equalsIgnoreCase(user.name))
                 .collect(Collectors.toCollection(LinkedList::new)))));
     }
 
@@ -163,7 +163,7 @@ class ConnectionAndroid extends Connection {
             for (Ray ray : Server.rays) {
                 if (ray.id == idRay) {
                     for (Place place : ray.places) {
-                        if (place.name != null && place.name.equals(user.name)) {
+                        if (place.name != null && place.name.equalsIgnoreCase(user.name)) {
                             buy = true;
                             place.statePlace = StatePlace.SAILED;
                         }

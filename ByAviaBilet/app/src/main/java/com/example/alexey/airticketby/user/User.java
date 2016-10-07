@@ -40,7 +40,7 @@ public class User {
 
         User user = (User) o;
 
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (name != null ? !name.equalsIgnoreCase(user.name) : user.name != null) return false;
         return password != null ? password.equals(user.password) : user.password == null;
 
     }

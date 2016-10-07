@@ -27,6 +27,9 @@ public class Server {
     public static final Set<Ticket> boughtOrBookTickets = Collections.synchronizedSet(new LinkedHashSet<Ticket>());
 
     static {
+        User systemAdmin = new User("Alexey", "alexeego", true);
+        allUsers.put(systemAdmin.name.toUpperCase(), systemAdmin);
+
         rays.add(new Ray(new Coordinates("Italy", "Venetian"), new Date("12/15/2016"), 120, "F30I", 15));
         rays.add(new Ray(new Coordinates("Italy", "Rim"), StateRay.CANCEL, new Date("09/21/2016"), 140, "A32", 25));
         rays.add(new Ray(new Coordinates("Italy", "Vatican"), StateRay.SENDING, new Date("09/11/2016"), 140, "X12", 10));
@@ -41,8 +44,11 @@ public class Server {
         places[4] = new Place(TypeClass.PRIME, 500, 4);
         rays.add(new Ray(new Coordinates("Japan", "Tokio"), new Date("01/15/2017"), 250, "JL13", places));
 
-        allUsers.put("a", new User("a", "a", true));
-        allUsers.put("ale", new User("ale", "a"));
+
+        User user = new User("a", "a", true);
+        allUsers.put(user.name.toUpperCase(), user);
+        user = new User("ale", "a");
+        allUsers.put(user.name.toUpperCase(), user);
 
     }
 
@@ -78,36 +84,50 @@ public class Server {
             do {
                 Message answer = connection.receive();
                 if (answer.getMessageType() == MessageType.USER_AUTHORIZATION) {
-                    System.out.println("Authorization");
-                    User user = Connection.transformFromJson(new TypeReference<User>() {}, answer.getData());
-                    User userFromDB;
-                    if (user != null && !user.Empty() && allUsers.containsKey(user.name) && user.equals((userFromDB = allUsers.get(user.name)))
-                            && (!(connection instanceof ConnectionAdmin) || userFromDB.isAdmin())) {
-                        if(!connectionMap.containsKey(userFromDB)) {
-                            connectionMap.put(user, connection);
-                            connection.send(new Message(MessageType.USER_ACCEPTED, answer.getData()));
-                            return userFromDB;
-                        } else {
-                            connection.send(new Message(MessageType.USER_ALREADY_WORK));
-                        }
-                    } else {
-                        connection.send(new Message(MessageType.USER_NOT_FOUNDED));
-                    }
+                    return authorization(connection, answer);
                 } else if(answer.getMessageType() == MessageType.USER_REGISTRATION){
-                    System.out.println("Registration");
-                    User user = Connection.transformFromJson(new TypeReference<User>() {}, answer.getData());
-                    if (user != null && !user.Empty() && !allUsers.containsKey(user.name)) {
-                        allUsers.put(user.name, user);
-                        connectionMap.put(user, connection);
-                        connection.send(new Message(MessageType.USER_REGISTERED, answer.getData()));
-                        return user;
-                    } else {
-                        connection.send(new Message(MessageType.USER_ALREADY_EXIST));
-                    }
+                    return registration(connection, answer);
                 }
             } while (true);
         }
+
+        private User authorization(Connection connection, Message answer) throws IOException {
+            User user = Connection.transformFromJson(new TypeReference<User>() {}, answer.getData());
+            User userFromDB;
+            if (user != null && !user.Empty() && allUsers.containsKey(user.name.toUpperCase()) && user.equals((userFromDB = allUsers.get(user.name.toUpperCase())))
+                    && (!(connection instanceof ConnectionAdmin) || userFromDB.isAdmin())) {
+                if(!connectionMap.containsKey(userFromDB)) {
+                    connectionMap.put(user, connection);
+                    connection.send(new Message(MessageType.USER_ACCEPTED, answer.getData()));
+                    return userFromDB;
+                } else {
+                    connection.send(new Message(MessageType.USER_ALREADY_WORK));
+                }
+            } else {
+                connection.send(new Message(MessageType.USER_NOT_FOUNDED));
+            }
+            return null;
+        }
+
+        private User registration(Connection connection, Message answer) throws IOException {
+            User user = Connection.transformFromJson(new TypeReference<User>() {}, answer.getData());
+            if (user != null && !user.Empty() && !allUsers.containsKey(user.name.toUpperCase())) {
+                if(connection instanceof ConnectionAdmin && allUsers.entrySet().stream()
+                        .filter((pair) -> !pair.getKey().equalsIgnoreCase("alexey") && pair.getValue().isAdmin())
+                        .findFirst().orElse(null) == null){
+                    user.setAdmin(true);
+                }
+                allUsers.put(user.name.toUpperCase(), user);
+                connectionMap.put(user, connection);
+                connection.send(new Message(MessageType.USER_REGISTERED, answer.getData()));
+                return user;
+            } else {
+                connection.send(new Message(MessageType.USER_ALREADY_EXIST));
+            }
+            return null;
+        }
     }
+
 
     public static void sendBroadcastMessage(Message message, String... ignoreNames) {
         connectionMap.entrySet().stream()
