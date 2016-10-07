@@ -179,6 +179,11 @@ public class ClientModel {
             }
             case USER_NOT_FOUNDED: {
                 view.showMessageError("Увы, логин или пароль неверен", "Авторизация");
+                break;
+            }
+            case USER_ALREADY_WORK: {
+                view.showMessageError("Увы, данный аккаунт сейчас используется", "Авторизация");
+                break;
             }
         }
     }

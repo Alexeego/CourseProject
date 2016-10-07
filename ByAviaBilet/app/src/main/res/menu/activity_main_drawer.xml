@@ -6,10 +6,10 @@
             android:id="@+id/nav_rays"
             android:icon="@drawable/ic_menu_share"
             android:title="Все рейсы" />
-        <item
-            android:id="@+id/nav_my_account"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Мой аккаунт" />
+        <!--<item-->
+            <!--android:id="@+id/nav_my_account"-->
+            <!--android:icon="@drawable/ic_menu_send"-->
+            <!--android:title="Мой аккаунт" />-->
         <item
             android:id="@+id/nav_my_tickets"
             android:icon="@drawable/ic_menu_slideshow"

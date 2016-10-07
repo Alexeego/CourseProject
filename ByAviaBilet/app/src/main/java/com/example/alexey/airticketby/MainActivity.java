@@ -252,6 +252,8 @@ public class MainActivity extends AppCompatActivity
             } else if (nowConnectionState == ConnectionState.REGISTRATION && fragment instanceof RegistrationFragment) {
                 connectAuthorization();
                 setEnterFragment();
+            } else if(nowConnectionState == ConnectionState.CONNECT && fragment  instanceof MyTicketsFragment) {
+                context.setEnterFragment();
             } else if (!stackFragments.isEmpty()) {
                 boolean error = false;
                 if (fragment instanceof ItemListRaysFragment) {
@@ -291,20 +293,10 @@ public class MainActivity extends AppCompatActivity
                 stackFragments.clear();
                 setEnterFragment();
                 break;
-            case R.id.nav_my_account:
-                if (nowConnectionState == ConnectionState.CONNECT) {
-                    if(!(fragment  instanceof MyAccountFragment)) {
-                        stackFragments.push(fragment);
-                        fragment = new MyAccountFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
-                    }
-                } else
-                    Toast.makeText(context, "Необходимо аворизоваться", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.nav_my_tickets:
                 if (nowConnectionState == ConnectionState.CONNECT) {
                     if(!(fragment  instanceof MyTicketsFragment)) {
-                        stackFragments.push(fragment);
+                        stackFragments.clear();
                         fragment = new MyTicketsFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
                     }

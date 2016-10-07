@@ -83,12 +83,15 @@ public class Server {
                     User userFromDB;
                     if (user != null && !user.Empty() && allUsers.containsKey(user.name) && user.equals((userFromDB = allUsers.get(user.name)))
                             && (!(connection instanceof ConnectionAdmin) || userFromDB.isAdmin())) {
-                        connectionMap.put(user, connection);
-                        connection.send(new Message(MessageType.USER_ACCEPTED, answer.getData()));
-                        return userFromDB;
+                        if(!connectionMap.containsKey(userFromDB)) {
+                            connectionMap.put(user, connection);
+                            connection.send(new Message(MessageType.USER_ACCEPTED, answer.getData()));
+                            return userFromDB;
+                        } else {
+                            connection.send(new Message(MessageType.USER_ALREADY_WORK));
+                        }
                     } else {
                         connection.send(new Message(MessageType.USER_NOT_FOUNDED));
-                        return null;
                     }
                 } else if(answer.getMessageType() == MessageType.USER_REGISTRATION){
                     System.out.println("Registration");
@@ -100,7 +103,6 @@ public class Server {
                         return user;
                     } else {
                         connection.send(new Message(MessageType.USER_ALREADY_EXIST));
-                        return null;
                     }
                 }
             } while (true);
@@ -109,7 +111,7 @@ public class Server {
 
     public static void sendBroadcastMessage(Message message, String... ignoreNames) {
         connectionMap.entrySet().stream()
-                .filter(pair -> !(ignoreNames != null && ignoreNames.length > 0) || !pair.getKey().name.equals(ignoreNames[0]))
+                .filter(pair -> ignoreNames.length < 1 || !pair.getKey().name.equals(ignoreNames[0]))
                 .forEach(pair -> {
                     try {
                         pair.getValue().send(message);

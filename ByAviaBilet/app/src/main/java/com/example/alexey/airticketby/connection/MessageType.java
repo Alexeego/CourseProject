@@ -12,6 +12,7 @@ public enum MessageType {
     USER_AUTHORIZATION,
     USER_ACCEPTED,
     USER_NOT_FOUNDED,
+    USER_ALREADY_WORK,
     // registration
     USER_REGISTRATION,
     USER_REGISTERED,

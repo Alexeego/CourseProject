@@ -31,7 +31,6 @@ public class MainFrame extends AbstractFrame {
         setLayout(new BorderLayout(5, 5));
         setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 
-        //setLayout(new FlowLayout());
         setBackground(Color.DARK_GRAY);
 
         JPanel infoPanel = new JPanel();
@@ -84,6 +83,7 @@ public class MainFrame extends AbstractFrame {
 
         raysList = new JList<>(listModelRays);
         raysList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        raysList.setFixedCellWidth(300);
         raysList.setCellRenderer(new DefaultListCellRenderer() {
             public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 Component component = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
@@ -92,7 +92,7 @@ public class MainFrame extends AbstractFrame {
                 String itemList = "<html><style>\n" +
                         "    div.wrapper {\n" +
                         "        border: 4px double black;\n" +
-                        "        width:260px;\n" +
+                        "        width:218px;\n" +
                         "    }\n" +
                         "</style>\n" +
                         "<div class=\"wrapper\">\n" +
@@ -120,8 +120,8 @@ public class MainFrame extends AbstractFrame {
         raysList.addListSelectionListener(event -> {
             if (!raysList.isSelectionEmpty()) {
                 JOptionPane.showMessageDialog(this, "Выбран " + raysList.getSelectedValue().coordinates);
-                raysList.clearSelection();
             }
+            raysList.clearSelection();
         });
         add(new JScrollPane(raysList), BorderLayout.WEST);
 
@@ -153,6 +153,6 @@ public class MainFrame extends AbstractFrame {
 
     @Override
     public Dimension getDimension() {
-        return new Dimension(700, 500);
+        return new Dimension(635, 500);
     }
 }

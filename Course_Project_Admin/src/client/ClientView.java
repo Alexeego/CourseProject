@@ -21,7 +21,7 @@ public class ClientView extends JFrame {
     private void initializationWindow() {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-
+        setResizable(false);
         setSize(300, 200);
         setFrame(new ConnectionFrame(clientController));
 

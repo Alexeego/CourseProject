@@ -70,6 +70,11 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
                         "Пользователь с таким именем не найден", Toast.LENGTH_SHORT).show();
                 break;
             }
+            case USER_ALREADY_WORK: {
+                Toast.makeText(MainActivity.context, "Авторизация не прошла.\n" +
+                        "Этот аккаунт в данный момент уже используется", Toast.LENGTH_SHORT).show();
+                break;
+            }
         }
         ConnectionFragment.editNameAuthorization.setEnabled(true);
         ConnectionFragment.editPasswordAuthorization.setEnabled(true);
