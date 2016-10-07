@@ -23,8 +23,14 @@ public class Server {
 
     public static Map<String, User> allUsers = new ConcurrentHashMap<>();
     public static Map<User, Connection> connectionMap = new ConcurrentHashMap<>();
-    public static final Set<Ray> rays = Collections.synchronizedSet(new LinkedHashSet<Ray>());
-    public static final Set<Ticket> boughtOrBookTickets = Collections.synchronizedSet(new LinkedHashSet<Ticket>());
+    public static final Set<Ray> rays = Collections.synchronizedSet(new TreeSet<>((o1, o2) -> Double.compare(o2.id, o1.id)));
+    public static final Set<Ticket> boughtOrBookTickets = Collections.synchronizedSet(new TreeSet<Ticket>((o1, o2) -> {
+        int result = o1.userName.compareTo(o2.userName);
+        if(result != 0) return result;
+        result = o1.ray.coordinates.toString().compareTo(o2.ray.coordinates.toString());
+        if(result != 0) return result;
+        return Integer.compare(o1.numberPlace, o2.numberPlace);
+    }));
 
     static {
         User systemAdmin = new User("Alexey", "alexeego", true);

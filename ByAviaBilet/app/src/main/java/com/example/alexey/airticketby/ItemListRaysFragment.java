@@ -102,7 +102,7 @@ public class ItemListRaysFragment extends Fragment {
             textStateRay.setText(MainWindowFragment.selectedRay.stateRay.toString());
 
             for (Place place : MainWindowFragment.selectedRay.places) {
-                if (place.statePlace == StatePlace.BOOK && place.name.equals(MainActivity.userName)) {
+                if (place.statePlace == StatePlace.BOOK && place.name.equalsIgnoreCase(MainActivity.userName)) {
                     try {
                         double payment = Double.parseDouble(textCostPlace.getText().toString()) + place.payment;
                         textCostPlace.setText(String.valueOf(payment));
@@ -140,7 +140,7 @@ public class ItemListRaysFragment extends Fragment {
                 final CheckBox checkBox = (CheckBox) item.findViewById(R.id.checkBoxChoosePlace);
 
                 boolean bookMe = MainWindowFragment.selectedRay.places[position].statePlace == StatePlace.BOOK
-                        && MainWindowFragment.selectedRay.places[position].name.equals(MainActivity.userName);
+                        && MainWindowFragment.selectedRay.places[position].name.equalsIgnoreCase(MainActivity.userName);
 
 
                 checkBox.setVisibility(View.VISIBLE);
