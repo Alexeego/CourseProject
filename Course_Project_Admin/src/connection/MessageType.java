@@ -24,6 +24,8 @@ public enum MessageType {
     RAY_LIST,
     GET_TICKETS_LIST,
     MY_TICKETS_LIST,
+    GET_LIST_USERS,
+    LIST_USERS,
     // Edit Rays
     ADD_NEW_RAY,
     NEW_RAY_ADDED,

@@ -26,15 +26,15 @@ public class Server {
     public static final Set<Ray> rays = Collections.synchronizedSet(new TreeSet<>((o1, o2) -> Double.compare(o2.id, o1.id)));
     public static final Set<Ticket> boughtOrBookTickets = Collections.synchronizedSet(new TreeSet<Ticket>((o1, o2) -> {
         int result = o1.userName.compareTo(o2.userName);
-        if(result != 0) return result;
+        if (result != 0) return result;
         result = o1.ray.coordinates.toString().compareTo(o2.ray.coordinates.toString());
-        if(result != 0) return result;
+        if (result != 0) return result;
         return Integer.compare(o1.numberPlace, o2.numberPlace);
     }));
 
     static {
         User systemAdmin = new User("Alexey", "alexeego", true);
-        allUsers.put(systemAdmin.name.toUpperCase(), systemAdmin);
+        allUsers.put(systemAdmin.getName().toUpperCase(), systemAdmin);
 
         rays.add(new Ray(new Coordinates("Italy", "Venetian"), new Date("12/15/2016"), 120, "F30I", 15));
         rays.add(new Ray(new Coordinates("Italy", "Rim"), StateRay.CANCEL, new Date("09/21/2016"), 140, "A32", 25));
@@ -52,9 +52,10 @@ public class Server {
 
 
         User user = new User("a", "a", true);
-        allUsers.put(user.name.toUpperCase(), user);
+        allUsers.put(user.getName().toUpperCase(), user);
         user = new User("ale", "a");
-        allUsers.put(user.name.toUpperCase(), user);
+        user.setAccess((byte) 1);
+        allUsers.put(user.getName().toUpperCase(), user);
 
     }
 
@@ -75,7 +76,7 @@ public class Server {
                     user = authorizationOrRegistration(connection);
                     if (user == null) continue;
 
-                    System.out.println("New User = " + user.name);
+                    System.out.println("New User = " + user.getName());
                     connection.serverMainLoop(user);
                 }
             } catch (Exception ignore) {
@@ -83,7 +84,7 @@ public class Server {
             }
             if (user != null) {
                 connectionMap.remove(user);
-                System.out.println("End run " + user.name);
+                System.out.println("End run " + user.getName());
             }
         }
 
@@ -92,20 +93,24 @@ public class Server {
                 Message answer = connection.receive();
                 if (answer.getMessageType() == MessageType.USER_AUTHORIZATION) {
                     return authorization(connection, answer);
-                } else if(answer.getMessageType() == MessageType.USER_REGISTRATION){
+                } else if (answer.getMessageType() == MessageType.USER_REGISTRATION) {
                     return registration(connection, answer);
                 }
             } while (true);
         }
 
         private User authorization(Connection connection, Message answer) throws IOException {
-            User user = Connection.transformFromJson(new TypeReference<User>() {}, answer.getData());
+            User user = Connection.transformFromJson(new TypeReference<User>() {
+            }, answer.getData());
             User userFromDB;
-            if (user != null && !user.Empty() && allUsers.containsKey(user.name.toUpperCase()) && user.equals((userFromDB = allUsers.get(user.name.toUpperCase())))
-                    && (!(connection instanceof ConnectionAdmin) || userFromDB.isAdmin())) {
-                if(!connectionMap.containsKey(userFromDB)) {
-                    connectionMap.put(user, connection);
-                    connection.send(new Message(MessageType.USER_ACCEPTED, answer.getData()));
+            if (user != null && !user.Empty() && allUsers.containsKey(user.getName().toUpperCase()) && user.equals((userFromDB = allUsers.get(user.getName().toUpperCase())))
+                    && (!(connection instanceof ConnectionAdmin) || userFromDB.getAccess() != 0)) {
+                if (!connectionMap.containsKey(userFromDB)) {
+                    connectionMap.put(userFromDB, connection);
+                    if (connection instanceof ConnectionAdmin)
+                        connection.send(new Message(MessageType.USER_ACCEPTED, Connection.transformToJson(userFromDB)));
+                    else
+                        connection.send(new Message(MessageType.USER_ACCEPTED, answer.getData()));
                     return userFromDB;
                 } else {
                     connection.send(new Message(MessageType.USER_ALREADY_WORK));
@@ -117,14 +122,15 @@ public class Server {
         }
 
         private User registration(Connection connection, Message answer) throws IOException {
-            User user = Connection.transformFromJson(new TypeReference<User>() {}, answer.getData());
-            if (user != null && !user.Empty() && !allUsers.containsKey(user.name.toUpperCase())) {
-                if(connection instanceof ConnectionAdmin && allUsers.entrySet().stream()
-                        .filter((pair) -> !pair.getKey().equalsIgnoreCase("alexey") && pair.getValue().isAdmin())
-                        .findFirst().orElse(null) == null){
-                    user.setAdmin(true);
+            User user = Connection.transformFromJson(new TypeReference<User>() {
+            }, answer.getData());
+            if (user != null && !user.Empty() && !allUsers.containsKey(user.getName().toUpperCase())) {
+                if (connection instanceof ConnectionAdmin && allUsers.entrySet().stream()
+                        .filter((pair) -> !pair.getKey().equalsIgnoreCase("alexey") && (pair.getValue().getAccess() != -1))
+                        .findFirst().orElse(null) == null) {
+                    user = new User(user.getName(), user.getPassword(), true);
                 }
-                allUsers.put(user.name.toUpperCase(), user);
+                allUsers.put(user.getName().toUpperCase(), user);
                 connectionMap.put(user, connection);
                 connection.send(new Message(MessageType.USER_REGISTERED, answer.getData()));
                 return user;
@@ -138,7 +144,7 @@ public class Server {
 
     public static void sendBroadcastMessage(Message message, String... ignoreNames) {
         connectionMap.entrySet().stream()
-                .filter(pair -> ignoreNames.length < 1 || !pair.getKey().name.equals(ignoreNames[0]))
+                .filter(pair -> ignoreNames.length < 1 || !pair.getKey().getName().equals(ignoreNames[0]))
                 .forEach(pair -> {
                     try {
                         pair.getValue().send(message);

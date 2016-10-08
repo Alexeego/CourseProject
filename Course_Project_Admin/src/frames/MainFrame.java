@@ -63,11 +63,13 @@ public class MainFrame extends AbstractFrame {
             controller.signOut();
         });
 
-        JButton buttonManageAccounts = new JButton("Управление аккаунтами");
-        buttonsPanelNorth.add(buttonManageAccounts);
-        buttonManageAccounts.addActionListener(event -> {
-
-        });
+        if(controller.nowSysAdmin()) {
+            JButton buttonManageAccounts = new JButton("Управление аккаунтами");
+            buttonsPanelNorth.add(buttonManageAccounts);
+            buttonManageAccounts.addActionListener(event -> {
+                controller.openWindowForManageAccounts();
+            });
+        }
 
         JPanel buttonsPanelSouth = new JPanel();
         buttonsPanelSouth.setLayout(new GridLayout(1, 2, 5, 0));
@@ -88,9 +90,9 @@ public class MainFrame extends AbstractFrame {
             textFieldSendInformation.setText("");
         });
 
+
         java.util.List<Ray> rayListFromModel = controller.getListRays();
         listModelRays = new DefaultListModel<>();
-
         if (rayListFromModel != null) {
             for (Ray ray : rayListFromModel)
                 listModelRays.addElement(ray);

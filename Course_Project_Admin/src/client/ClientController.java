@@ -51,4 +51,12 @@ public class ClientController {
     public void openWindowForRegistration() {
         model.openWindowForRegistration();
     }
+
+    public boolean nowSysAdmin() {
+        return model.nowSysAdmin();
+    }
+
+    public void openWindowForManageAccounts() {
+        model.openWindowForManageAccounts();
+    }
 }

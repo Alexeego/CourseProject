@@ -15,6 +15,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,40 +31,52 @@ public class ClientModel {
         this.view = view;
     }
 
-    public enum ConnectionState{
+    public enum ConnectionState {
         TRY_CONNECTION,
         AUTHORIZATION,
         REGISTRATION,
         CONNECTED,
         // Others in connected
-        ADD_NEW_RAY
+        ADD_NEW_RAY,
+        SYS_ADMIN_MANAGE_USERS
     }
+
     private ConnectionState nowConnectionState = ConnectionState.TRY_CONNECTION;
 
-    public void connectAuthorization(){
+    public void connectAuthorization() {
         nowConnectionState = ConnectionState.AUTHORIZATION;
     }
-    public void connectRegistration(){
+
+    public void connectRegistration() {
         nowConnectionState = ConnectionState.REGISTRATION;
     }
-    public void connectSuccess(){
+
+    public void connectSuccess() {
         nowConnectionState = ConnectionState.CONNECTED;
     }
-    public void connectError(){
+
+    public void connectError() {
         synchronized (lock) {
-            if(nowConnectionState != ConnectionState.TRY_CONNECTION) {
+            if (nowConnectionState != ConnectionState.TRY_CONNECTION) {
                 nowConnectionState = ConnectionState.TRY_CONNECTION;
                 try {
                     if (connection != null)
                         connection.close();
-                } catch (IOException e) {}
+                } catch (IOException e) {
+                }
                 connection = null;
                 user = null;
                 view.updateWindow(nowConnectionState);
             }
         }
     }
+
     private final Object lock = new Object();
+
+
+    public boolean nowSysAdmin() {
+        return user.getAccess() == -1;
+    }
 
     public List<Ray> getRays() {
         return rays;
@@ -100,7 +113,7 @@ public class ClientModel {
             executor.submit(() -> {
                 try {
                     loop();
-                } catch (Exception exception){
+                } catch (Exception exception) {
                     System.out.println("Бай-бай");
                     connectError();
                 }
@@ -115,10 +128,10 @@ public class ClientModel {
     /////////////////////////////////////////////////////////////////////////
     // Events Methods
 
-    public void authorization(String name, String password){
+    public void authorization(String name, String password) {
         try {
-            connection.send(new Message(MessageType.USER_AUTHORIZATION, Connection.transformToJson(new User(name, password, true))));
-        } catch (Exception exception){
+            connection.send(new Message(MessageType.USER_AUTHORIZATION, Connection.transformToJson(new User(name, password))));
+        } catch (Exception exception) {
             connectError();
         }
     }
@@ -139,24 +152,6 @@ public class ClientModel {
         }
     }
 
-    // Manage windows
-    public void openWindowForRegistration() {
-        connectRegistration();
-        view.updateWindow(nowConnectionState);
-    }
-
-    public void openWindowForAddNewRay() {
-        view.updateWindow(ConnectionState.ADD_NEW_RAY);
-    }
-
-    // Back
-
-    public void toBackPressed(AbstractFrame abstractFrame) {
-        if(abstractFrame instanceof RegistrationFrame)
-            connectAuthorization();
-        view.updateWindow(nowConnectionState);
-    }
-
     public void signOut() {
         try {
             connection.send(new Message(MessageType.USER_SIGN_OUT));
@@ -168,17 +163,44 @@ public class ClientModel {
         }
     }
 
+    // Manage windows
+
+    public void openWindowForManageAccounts() {
+        try {
+            view.updateWindow(ConnectionState.SYS_ADMIN_MANAGE_USERS);
+            connection.send(new Message(MessageType.GET_LIST_USERS));
+        } catch (IOException e) {
+            connectError();
+        }
+    }
+
+    public void openWindowForRegistration() {
+        connectRegistration();
+        view.updateWindow(nowConnectionState);
+    }
+
+    public void openWindowForAddNewRay() {
+        view.updateWindow(ConnectionState.ADD_NEW_RAY);
+    }
+
+
+    public void toBackPressed(AbstractFrame abstractFrame) {
+        if (abstractFrame instanceof RegistrationFrame)
+            connectAuthorization();
+        view.updateWindow(nowConnectionState);
+    }
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Loop and other methods
 
     public void loop() throws IOException, ClassNotFoundException {
-        while (!Thread.currentThread().isInterrupted() && connection != null){
+        while (!Thread.currentThread().isInterrupted() && connection != null) {
             Message message = connection.receive();
-            if(nowConnectionState == ConnectionState.AUTHORIZATION){
+            if (nowConnectionState == ConnectionState.AUTHORIZATION) {
                 communicationAuthorization(message);
-            } else if(nowConnectionState == ConnectionState.REGISTRATION){
+            } else if (nowConnectionState == ConnectionState.REGISTRATION) {
 
-            } else if(nowConnectionState == ConnectionState.CONNECTED) {
+            } else if (nowConnectionState == ConnectionState.CONNECTED) {
                 communicationConnect(message);
             }
         }
@@ -186,12 +208,12 @@ public class ClientModel {
 
     ////////////////////////////////////// Authorization
     public void communicationAuthorization(Message message) throws IOException {
-        switch (message.getMessageType()){
+        switch (message.getMessageType()) {
             case USER_ACCEPTED: {
-                user = Connection.transformFromJson(new TypeReference<User>() {}, message.getData());
+                user = Connection.transformFromJson(new TypeReference<User>() {
+                }, message.getData());
                 connectSuccess();
                 view.updateWindow(nowConnectionState);
-                view.showMessageInfo("Ура. Вы авторизованы " + user.name, MessageType.USER_ACCEPTED, "Авторизация");
                 break;
             }
             case USER_NOT_FOUNDED: {
@@ -206,7 +228,7 @@ public class ClientModel {
     }
 
     ////////////////////////////////////////////////// Connected
-    public void communicationConnect(Message message){
+    public void communicationConnect(Message message) {
         switch (message.getMessageType()) {
             case DATA: {
                 view.showMessageInfo(message.getData(), MessageType.DATA);
@@ -221,16 +243,28 @@ public class ClientModel {
                 view.updateWindow(nowConnectionState);
                 break;
             }
+            case LIST_USERS: {
+                initListUsers(message.getData());
+                break;
+            }
+        }
+    }
+
+    private void initListUsers(String json) {
+        try {
+            view.showMessageInfo(Connection.transformFromJson(new TypeReference<ArrayList<User>>() {}, json), MessageType.LIST_USERS);
+        } catch (IOException ignored) {
+            System.out.println("exception" + ignored);
         }
     }
 
     private void initListRays(String json) {
         try {
-            rays = Connection.transformFromJson(new TypeReference<ArrayList<Ray>>() {}, json);
+            rays = Connection.transformFromJson(new TypeReference<ArrayList<Ray>>() {
+            }, json);
             view.showMessageInfo(null, MessageType.RAY_LIST);
-        } catch (IOException ignore) {}
+        } catch (IOException ignored) {}
     }
-
 
 
     ///////////////////////////////////////////////////////// Close

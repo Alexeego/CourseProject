@@ -28,7 +28,7 @@ public class ClientView extends JFrame {
         setVisible(true);
     }
 
-    public void showMessageInfo(String message, MessageType type, String... title) {
+    public void showMessageInfo(Object message, MessageType type, String... title) {
         if (type != null)
             nowPanel.event(type, message);
         else
@@ -55,7 +55,7 @@ public class ClientView extends JFrame {
             case REGISTRATION: {
                 frame = new RegistrationFrame(clientController);
                 setSize(frame.getDimension());
-                setFrame(new RegistrationFrame(clientController));
+                setFrame(frame);
                 break;
             }
             case CONNECTED: {
@@ -67,7 +67,13 @@ public class ClientView extends JFrame {
             case ADD_NEW_RAY: {
                 frame = new AddNewRayFrame(clientController);
                 setSize(frame.getDimension());
-                setFrame(new AddNewRayFrame(clientController));
+                setFrame(frame);
+                break;
+            }
+            case SYS_ADMIN_MANAGE_USERS: {
+                frame = new ManageAccountsFrame(clientController);
+                setSize(frame.getDimension());
+                setFrame(frame);
                 break;
             }
         }

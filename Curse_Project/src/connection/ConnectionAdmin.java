@@ -62,8 +62,13 @@ public class ConnectionAdmin extends Connection {
                 }
                 case USER_SIGN_OUT:{
                     Server.connectionMap.remove(user);
-                    System.out.println("End run " + user.name);
+                    System.out.println("End run " + user.getName());
                     return;
+                }
+                case GET_LIST_USERS: {
+                    System.out.println(transformToJson(Server.allUsers.values()));
+                    send(new Message(MessageType.LIST_USERS, transformToJson(Server.allUsers.values())));
+                    break;
                 }
             }
         } while (true);

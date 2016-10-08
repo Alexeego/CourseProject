@@ -4,31 +4,38 @@ package user;
  * Created by Alexey on 19.09.2016.
  */
 public class User {
-    public String name;
-    public String password;
-    private boolean admin;
+    private String name;
+    private String password;
+    private byte access;
 
-    public User() {
-    }
-
+    public User(){}
     public User(String name, String password) {
         this.name = name;
         this.password = password;
     }
 
-    public User(String name, String password, boolean admin) {
+    public byte getAccess() {
+        return access;
+    }
+
+    public void setAccess(byte access) {
+        this.access = access;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
-        this.admin = admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
-    public boolean isAdmin() {
-
-        return admin;
     }
 
     @Override
