@@ -60,6 +60,11 @@ public class ConnectionAdmin extends Connection {
                     }
                     break;
                 }
+                case USER_SIGN_OUT:{
+                    Server.connectionMap.remove(user);
+                    System.out.println("End run " + user.name);
+                    return;
+                }
             }
         } while (true);
     }

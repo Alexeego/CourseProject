@@ -43,4 +43,12 @@ public class ClientController {
     public static void main(String[] args) {
         new ClientController();
     }
+
+    public void signOut() {
+        model.signOut();
+    }
+
+    public void openWindowForRegistration() {
+        model.openWindowForRegistration();
+    }
 }

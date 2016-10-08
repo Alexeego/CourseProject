@@ -2,6 +2,7 @@ package frames;
 
 import client.ClientController;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -15,7 +16,12 @@ public class RegistrationFrame extends AbstractFrame {
 
     @Override
     protected void initializationWindow() {
+        setLayout(new FlowLayout());
+        setBackground(Color.DARK_GRAY);
 
+        JButton buttonCancel = new JButton("Назад");
+        add(buttonCancel);
+        buttonCancel.addActionListener(event -> controller.toBackPressed(this));
     }
 
     @Override

@@ -6,6 +6,7 @@ import connection.Message;
 import connection.MessageType;
 import frames.AbstractFrame;
 import frames.AddNewRayFrame;
+import frames.RegistrationFrame;
 import ray.Ray;
 import user.User;
 
@@ -58,7 +59,7 @@ public class ClientModel {
                 } catch (IOException e) {}
                 connection = null;
                 user = null;
-                view.updateWindow(ConnectionState.TRY_CONNECTION);
+                view.updateWindow(nowConnectionState);
             }
         }
     }
@@ -112,7 +113,7 @@ public class ClientModel {
     }
 
     /////////////////////////////////////////////////////////////////////////
-    // Methods for Sending to server anything
+    // Events Methods
 
     public void authorization(String name, String password){
         try {
@@ -122,7 +123,6 @@ public class ClientModel {
         }
     }
 
-
     public void sendInfoMessage(String text) {
         try {
             connection.send(new Message(MessageType.DATA, text));
@@ -130,12 +130,6 @@ public class ClientModel {
             connectError();
         }
     }
-
-
-    public void openWindowForAddNewRay() {
-        view.updateWindow(ConnectionState.ADD_NEW_RAY);
-    }
-
 
     public void addNewInitRay(Ray ray) {
         try {
@@ -145,11 +139,34 @@ public class ClientModel {
         }
     }
 
-    public void toBackPressed(AbstractFrame abstractFrame) {
-        if(abstractFrame instanceof AddNewRayFrame)
-            view.updateWindow(nowConnectionState);
+    // Manage windows
+    public void openWindowForRegistration() {
+        connectRegistration();
+        view.updateWindow(nowConnectionState);
     }
 
+    public void openWindowForAddNewRay() {
+        view.updateWindow(ConnectionState.ADD_NEW_RAY);
+    }
+
+    // Back
+
+    public void toBackPressed(AbstractFrame abstractFrame) {
+        if(abstractFrame instanceof RegistrationFrame)
+            connectAuthorization();
+        view.updateWindow(nowConnectionState);
+    }
+
+    public void signOut() {
+        try {
+            connection.send(new Message(MessageType.USER_SIGN_OUT));
+            user = null;
+            connectAuthorization();
+            view.updateWindow(nowConnectionState);
+        } catch (IOException e) {
+            connectError();
+        }
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Loop and other methods

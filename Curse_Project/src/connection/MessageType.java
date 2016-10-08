@@ -14,6 +14,7 @@ public enum MessageType {
     USER_ACCEPTED,
     USER_NOT_FOUNDED,
     USER_ALREADY_WORK,
+    USER_SIGN_OUT,
     // registration
     USER_REGISTRATION,
     USER_REGISTERED,

@@ -53,20 +53,35 @@ public class MainFrame extends AbstractFrame {
         gridBagConstraints.gridwidth = GridBagConstraints.REMAINDER;
         infoPanel.add(textFieldSendInformation, gridBagConstraints);
 
+        JPanel buttonsPanelNorth = new JPanel();
+        buttonsPanelNorth.setLayout(new GridLayout(1, 2, 5, 0));
+        add(buttonsPanelNorth, BorderLayout.NORTH);
 
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new GridLayout(1, 2, 5, 0));
-        add(buttonsPanel, BorderLayout.SOUTH);
+        JButton buttonExit = new JButton("Выйти");
+        buttonsPanelNorth.add(buttonExit);
+        buttonExit.addActionListener(event -> {
+            controller.signOut();
+        });
+
+        JButton buttonManageAccounts = new JButton("Управление аккаунтами");
+        buttonsPanelNorth.add(buttonManageAccounts);
+        buttonManageAccounts.addActionListener(event -> {
+
+        });
+
+        JPanel buttonsPanelSouth = new JPanel();
+        buttonsPanelSouth.setLayout(new GridLayout(1, 2, 5, 0));
+        add(buttonsPanelSouth, BorderLayout.SOUTH);
 
         buttonAddNewRay = new JButton("Добавить новый рейс");
-        buttonsPanel.add(buttonAddNewRay);
+        buttonsPanelSouth.add(buttonAddNewRay);
 
         buttonAddNewRay.addActionListener(event -> {
             controller.openWindowForAddNewRay();
         });
 
         buttonSendDataMessage = new JButton("Отправить информационное сообщение");
-        buttonsPanel.add(buttonSendDataMessage);
+        buttonsPanelSouth.add(buttonSendDataMessage);
 
         buttonSendDataMessage.addActionListener(event -> {
             controller.sendInfoMessage(textFieldSendInformation.getText());

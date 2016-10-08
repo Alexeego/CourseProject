@@ -70,7 +70,8 @@ public class Server {
             User user = null;
             try (Connection connection = Connection.build(clientSocket)) {
                 System.out.println("Connected");
-                while (user == null) {
+                while (true) {
+                    user = null;
                     user = authorizationOrRegistration(connection);
                     if (user == null) continue;
 
