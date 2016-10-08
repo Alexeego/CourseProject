@@ -57,7 +57,7 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
         switch (message.getMessageType()) {
             case USER_ACCEPTED: {
                 try {
-                    MainActivity.userName = Connection.transformFromJson(new TypeReference<User>() {}, message.getData()).name;
+                    MainActivity.userName = Connection.transformFromJson(new TypeReference<User>() {}, message.getData()).getName();
                 } catch (IOException ignored) {}
                 Toast.makeText(MainActivity.context, "Авторизация прошла успешно.", Toast.LENGTH_SHORT).show();
                 Toast.makeText(MainActivity.context, "Добро пожаловать " + MainActivity.userName, Toast.LENGTH_SHORT).show();
@@ -87,7 +87,7 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
         switch (message.getMessageType()){
             case USER_REGISTERED:{
                 try {
-                    MainActivity.userName = Connection.transformFromJson(new TypeReference<User>() {}, message.getData()).name;
+                    MainActivity.userName = Connection.transformFromJson(new TypeReference<User>() {}, message.getData()).getName();
                 } catch (IOException ignored) {}
                 Toast.makeText(MainActivity.context, "Регистрация успешно прошла.\n" +
                         "Теперь вы зарегистрированы", Toast.LENGTH_SHORT).show();
