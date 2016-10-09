@@ -5,38 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c6f7bd46-f16f-4369-91c7-0ef5053201fc" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientController.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$1.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$2.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$ConnectionState.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel$ConnectionState.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView$1.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/client/ClientView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/connection/MessageType.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/connection/MessageType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/MainFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/MainFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/RegistrationFrame.class" afterPath="$PROJECT_DIR$/../Course_Project_Admin/out/production/Course_Project_Admin/frames/RegistrationFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAdmin$1.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAdmin$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAdmin.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAdmin.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAndroid$1.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAndroid$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAndroid$2.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAndroid$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAndroid$3.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAndroid$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAndroid.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/ConnectionAndroid.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/connection/MessageType.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/connection/MessageType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/server/Server$Handler$1.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/server/Server$Handler$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/server/Server$Handler$2.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/server/Server$Handler$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/server/Server$Handler.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/server/Server$Handler.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/server/Server.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/server/Server.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/ticket/Ticket.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/ticket/Ticket.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Curse_Project/user/User.class" afterPath="$PROJECT_DIR$/out/production/Curse_Project/user/User.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Course_Project_Admin/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientController.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientModel.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientView.java" afterPath="$PROJECT_DIR$/../Course_Project_Admin/src/client/ClientView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connection/ConnectionAdmin.java" afterPath="$PROJECT_DIR$/src/connection/ConnectionAdmin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connection/ConnectionAndroid.java" afterPath="$PROJECT_DIR$/src/connection/ConnectionAndroid.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/server/Server.java" afterPath="$PROJECT_DIR$/src/server/Server.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ticket/Ticket.java" afterPath="$PROJECT_DIR$/src/ticket/Ticket.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/BackgroundAsyncTask.java" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/BackgroundAsyncTask.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/ItemListRaysFragment.java" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/ItemListRaysFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/MyTicketsFragment.java" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/MyTicketsFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/res/layout/item_list_tickets.xml" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/res/layout/item_list_tickets.xml" />
     </list>
     <ignored path="Curse_Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -853,7 +825,7 @@
       <workItem from="1475761637424" duration="997000" />
       <workItem from="1475841110509" duration="14272000" />
       <workItem from="1475923111045" duration="14734000" />
-      <workItem from="1476015781802" duration="10145000" />
+      <workItem from="1476015781802" duration="10291000" />
     </task>
     <task id="LOCAL-00001" summary="Commit">
       <created>1474654258335</created>
@@ -918,11 +890,18 @@
       <option name="project" value="LOCAL" />
       <updated>1475971979921</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Server + Admin + Android">
+      <created>1476031142610</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1476031142610</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="244218000" />
+    <option name="totallyTimeSpent" value="244364000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
@@ -964,9 +943,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Commit" />
     <MESSAGE value="Server + Admin" />
-    <MESSAGE value="Server + Admin + Android" />
     <MESSAGE value="Server + Admin (UserManage)" />
-    <option name="LAST_COMMIT_MESSAGE" value="Server + Admin (UserManage)" />
+    <MESSAGE value="Server + Admin + Android" />
+    <option name="LAST_COMMIT_MESSAGE" value="Server + Admin + Android" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

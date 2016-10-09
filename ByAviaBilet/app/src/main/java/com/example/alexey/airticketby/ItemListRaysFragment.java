@@ -18,6 +18,7 @@ import com.example.alexey.airticketby.connection.Message;
 import com.example.alexey.airticketby.connection.MessageType;
 import com.example.alexey.airticketby.ray.Place;
 import com.example.alexey.airticketby.ray.StatePlace;
+import com.example.alexey.airticketby.ray.StateRay;
 import com.example.alexey.airticketby.ticket.Ticket;
 
 
@@ -35,8 +36,8 @@ public class ItemListRaysFragment extends Fragment {
         // Required empty public constructor
     }
 
-    Button buttonBookPlaces;
-    Button buttonBuyPlaces;
+    static Button buttonBookPlaces;
+    static Button buttonBuyPlaces;
     ListView listView;
     TextView textCoordinatesRay;
     TextView textStateRay;
@@ -54,45 +55,53 @@ public class ItemListRaysFragment extends Fragment {
         textStateRay = (TextView) view.findViewById(R.id.textStateRayItemRays);
         textCostPlace = (TextView) view.findViewById(R.id.textCostPlace);
         textCostPlace.setText(String.valueOf(0d));
+
         buttonBookPlaces = (Button) view.findViewById(R.id.buttonBookPlaces);
-        buttonBookPlaces.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
+        if (MainWindowFragment.selectedRay != null && MainWindowFragment.selectedRay.stateRay == StateRay.NEW)
+            buttonBookPlaces.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        if (numbersCheckedPlaces != null) {
+                            for (boolean bool : numbersCheckedPlaces) {
+                                if (bool) {
+                                    MainActivity.connection.send(new Message(MessageType.BOOK_PLACES_TRY));
+                                    break;
+                                }
+                            }
+                        }
+                    } catch (IOException e) {
+                        MainActivity.connectError();
+                    }
+                }
+            });
+        else buttonBookPlaces.setVisibility(View.INVISIBLE);
+
+        buttonBuyPlaces = (Button) view.findViewById(R.id.buttonBuyPlaces);
+
+        if (MainWindowFragment.selectedRay != null
+                && (MainWindowFragment.selectedRay.stateRay == StateRay.NEW
+                || MainWindowFragment.selectedRay.stateRay == StateRay.READY))
+            buttonBuyPlaces.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     if (numbersCheckedPlaces != null) {
                         for (boolean bool : numbersCheckedPlaces) {
                             if (bool) {
-                                MainActivity.connection.send(new Message(MessageType.BOOK_PLACES_TRY));
+                                try {
+
+                                    textOverCost.setText(textCostPlace.getText().toString());
+                                    dialog.show();
+                                } catch (Exception e) {
+                                    Toast.makeText(MainActivity.context, "2 = " + e, Toast.LENGTH_SHORT).show();
+                                }
                                 break;
                             }
                         }
                     }
-                } catch (IOException e) {
-                    MainActivity.connectError();
                 }
-            }
-        });
-
-        buttonBuyPlaces = (Button) view.findViewById(R.id.buttonBuyPlaces);
-        buttonBuyPlaces.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (numbersCheckedPlaces != null) {
-                    for (boolean bool : numbersCheckedPlaces) {
-                        if (bool) {
-                            try {
-
-                                textOverCost.setText(textCostPlace.getText().toString());
-                                dialog.show();
-                            } catch (Exception e) {
-                                Toast.makeText(MainActivity.context, "2 = " + e, Toast.LENGTH_SHORT).show();
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-        });
+            });
+        else buttonBuyPlaces.setVisibility(View.INVISIBLE);
 
         listView = (ListView) view.findViewById(R.id.listViewPlaces);
         places = new LinkedList<>();
@@ -137,45 +146,49 @@ public class ItemListRaysFragment extends Fragment {
                         .setText(String.valueOf(MainWindowFragment.selectedRay.places[position].number + 1));
                 ((TextView) item.findViewById(R.id.textStatePlaceOnRay))
                         .setText(MainWindowFragment.selectedRay.places[position].statePlace.toString());
+
+
                 final CheckBox checkBox = (CheckBox) item.findViewById(R.id.checkBoxChoosePlace);
+                if(MainWindowFragment.selectedRay.stateRay == StateRay.NEW || MainWindowFragment.selectedRay.stateRay == StateRay.READY) {
 
-                boolean bookMe = MainWindowFragment.selectedRay.places[position].statePlace == StatePlace.BOOK
-                        && MainWindowFragment.selectedRay.places[position].name.equalsIgnoreCase(MainActivity.userName);
+                    boolean bookMe = MainWindowFragment.selectedRay.places[position].statePlace == StatePlace.BOOK
+                            && MainWindowFragment.selectedRay.places[position].name.equalsIgnoreCase(MainActivity.userName);
 
-
-                checkBox.setVisibility(View.VISIBLE);
-                if (MainWindowFragment.selectedRay.places[position].statePlace == StatePlace.FREE || bookMe) {
-                    if (bookMe) {
-                        numbersCheckedPlaces[position] = true;
-                    }
-                    checkBox.setEnabled(true);
-                    checkBox.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            boolean isChecked = !numbersCheckedPlaces[position];
-                            try {
-                                if (isChecked) {
-                                    checkBox.setEnabled(false);
-                                    MainActivity.connection.send(new Message(MessageType.BOOK_NUMBER_PLACE_TRY,
-                                            Connection.transformToJson(new Ticket(MainWindowFragment.selectedRay, MainActivity.userName, position))));
-                                } else {
-                                    MainActivity.connection.send(new Message(MessageType.BOOK_NUMBER_PLACE_CANCEL,
-                                            Connection.transformToJson(new Ticket(MainWindowFragment.selectedRay, MainActivity.userName, position))));
-                                    textCostPlace.setText(String.valueOf(Double.parseDouble(textCostPlace.getText().toString())
-                                            - MainWindowFragment.selectedRay.places[position].payment));
-                                }
-                            } catch (IOException e) {
-                                MainActivity.connectError();
-                            }
+                    checkBox.setVisibility(View.VISIBLE);
+                    if (MainWindowFragment.selectedRay.places[position].statePlace == StatePlace.FREE || bookMe) {
+                        if (bookMe) {
+                            numbersCheckedPlaces[position] = true;
                         }
-                    });
-                } else {
-                    if (MainWindowFragment.selectedRay.places[position].statePlace == StatePlace.SAILED) {
-                        checkBox.setVisibility(View.INVISIBLE);
+                        checkBox.setEnabled(true);
+                        checkBox.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                boolean isChecked = !numbersCheckedPlaces[position];
+                                try {
+                                    if (isChecked) {
+                                        checkBox.setEnabled(false);
+                                        MainActivity.connection.send(new Message(MessageType.BOOK_NUMBER_PLACE_TRY,
+                                                Connection.transformToJson(new Ticket(MainWindowFragment.selectedRay, MainActivity.userName, position))));
+                                    } else {
+                                        MainActivity.connection.send(new Message(MessageType.BOOK_NUMBER_PLACE_CANCEL,
+                                                Connection.transformToJson(new Ticket(MainWindowFragment.selectedRay, MainActivity.userName, position))));
+                                        textCostPlace.setText(String.valueOf(Double.parseDouble(textCostPlace.getText().toString())
+                                                - MainWindowFragment.selectedRay.places[position].payment));
+                                    }
+                                } catch (IOException e) {
+                                    MainActivity.connectError();
+                                }
+                            }
+                        });
+                    } else {
+                        if (MainWindowFragment.selectedRay.places[position].statePlace == StatePlace.SAILED) {
+                            checkBox.setVisibility(View.INVISIBLE);
+                        }
+                        checkBox.setEnabled(false);
                     }
-                    checkBox.setEnabled(false);
-                }
-                checkBox.setChecked(numbersCheckedPlaces[position]);
+                    checkBox.setChecked(numbersCheckedPlaces[position]);
+                } else
+                    checkBox.setVisibility(View.INVISIBLE);
                 return item;
             }
         };

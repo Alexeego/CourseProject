@@ -1,12 +1,14 @@
 package com.example.alexey.airticketby;
 
 import android.os.AsyncTask;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.alexey.airticketby.connection.Connection;
 import com.example.alexey.airticketby.connection.Message;
 import com.example.alexey.airticketby.ray.Place;
 import com.example.alexey.airticketby.ray.Ray;
+import com.example.alexey.airticketby.ray.StateRay;
 import com.example.alexey.airticketby.ticket.Ticket;
 import com.example.alexey.airticketby.user.User;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -158,6 +160,12 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
                         }
                         ItemListRaysFragment.numbersCheckedPlaces = new boolean[MainWindowFragment.selectedRay.places.length];
                         ItemListRaysFragment.simpleAdapterForPlaces.notifyDataSetChanged();
+
+                        if(ray.stateRay != StateRay.NEW){
+                            ItemListRaysFragment.buttonBookPlaces.setVisibility(View.INVISIBLE);
+                            if(ray.stateRay != StateRay.READY)
+                                ItemListRaysFragment.buttonBuyPlaces.setVisibility(View.INVISIBLE);
+                        }
                         exist = true;
                         break;
                     }
