@@ -49,9 +49,9 @@ public class Server {
         places[2] = new Place(TypeClass.PRIME, 500, 2);
         places[3] = new Place(40, 3);
         places[4] = new Place(TypeClass.PRIME, 500, 4);
-        Ray ray = new Ray(new Coordinates("Japan", "Tokio"), new Date("10/09/2016"), 250, "JL13", places);
-        ray.timeSending.setHours(17);
-        ray.timeSending.setMinutes(59);
+        Ray ray = new Ray(new Coordinates("Japan", "Tokio"), new Date("10/10/2016"), 250, "JL13", places);
+        ray.timeSending.setHours(7);
+        ray.timeSending.setMinutes(8);
         rays.add(ray);
 
 
@@ -177,8 +177,15 @@ public class Server {
                                     ray.stateRay = StateRay.SENDING;
                                 else if(ray.timeSending.getTime() - 36000000 < nowDate.getTime()) {
                                     ray.stateRay = StateRay.READY;
-
-                                }
+                                    Set<Ticket> tickets = new LinkedHashSet<Ticket>();
+                                    Arrays.stream(ray.places).filter(place -> place.statePlace == StatePlace.BOOK)
+                                            .forEach(place -> {
+                                                tickets.add(new Ticket(ray, place.name, place.number));
+                                                place.name = null;
+                                                place.statePlace = StatePlace.FREE;
+                                            });
+                                    boughtOrBookTickets.removeAll(tickets);
+                                } else ray.stateRay = StateRay.NEW;
                             }
                         });
                         try {

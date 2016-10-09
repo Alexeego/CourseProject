@@ -172,8 +172,6 @@ public class ItemListRaysFragment extends Fragment {
                                     } else {
                                         MainActivity.connection.send(new Message(MessageType.BOOK_NUMBER_PLACE_CANCEL,
                                                 Connection.transformToJson(new Ticket(MainWindowFragment.selectedRay, MainActivity.userName, position))));
-                                        textCostPlace.setText(String.valueOf(Double.parseDouble(textCostPlace.getText().toString())
-                                                - MainWindowFragment.selectedRay.places[position].payment));
                                     }
                                 } catch (IOException e) {
                                     MainActivity.connectError();
@@ -233,5 +231,10 @@ public class ItemListRaysFragment extends Fragment {
         simpleAdapterForPlaces = null;
         places = null;
         MainWindowFragment.selectedRay = null;
+        try {
+            MainActivity.connection.send(new Message(MessageType.BOOK_PLACES_CANCEL));
+        } catch (IOException e) {
+            MainActivity.connectError();
+        }
     }
 }

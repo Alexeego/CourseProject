@@ -2,10 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e171ce3-0583-42e8-afe8-09b9b4d337af" name="Default" comment="Admin + Server">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAndroid$2.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAndroid$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAndroid.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAndroid.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/ray/Ray.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/ray/Ray.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/server/Server.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/server/Server.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/BackgroundAsyncTask.java" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/BackgroundAsyncTask.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/ItemListRaysFragment.java" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/ItemListRaysFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/MyTicketsFragment.java" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/MyTicketsFragment.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/res/layout/item_list_tickets.xml" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/res/layout/item_list_tickets.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/MainActivity.java" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Curse_Project/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/src/connection/ConnectionAndroid.java" afterPath="$PROJECT_DIR$/../Curse_Project/src/connection/ConnectionAndroid.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/src/ray/Ray.java" afterPath="$PROJECT_DIR$/../Curse_Project/src/ray/Ray.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/src/server/Server.java" afterPath="$PROJECT_DIR$/../Curse_Project/src/server/Server.java" />
     </list>
     <ignored path="Course_Project_Admin.iws" />
     <ignored path=".idea/workspace.xml" />

@@ -8,6 +8,7 @@ import com.example.alexey.airticketby.connection.Connection;
 import com.example.alexey.airticketby.connection.Message;
 import com.example.alexey.airticketby.ray.Place;
 import com.example.alexey.airticketby.ray.Ray;
+import com.example.alexey.airticketby.ray.StatePlace;
 import com.example.alexey.airticketby.ray.StateRay;
 import com.example.alexey.airticketby.ticket.Ticket;
 import com.example.alexey.airticketby.user.User;
@@ -166,6 +167,18 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
                             if(ray.stateRay != StateRay.READY)
                                 ItemListRaysFragment.buttonBuyPlaces.setVisibility(View.INVISIBLE);
                         }
+
+                        ItemListRaysFragment.textCostPlace.setText(String.valueOf(0d));
+                        for (Place place : MainWindowFragment.selectedRay.places) {
+                            if (place.statePlace == StatePlace.BOOK && place.name.equalsIgnoreCase(MainActivity.userName)) {
+                                try {
+                                    double payment = Double.parseDouble(ItemListRaysFragment.textCostPlace.getText().toString()) + place.payment;
+                                    ItemListRaysFragment.textCostPlace.setText(String.valueOf(payment));
+                                } catch (Exception e) {
+                                    Toast.makeText(MainActivity.context, "" + e.getClass(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }
                         exist = true;
                         break;
                     }
@@ -205,13 +218,6 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
             Toast.makeText(MainActivity.context, "Место №"
                     + (numberPlace + 1)
                     + " забронировано", Toast.LENGTH_SHORT).show();
-            try {
-                ItemListRaysFragment.textCostPlace.setText(
-                        String.valueOf(Double.parseDouble(ItemListRaysFragment.textCostPlace.getText().toString())
-                        + MainWindowFragment.selectedRay.places[numberPlace].payment));
-            } catch (Exception e){
-                Toast.makeText(MainActivity.context, "" + e, Toast.LENGTH_LONG).show();
-            }
         } catch (IOException ignored) {}
     }
     private void bookNumberPlaceError(String json) {

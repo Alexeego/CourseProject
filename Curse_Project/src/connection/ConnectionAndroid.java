@@ -13,9 +13,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -47,7 +45,7 @@ class ConnectionAndroid extends Connection {
     }
 
 
-    private List<Ticket> readyBookTickets = new LinkedList<>();
+    private Set<Ticket> readyBookTickets = new LinkedHashSet<>();
     private User user;
 
     @Override
@@ -159,13 +157,29 @@ class ConnectionAndroid extends Connection {
     }
 
     private void bookPlacesTry() throws IOException {
-
-        boughtOrBookTickets.addAll(readyBookTickets);
-        readyBookTickets.clear();
-        send(new Message(MessageType.BOOK_PLACES_OK));
-        synchronized (rays) {
-            sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
-        }
+        if (readyBookTickets.size() > 0)
+            synchronized (rays) {
+                for (Ray ray : rays) {
+                    Iterator<Ticket> iterator = readyBookTickets.iterator();
+                    boolean foundRay = false;
+                    while (iterator.hasNext()) {
+                        Ticket ticket = iterator.next();
+                        if (ray.equals(ticket.ray)) {
+                            if (ray.places[ticket.numberPlace].name != null
+                                    && ray.places[ticket.numberPlace].name.equalsIgnoreCase(user.getName())
+                                    && ray.places[ticket.numberPlace].statePlace == StatePlace.BOOK) {
+                                boughtOrBookTickets.add(ticket);
+                            }
+                            foundRay = true;
+                        }
+                    }
+                    if (foundRay)
+                        break;
+                }
+                readyBookTickets.clear();
+                send(new Message(MessageType.BOOK_PLACES_OK));
+                sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
+            }
     }
 
     private void buyPlacesTry(double idRay) throws IOException {
@@ -174,17 +188,16 @@ class ConnectionAndroid extends Connection {
             for (Ray ray : rays) {
                 if (ray.id == idRay) {
                     for (Place place : ray.places) {
-                        if (place.name != null && place.name.equalsIgnoreCase(user.getName())) {
+                        if (place.name != null && place.name.equalsIgnoreCase(user.getName()) && place.statePlace == StatePlace.BOOK) {
                             buy = true;
                             place.statePlace = StatePlace.SAILED;
+                            boughtOrBookTickets.add(new Ticket(ray, user.getName(), place.number));
                         }
                     }
-
-                    boughtOrBookTickets.addAll(readyBookTickets);
-                    readyBookTickets.clear();
                     break;
                 }
             }
+            readyBookTickets.clear();
             if (buy)
                 send(new Message(MessageType.BUY_PLACES_OK));
             sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
@@ -192,19 +205,27 @@ class ConnectionAndroid extends Connection {
     }
 
     private void clearReadyTickets() throws IOException {
-        if (readyBookTickets != null && readyBookTickets.size() > 0) {
+        if (readyBookTickets.size() > 0) {
             synchronized (rays) {
                 for (Ray ray : rays) {
                     Iterator<Ticket> iterator = readyBookTickets.iterator();
+                    boolean foundRay = false;
                     while (iterator.hasNext()) {
                         Ticket ticket = iterator.next();
                         if (ray.equals(ticket.ray)) {
-                            ray.places[ticket.numberPlace].statePlace = StatePlace.FREE;
-                            ray.places[ticket.numberPlace].name = null;
-                            iterator.remove();
-                        }
+                            if (ray.places[ticket.numberPlace].name != null
+                                    && ray.places[ticket.numberPlace].name.equalsIgnoreCase(user.getName())
+                                    && ray.places[ticket.numberPlace].statePlace == StatePlace.BOOK) {
+                                ray.places[ticket.numberPlace].statePlace = StatePlace.FREE;
+                                ray.places[ticket.numberPlace].name = null;
+                            }
+                            foundRay = true;
+                        } else break;
                     }
+                    if (foundRay)
+                        break;
                 }
+                readyBookTickets.clear();
                 sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
             }
         }

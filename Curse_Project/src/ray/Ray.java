@@ -76,7 +76,7 @@ public class Ray {
 
     private void initPlaces(){
         this.places = new Place[numberPlaces];
-        double cost = Math.random() * 101;
+        double cost = (double) ((int) ((Math.random() * 101) * 100)) / 100d;
         for(int i = 0; i < numberPlaces;) {
             this.places[i] = new Place(cost, i++);
         }
