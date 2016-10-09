@@ -37,10 +37,11 @@ public class Server {
         allUsers.put(systemAdmin.getName().toUpperCase(), systemAdmin);
 
         rays.add(new Ray(new Coordinates("Italy", "Venetian"), new Date("12/15/2016"), 120, "F30I", 15));
-        rays.add(new Ray(new Coordinates("Italy", "Rim"), StateRay.CANCEL, new Date("09/21/2016"), 140, "A32", 25));
+        rays.add(new Ray(new Coordinates("Italy", "Rim"), StateRay.NEW, new Date("09/21/2016"), 140, "A32", 25));
+        rays.add(new Ray(new Coordinates("Italy", "Rim"), StateRay.CANCEL, new Date("09/20/2016"), 140, "A32", 25));
         rays.add(new Ray(new Coordinates("Italy", "Vatican"), StateRay.SENDING, new Date("09/11/2016"), 140, "X12", 10));
         rays.add(new Ray(new Coordinates("USA", "New-York"), StateRay.COMPLETED, new Date("08/13/2016"), 300, "AD1", 30));
-        rays.add(new Ray(new Coordinates("Russia", "Moscow"), StateRay.READY, new Date("09/22/2016"), 30, "0LH", 100));
+        rays.add(new Ray(new Coordinates("Russia", "Moscow"), StateRay.NEW, new Date("10/10/2016"), 30, "0LH", 100));
         rays.add(new Ray(new Coordinates("Australia", "Sidney"), new Date("03/15/2017"), 250, "TY14", 50));
         Place[] places = new Place[5];
         places[0] = new Place(TypeClass.BUSINESS, 300, 0);
@@ -48,7 +49,10 @@ public class Server {
         places[2] = new Place(TypeClass.PRIME, 500, 2);
         places[3] = new Place(40, 3);
         places[4] = new Place(TypeClass.PRIME, 500, 4);
-        rays.add(new Ray(new Coordinates("Japan", "Tokio"), new Date("01/15/2017"), 250, "JL13", places));
+        Ray ray = new Ray(new Coordinates("Japan", "Tokio"), new Date("10/09/2016"), 250, "JL13", places);
+        ray.timeSending.setHours(17);
+        ray.timeSending.setMinutes(59);
+        rays.add(ray);
 
 
         User user = new User("a", "a", true);
@@ -152,6 +156,41 @@ public class Server {
         }
     }
 
+
+    public static Thread validateThread = new Thread(){
+        {
+            setDaemon(true);
+            start();
+        }
+
+        @Override
+        public void run() {
+            try {
+                synchronized (rays){
+                    while (!isInterrupted()){
+                        Date nowDate = new Date();
+                        rays.stream().forEach(ray -> {
+                            if(ray.stateRay != StateRay.CANCEL){
+                                if(ray.timeSending.getTime() + ray.timeInWay < nowDate.getTime())
+                                    ray.stateRay = StateRay.COMPLETED;
+                                else if(ray.timeSending.getTime() < nowDate.getTime())
+                                    ray.stateRay = StateRay.SENDING;
+                                else if(ray.timeSending.getTime() - 36000000 < nowDate.getTime()) {
+                                    ray.stateRay = StateRay.READY;
+
+                                }
+                            }
+                        });
+                        try {
+                            sendBroadcastMessage(new Message(MessageType.RAY_LIST, Connection.transformToJson(rays)));
+                        } catch (IOException e) {}
+                        rays.wait(60000);
+                    }
+                }
+            } catch (InterruptedException e) {
+            }
+        }
+    };
 
     public static void sendBroadcastMessage(Message message, String... ignoreNames) {
         connectionMap.entrySet().stream()

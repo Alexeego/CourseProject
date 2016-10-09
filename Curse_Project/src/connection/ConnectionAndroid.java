@@ -1,11 +1,13 @@
 package connection;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import ray.Place;
 import ray.Ray;
 import ray.StatePlace;
-import server.Server;
 import ticket.Ticket;
 import user.User;
+
+import static server.Server.*;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,6 +17,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 /**
  * Created by Alexey on 16.09.2016.
@@ -27,7 +30,7 @@ class ConnectionAndroid extends Connection {
 
     @Override
     public void send(Message message) throws IOException {
-        synchronized (out){
+        synchronized (out) {
             out.writeObject(message.getMessageType().toString());
             out.writeObject(message.getData());
             out.flush();
@@ -36,8 +39,8 @@ class ConnectionAndroid extends Connection {
 
     @Override
     public Message receive() throws IOException, ClassNotFoundException {
-        synchronized (in){
-            MessageType type = MessageType.valueOf((String)in.readObject());
+        synchronized (in) {
+            MessageType type = MessageType.valueOf((String) in.readObject());
             String data = (String) in.readObject();
             return new Message(type, data);
         }
@@ -49,8 +52,9 @@ class ConnectionAndroid extends Connection {
 
     @Override
     public void serverMainLoop(User user) throws IOException, ClassNotFoundException {
-        synchronized (Server.rays) {
-            send(new Message(MessageType.RAY_LIST, Connection.transformToJson(Server.rays)));
+        synchronized (
+                rays) {
+            send(new Message(MessageType.RAY_LIST, transformToJson(rays)));
         }
         this.user = user;
         while (true) {
@@ -58,8 +62,8 @@ class ConnectionAndroid extends Connection {
             System.out.println(message.getMessageType());
             switch (message.getMessageType()) {
                 case DATA: {
-                    System.out.println(message.getData());
-                    Server.sendBroadcastMessage(message);
+                    if (!message.getData().trim().equals(""))
+                        sendBroadcastMessage(new Message(message.getMessageType(), "От " + user.getName() + ": " + message.getData().trim()));
                     break;
                 }
                 case BOOK_NUMBER_PLACE_TRY: {
@@ -92,8 +96,8 @@ class ConnectionAndroid extends Connection {
 
     private void sendUserTicketsList() throws IOException {
         send(new Message(MessageType.MY_TICKETS_LIST,
-                transformToJson(Server.boughtOrBookTickets.stream().filter(ticket -> ticket.userName.equalsIgnoreCase(user.getName()))
-                .collect(Collectors.toCollection(LinkedList::new)))));
+                transformToJson(boughtOrBookTickets.stream().filter(ticket -> ticket.userName.equalsIgnoreCase(user.getName()))
+                        .collect(Collectors.toCollection(LinkedList::new)))));
     }
 
     private void bookNumberPlaceTry(String json) throws IOException {
@@ -101,14 +105,16 @@ class ConnectionAndroid extends Connection {
         try {
             ticket = transformFromJson(new TypeReference<Ticket>() {
             }, json);
-        } catch (IOException ignore) {}
-        if(ticket != null) {
+        } catch (IOException ignore) {
+        }
+        if (ticket != null) {
             boolean ok = false;
-            synchronized (Server.rays) {
-                for (Ray ray : Server.rays) {
+            synchronized (rays) {
+                for (Ray ray : rays) {
                     if (ray.equals(ticket.ray)) {
                         if (ray.places[ticket.numberPlace].statePlace == StatePlace.FREE) {
                             ray.places[ticket.numberPlace].statePlace = StatePlace.BOOK;
+                            ticket.ray = ray;
                             readyBookTickets.add(ticket);
                             ray.places[ticket.numberPlace].name = user.getName();
                             send(new Message(MessageType.BOOK_NUMBER_PLACE_OK, json));
@@ -120,27 +126,30 @@ class ConnectionAndroid extends Connection {
                 if (!ok) {
                     send(new Message(MessageType.BOOK_NUMBER_PLACE_ERROR, json));
                 }
-                Server.sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(Server.rays)));
+                sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
             }
         }
     }
+
     private void bookNumberPlaceCancel(String json) throws IOException {
         Ticket ticket = null;
         try {
             ticket = transformFromJson(new TypeReference<Ticket>() {
             }, json);
-        } catch (IOException ignore) {}
-        if(ticket != null) {
-            synchronized (Server.rays) {
-                for (Ray ray : Server.rays) {
+        } catch (IOException ignore) {
+        }
+        if (ticket != null) {
+            synchronized (rays) {
+                for (Ray ray : rays) {
                     if (ray.equals(ticket.ray)) {
                         if (ray.places[ticket.numberPlace].statePlace == StatePlace.BOOK) {
                             ray.places[ticket.numberPlace].statePlace = StatePlace.FREE;
                             ray.places[ticket.numberPlace].name = null;
                             if (readyBookTickets.contains(ticket))
                                 readyBookTickets.remove(ticket);
-                            else Server.boughtOrBookTickets.remove(ticket);
-                            Server.sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(Server.rays)));
+                            else
+                                boughtOrBookTickets.remove(ticket);
+                            sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
                         }
                         break;
                     }
@@ -150,17 +159,19 @@ class ConnectionAndroid extends Connection {
     }
 
     private void bookPlacesTry() throws IOException {
-        Server.boughtOrBookTickets.addAll(readyBookTickets);
+
+        boughtOrBookTickets.addAll(readyBookTickets);
         readyBookTickets.clear();
         send(new Message(MessageType.BOOK_PLACES_OK));
-        synchronized (Server.rays) {
-            Server.sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(Server.rays)));
+        synchronized (rays) {
+            sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
         }
     }
+
     private void buyPlacesTry(double idRay) throws IOException {
-        synchronized (Server.rays) {
+        synchronized (rays) {
             boolean buy = false;
-            for (Ray ray : Server.rays) {
+            for (Ray ray : rays) {
                 if (ray.id == idRay) {
                     for (Place place : ray.places) {
                         if (place.name != null && place.name.equalsIgnoreCase(user.getName())) {
@@ -168,21 +179,22 @@ class ConnectionAndroid extends Connection {
                             place.statePlace = StatePlace.SAILED;
                         }
                     }
-                    Server.boughtOrBookTickets.addAll(readyBookTickets);
+
+                    boughtOrBookTickets.addAll(readyBookTickets);
                     readyBookTickets.clear();
                     break;
                 }
             }
             if (buy)
                 send(new Message(MessageType.BUY_PLACES_OK));
-            Server.sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(Server.rays)));
+            sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
         }
     }
 
     private void clearReadyTickets() throws IOException {
         if (readyBookTickets != null && readyBookTickets.size() > 0) {
-            synchronized (Server.rays) {
-                for (Ray ray : Server.rays) {
+            synchronized (rays) {
+                for (Ray ray : rays) {
                     Iterator<Ticket> iterator = readyBookTickets.iterator();
                     while (iterator.hasNext()) {
                         Ticket ticket = iterator.next();
@@ -193,7 +205,7 @@ class ConnectionAndroid extends Connection {
                         }
                     }
                 }
-                Server.sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(Server.rays)));
+                sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
             }
         }
     }

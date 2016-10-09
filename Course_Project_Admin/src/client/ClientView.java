@@ -13,7 +13,7 @@ public class ClientView extends JFrame {
 
     private AbstractFrame nowPanel = null;
 
-    public ClientView(ClientController clientController) {
+    ClientView(ClientController clientController) {
         this.clientController = clientController;
         initializationWindow();
     }
@@ -28,18 +28,18 @@ public class ClientView extends JFrame {
         setVisible(true);
     }
 
-    public void showMessageInfo(Object message, MessageType type, String... title) {
+    void showMessageInfo(Object message, MessageType type, String... title) {
         if (type != null)
             nowPanel.event(type, message);
         else
             JOptionPane.showMessageDialog(this, message, title.length > 0 ? title[0] : "Инфо", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    public void showMessageError(String message, String... title) {
+    void showMessageError(String message, String... title) {
         JOptionPane.showMessageDialog(this, message, title.length > 0 ? title[0] : "Error", JOptionPane.ERROR_MESSAGE);
     }
 
-    protected void updateWindow(ClientModel.ConnectionState nowConnectionState) {
+    void updateWindow(ClientModel.ConnectionState nowConnectionState) {
         AbstractFrame frame;
         switch (nowConnectionState) {
             case TRY_CONNECTION:
@@ -79,7 +79,7 @@ public class ClientView extends JFrame {
         }
     }
 
-    protected void setFrame(AbstractFrame frame) {
+    private void setFrame(AbstractFrame frame) {
         setLocationRelativeTo(null);
         if (nowPanel != null) {
             remove(nowPanel);

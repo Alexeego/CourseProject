@@ -26,9 +26,7 @@ public class Ticket {
 
         Ticket ticket = (Ticket) o;
 
-        if (!ray.equals(ticket.ray)) return false;
-        if (numberPlace != ticket.numberPlace) return false;
-        return userName.equals(ticket.userName);
+        return ray.equals(ticket.ray) && numberPlace == ticket.numberPlace && userName.equals(ticket.userName);
 
     }
 

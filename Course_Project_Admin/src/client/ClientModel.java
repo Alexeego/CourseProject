@@ -2,10 +2,10 @@ package client;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import connection.Connection;
+import static connection.Connection.*;
 import connection.Message;
 import connection.MessageType;
 import frames.AbstractFrame;
-import frames.AddNewRayFrame;
 import frames.RegistrationFrame;
 import ray.Ray;
 import user.User;
@@ -15,7 +15,6 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -27,11 +26,11 @@ import java.util.concurrent.Future;
 public class ClientModel {
     private final ClientView view;
 
-    public ClientModel(ClientView view) {
+    ClientModel(ClientView view) {
         this.view = view;
     }
 
-    public enum ConnectionState {
+    enum ConnectionState {
         TRY_CONNECTION,
         AUTHORIZATION,
         REGISTRATION,
@@ -43,19 +42,16 @@ public class ClientModel {
 
     private ConnectionState nowConnectionState = ConnectionState.TRY_CONNECTION;
 
-    public void connectAuthorization() {
+    private void connectAuthorization() {
         nowConnectionState = ConnectionState.AUTHORIZATION;
     }
-
-    public void connectRegistration() {
+    private void connectRegistration() {
         nowConnectionState = ConnectionState.REGISTRATION;
     }
-
-    public void connectSuccess() {
+    private void connectSuccess() {
         nowConnectionState = ConnectionState.CONNECTED;
     }
-
-    public void connectError() {
+    private void connectError() {
         synchronized (lock) {
             if (nowConnectionState != ConnectionState.TRY_CONNECTION) {
                 nowConnectionState = ConnectionState.TRY_CONNECTION;
@@ -74,11 +70,11 @@ public class ClientModel {
     private final Object lock = new Object();
 
 
-    public boolean nowSysAdmin() {
+    boolean nowSysAdmin() {
         return user.getAccess() == -1;
     }
 
-    public List<Ray> getRays() {
+    List<Ray> getRays() {
         return rays;
     }
 
@@ -88,7 +84,7 @@ public class ClientModel {
 
     private ExecutorService executor = Executors.newFixedThreadPool(1);
 
-    public void connectionToServer(String ip, int port) {
+    void connectionToServer(String ip, int port) {
         // Try connect
         Future<Connection> future = executor.submit(() -> {
             Socket socket = new Socket();
@@ -128,56 +124,21 @@ public class ClientModel {
     /////////////////////////////////////////////////////////////////////////
     // Events Methods
 
-    public void authorization(String name, String password) {
+    void authorization(String name, String password) {
         try {
-            connection.send(new Message(MessageType.USER_AUTHORIZATION, Connection.transformToJson(new User(name, password))));
+            connection.send(new Message(MessageType.USER_AUTHORIZATION, transformToJson(new User(name, password))));
         } catch (Exception exception) {
             connectError();
         }
     }
-
-    public void registration(String name, String password) {
+    void registration(String name, String password) {
         try {
-            connection.send(new Message(MessageType.USER_REGISTRATION, Connection.transformToJson(new User(name, password))));
+            connection.send(new Message(MessageType.USER_REGISTRATION, transformToJson(new User(name, password))));
         } catch (IOException e) {
             connectError();
         }
     }
-
-    public void sendInfoMessage(String text) {
-        try {
-            connection.send(new Message(MessageType.DATA, text));
-        } catch (IOException e) {
-            connectError();
-        }
-    }
-
-    public void addNewInitRay(Ray ray) {
-        try {
-            connection.send(new Message(MessageType.ADD_NEW_RAY, Connection.transformToJson(ray)));
-        } catch (IOException ignored) {
-            connectError();
-        }
-    }
-
-    public void deleteUser(User user) {
-        try{
-            connection.send(new Message(MessageType.DELETE_USER, Connection.transformToJson(user)));
-        } catch (IOException ignored) {
-            connectError();
-        }
-    }
-
-
-    public void editAccessUser(User user) {
-        try{
-            connection.send(new Message(MessageType.EDIT_ACCESS_USER, Connection.transformToJson(user)));
-        } catch (IOException ignored) {
-            connectError();
-        }
-    }
-
-    public void signOut() {
+    void signOut() {
         try {
             connection.send(new Message(MessageType.USER_SIGN_OUT));
             user = null;
@@ -188,9 +149,41 @@ public class ClientModel {
         }
     }
 
+
+    void sendInfoMessage(String text) {
+        try {
+            connection.send(new Message(MessageType.DATA, text));
+        } catch (IOException e) {
+            connectError();
+        }
+    }
+
+    void addNewInitRay(Ray ray) {
+        try {
+            connection.send(new Message(MessageType.ADD_NEW_RAY, transformToJson(ray)));
+        } catch (IOException ignored) {
+            connectError();
+        }
+    }
+
+    void deleteUser(User user) {
+        try{
+            connection.send(new Message(MessageType.DELETE_USER, transformToJson(user)));
+        } catch (IOException ignored) {
+            connectError();
+        }
+    }
+    void editAccessUser(User user) {
+        try{
+            connection.send(new Message(MessageType.EDIT_ACCESS_USER, transformToJson(user)));
+        } catch (IOException ignored) {
+            connectError();
+        }
+    }
+
     // Manage windows
 
-    public void openWindowForManageAccounts() {
+    void openWindowForManageAccounts() {
         try {
             view.updateWindow(ConnectionState.SYS_ADMIN_MANAGE_USERS);
             Thread.sleep(100);
@@ -199,18 +192,15 @@ public class ClientModel {
             connectError();
         }
     }
-
-    public void openWindowForRegistration() {
+    void openWindowForRegistration() {
         connectRegistration();
         view.updateWindow(nowConnectionState);
     }
-
-    public void openWindowForAddNewRay() {
+    void openWindowForAddNewRay() {
         view.updateWindow(ConnectionState.ADD_NEW_RAY);
     }
 
-
-    public void toBackPressed(AbstractFrame abstractFrame) {
+    void toBackPressed(AbstractFrame abstractFrame) {
         if (abstractFrame instanceof RegistrationFrame)
             connectAuthorization();
         view.updateWindow(nowConnectionState);
@@ -236,7 +226,7 @@ public class ClientModel {
     private void communicationAuthorization(Message message) throws IOException {
         switch (message.getMessageType()) {
             case USER_ACCEPTED: {
-                user = Connection.transformFromJson(new TypeReference<User>() {
+                user = transformFromJson(new TypeReference<User>() {
                 }, message.getData());
                 connectSuccess();
                 view.updateWindow(nowConnectionState);
@@ -257,7 +247,7 @@ public class ClientModel {
     private void communicationRegistration(Message message) throws IOException {
         switch (message.getMessageType()){
             case USER_REGISTERED: {
-                user = Connection.transformFromJson(new TypeReference<User>() {
+                user = transformFromJson(new TypeReference<User>() {
                 }, message.getData());
                 view.showMessageInfo("<html>Регистрация прошла успешно.<br>Пожалуйста, дождитесь пока системный администратор<br> обработает вашу запрос, на получение прав модератора.</html>", null, "Регистрация");
                 connectAuthorization();
@@ -296,13 +286,13 @@ public class ClientModel {
 
     private void initListUsers(String json) {
         try {
-            view.showMessageInfo(Connection.transformFromJson(new TypeReference<ArrayList<User>>() {}, json), MessageType.LIST_USERS);
+            view.showMessageInfo(transformFromJson(new TypeReference<ArrayList<User>>() {}, json), MessageType.LIST_USERS);
         } catch (IOException ignored) {}
     }
 
     private void initListRays(String json) {
         try {
-            rays = Connection.transformFromJson(new TypeReference<ArrayList<Ray>>() {
+            rays = transformFromJson(new TypeReference<ArrayList<Ray>>() {
             }, json);
             view.showMessageInfo(null, MessageType.RAY_LIST);
         } catch (IOException ignored) {}
