@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Map;
 
 /**
  * Created by Alexey on 21.09.2016.
@@ -66,7 +67,34 @@ public class ConnectionAdmin extends Connection {
                     return;
                 }
                 case GET_LIST_USERS: {
-                    System.out.println(transformToJson(Server.allUsers.values()));
+                    send(new Message(MessageType.LIST_USERS, transformToJson(Server.allUsers.values())));
+                    break;
+                }
+                case DELETE_USER: {
+                    User userEditable = transformFromJson(new TypeReference<User>() {
+                    }, message.getData());
+                    Server.allUsers.remove(userEditable.getName().toUpperCase());
+                    if(Server.connectionMap.containsKey(userEditable)){
+                        Server.connectionMap.get(userEditable).close();
+                    }
+                    send(new Message(MessageType.LIST_USERS, transformToJson(Server.allUsers.values())));
+                    break;
+                }
+                case EDIT_ACCESS_USER: {
+                    User userEditable = transformFromJson(new TypeReference<User>() {
+                    }, message.getData());
+                    Map.Entry<String, User> pairFromDB = Server.allUsers.entrySet().stream()
+                            .filter(pair -> pair.getKey().equalsIgnoreCase(userEditable.getName()))
+                            .findFirst().orElse(null);
+                    if(pairFromDB != null) {
+                        byte oldAccess = pairFromDB.getValue().getAccess();
+                        pairFromDB.getValue().setAccess(userEditable.getAccess());
+                        if(oldAccess == 1 && (pairFromDB.getValue().getAccess() == 0 || pairFromDB.getValue().getAccess() == 2)
+                                && Server.connectionMap.containsKey(pairFromDB.getValue())
+                                && Server.connectionMap.get(pairFromDB.getValue()) instanceof ConnectionAdmin){
+                            Server.connectionMap.get(pairFromDB.getValue()).close();
+                        }
+                    }
                     send(new Message(MessageType.LIST_USERS, transformToJson(Server.allUsers.values())));
                     break;
                 }

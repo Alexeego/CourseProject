@@ -2,6 +2,7 @@ package client;
 
 import frames.AbstractFrame;
 import ray.Ray;
+import user.User;
 
 import java.util.List;
 
@@ -58,5 +59,18 @@ public class ClientController {
 
     public void openWindowForManageAccounts() {
         model.openWindowForManageAccounts();
+    }
+
+
+    public void registration(String name, String password) {
+        model.registration(name, password);
+    }
+
+    public void deleteUser(User user) {
+        model.deleteUser(user);
+    }
+
+    public void editAccessUser(User user) {
+        model.editAccessUser(user);
     }
 }

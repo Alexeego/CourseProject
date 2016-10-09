@@ -17,7 +17,7 @@ public class User {
     public User(String name, String password, boolean admin) {
         this.name = name;
         this.password = password;
-        this.access = (byte)(admin ? -1 : 0);
+        this.access = (byte)(admin ? -1 : 2);
     }
 
     public byte getAccess() {
@@ -36,13 +36,7 @@ public class User {
         return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     @Override
     public boolean equals(Object o) {

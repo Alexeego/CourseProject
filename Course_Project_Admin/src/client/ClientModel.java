@@ -136,6 +136,14 @@ public class ClientModel {
         }
     }
 
+    public void registration(String name, String password) {
+        try {
+            connection.send(new Message(MessageType.USER_REGISTRATION, Connection.transformToJson(new User(name, password))));
+        } catch (IOException e) {
+            connectError();
+        }
+    }
+
     public void sendInfoMessage(String text) {
         try {
             connection.send(new Message(MessageType.DATA, text));
@@ -147,7 +155,24 @@ public class ClientModel {
     public void addNewInitRay(Ray ray) {
         try {
             connection.send(new Message(MessageType.ADD_NEW_RAY, Connection.transformToJson(ray)));
-        } catch (IOException e) {
+        } catch (IOException ignored) {
+            connectError();
+        }
+    }
+
+    public void deleteUser(User user) {
+        try{
+            connection.send(new Message(MessageType.DELETE_USER, Connection.transformToJson(user)));
+        } catch (IOException ignored) {
+            connectError();
+        }
+    }
+
+
+    public void editAccessUser(User user) {
+        try{
+            connection.send(new Message(MessageType.EDIT_ACCESS_USER, Connection.transformToJson(user)));
+        } catch (IOException ignored) {
             connectError();
         }
     }
@@ -158,7 +183,7 @@ public class ClientModel {
             user = null;
             connectAuthorization();
             view.updateWindow(nowConnectionState);
-        } catch (IOException e) {
+        } catch (IOException ignored) {
             connectError();
         }
     }
@@ -168,8 +193,9 @@ public class ClientModel {
     public void openWindowForManageAccounts() {
         try {
             view.updateWindow(ConnectionState.SYS_ADMIN_MANAGE_USERS);
+            Thread.sleep(100);
             connection.send(new Message(MessageType.GET_LIST_USERS));
-        } catch (IOException e) {
+        } catch (Exception e) {
             connectError();
         }
     }
@@ -193,13 +219,13 @@ public class ClientModel {
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Loop and other methods
 
-    public void loop() throws IOException, ClassNotFoundException {
+    private void loop() throws IOException, ClassNotFoundException {
         while (!Thread.currentThread().isInterrupted() && connection != null) {
             Message message = connection.receive();
             if (nowConnectionState == ConnectionState.AUTHORIZATION) {
                 communicationAuthorization(message);
             } else if (nowConnectionState == ConnectionState.REGISTRATION) {
-
+                communicationRegistration(message);
             } else if (nowConnectionState == ConnectionState.CONNECTED) {
                 communicationConnect(message);
             }
@@ -207,7 +233,7 @@ public class ClientModel {
     }
 
     ////////////////////////////////////// Authorization
-    public void communicationAuthorization(Message message) throws IOException {
+    private void communicationAuthorization(Message message) throws IOException {
         switch (message.getMessageType()) {
             case USER_ACCEPTED: {
                 user = Connection.transformFromJson(new TypeReference<User>() {
@@ -227,8 +253,26 @@ public class ClientModel {
         }
     }
 
+    /////////////////////////////////////////////////// Registration
+    private void communicationRegistration(Message message) throws IOException {
+        switch (message.getMessageType()){
+            case USER_REGISTERED: {
+                user = Connection.transformFromJson(new TypeReference<User>() {
+                }, message.getData());
+                view.showMessageInfo("<html>Регистрация прошла успешно.<br>Пожалуйста, дождитесь пока системный администратор<br> обработает вашу запрос, на получение прав модератора.</html>", null, "Регистрация");
+                connectAuthorization();
+                view.updateWindow(nowConnectionState);
+                break;
+            }
+            case USER_ALREADY_EXIST: {
+                view.showMessageError("Регистрация не прошла. Пользователь с таким именем уже существует", "Регистрация");
+                break;
+            }
+        }
+    }
+
     ////////////////////////////////////////////////// Connected
-    public void communicationConnect(Message message) {
+    private void communicationConnect(Message message) {
         switch (message.getMessageType()) {
             case DATA: {
                 view.showMessageInfo(message.getData(), MessageType.DATA);
@@ -253,9 +297,7 @@ public class ClientModel {
     private void initListUsers(String json) {
         try {
             view.showMessageInfo(Connection.transformFromJson(new TypeReference<ArrayList<User>>() {}, json), MessageType.LIST_USERS);
-        } catch (IOException ignored) {
-            System.out.println("exception" + ignored);
-        }
+        } catch (IOException ignored) {}
     }
 
     private void initListRays(String json) {

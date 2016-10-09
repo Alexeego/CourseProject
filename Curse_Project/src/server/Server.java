@@ -56,6 +56,10 @@ public class Server {
         user = new User("ale", "a");
         user.setAccess((byte) 1);
         allUsers.put(user.getName().toUpperCase(), user);
+        user = new User("w", "a");
+        allUsers.put(user.getName().toUpperCase(), user);
+        user = new User("q", "a", false);
+        allUsers.put(user.getName().toUpperCase(), user);
 
     }
 
@@ -104,7 +108,7 @@ public class Server {
             }, answer.getData());
             User userFromDB;
             if (user != null && !user.Empty() && allUsers.containsKey(user.getName().toUpperCase()) && user.equals((userFromDB = allUsers.get(user.getName().toUpperCase())))
-                    && (!(connection instanceof ConnectionAdmin) || userFromDB.getAccess() != 0)) {
+                    && (!(connection instanceof ConnectionAdmin) || (userFromDB.getAccess() != 0 && userFromDB.getAccess() != 2))) {
                 if (!connectionMap.containsKey(userFromDB)) {
                     connectionMap.put(userFromDB, connection);
                     if (connection instanceof ConnectionAdmin)
@@ -125,15 +129,22 @@ public class Server {
             User user = Connection.transformFromJson(new TypeReference<User>() {
             }, answer.getData());
             if (user != null && !user.Empty() && !allUsers.containsKey(user.getName().toUpperCase())) {
-                if (connection instanceof ConnectionAdmin && allUsers.entrySet().stream()
-                        .filter((pair) -> !pair.getKey().equalsIgnoreCase("alexey") && (pair.getValue().getAccess() != -1))
-                        .findFirst().orElse(null) == null) {
-                    user = new User(user.getName(), user.getPassword(), true);
-                }
+                if (connection instanceof ConnectionAdmin) {
+                    if (allUsers.entrySet().stream()
+                            .filter((pair) -> !pair.getKey().equalsIgnoreCase("alexey") && (pair.getValue().getAccess() == -1))
+                            .findFirst().orElse(null) == null)
+                        user = new User(user.getName(), user.getPassword(), true);
+                    else user = new User(user.getName(), user.getPassword(), false);
+                } else user = new User(user.getName(), user.getPassword());
                 allUsers.put(user.getName().toUpperCase(), user);
-                connectionMap.put(user, connection);
-                connection.send(new Message(MessageType.USER_REGISTERED, answer.getData()));
-                return user;
+                if (connection instanceof ConnectionAdmin) {
+                    connection.send(new Message(MessageType.USER_REGISTERED, Connection.transformToJson(user)));
+                    return null;
+                } else {
+                    connectionMap.put(user, connection);
+                    connection.send(new Message(MessageType.USER_REGISTERED, answer.getData()));
+                    return user;
+                }
             } else {
                 connection.send(new Message(MessageType.USER_ALREADY_EXIST));
             }

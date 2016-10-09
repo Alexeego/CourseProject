@@ -90,6 +90,7 @@ public class MainFrame extends AbstractFrame {
             textFieldSendInformation.setText("");
         });
 
+        String[] colors = {"#4f7af1", "#fdba00", "#FF4081", "#00d904", "red"};
 
         java.util.List<Ray> rayListFromModel = controller.getListRays();
         listModelRays = new DefaultListModel<>();
@@ -143,8 +144,6 @@ public class MainFrame extends AbstractFrame {
         add(new JScrollPane(raysList), BorderLayout.WEST);
 
     }
-
-    private String[] colors = {"#4f7af1", "#fdba00", "#FF4081", "#00d904", "red"};
 
     @Override
     public void event(MessageType type, Object object) {
