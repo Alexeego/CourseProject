@@ -159,6 +159,7 @@ public class ClientModel {
     }
 
     void addNewInitRay(Ray ray) {
+        System.out.println(ray.id);
         try {
             connection.send(new Message(MessageType.ADD_NEW_RAY, transformToJson(ray)));
         } catch (IOException ignored) {

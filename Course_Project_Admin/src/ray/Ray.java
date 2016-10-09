@@ -11,10 +11,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 @JsonAutoDetect
 public class Ray {
-    @JsonIgnore
-    static volatile AtomicLong id0 = new AtomicLong(0);
 
-    public final double id = id0.incrementAndGet();
+    public double id;
     public Coordinates coordinates;
     public StateRay stateRay = StateRay.NEW;
     public Date timeSending;
@@ -66,7 +64,8 @@ public class Ray {
 
     private void initPlaces(){
         this.places = new Place[numberPlaces];
-        double cost = Math.random() * 101;
+        this.places = new Place[numberPlaces];
+        double cost = (double) ((int) ((Math.random() * 101) * 100)) / 100d;
         for(int i = 0; i < numberPlaces;) {
             this.places[i] = new Place(cost, i++);
         }

@@ -7,6 +7,7 @@ import ray.Ray;
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by Alexey on 22.09.2016.
@@ -124,7 +125,7 @@ public class MainFrame extends AbstractFrame {
                         new SimpleDateFormat("dd.MM.yyyy, HH:mm:ss").format(ray.timeSending) +
                         "</span><br>" +
                         "<span>Время в пути: " +
-                        new SimpleDateFormat("HH:mm:ss").format(ray.timeInWay) +
+                        new SimpleDateFormat("HH:mm:ss").format(new Date(ray.timeInWay - 7200000)) +
                         "</span><br>\n" +
                         "    <span>Статус: </span><span style='color: " + colors[ray.stateRay.ordinal()] + ";'>" +
                         ray.stateRay +

@@ -62,8 +62,21 @@ public class AddNewRayFrame extends AbstractFrame {
         labelAreaInfoNewRayTimeSending.setFont(font);
         labelAreaInfoNewRayTimeSending.setForeground(Color.WHITE);
         add(labelAreaInfoNewRayTimeSending);
-        textFieldNewRayTimeSending = new JTextField(30);
+        textFieldNewRayTimeSending = new JTextField(10);
         add(textFieldNewRayTimeSending);
+
+        JLabel labelHours = new JLabel("Часы:");
+        labelHours.setFont(font);
+        labelHours.setForeground(Color.WHITE);
+        add(labelHours);
+        JTextField textFieldNewRaySendingHours = new JTextField(2);
+        add(textFieldNewRaySendingHours);
+        JLabel labelMinutes = new JLabel("Минуты:");
+        labelMinutes.setFont(font);
+        labelMinutes.setForeground(Color.WHITE);
+        add(labelMinutes);
+        JTextField textFieldNewRaySendingMinutes = new JTextField(2);
+        add(textFieldNewRaySendingMinutes);
 
         JLabel labelAreaInfoNewRayTimeInWay = new JLabel("<html><span style = 'color: red;'>* </span>Время в пути (укажите в минутах)</html>");
         labelAreaInfoNewRayTimeInWay.setFont(font);
@@ -150,17 +163,23 @@ public class AddNewRayFrame extends AbstractFrame {
 
                 // DateSending
                 String dateString = textFieldNewRayTimeSending.getText();
+                String hoursSending = textFieldNewRaySendingHours.getText().trim().equals("") ? "0" : textFieldNewRaySendingHours.getText();
+                String minutesSending = textFieldNewRaySendingMinutes.getText().trim().equals("") ? "0" : textFieldNewRaySendingMinutes.getText();
                 Date dateSending = null;
                 if (valid)
-                    if (!dateString.matches("^\\d{1,2}\\.\\d{1,2}\\.(\\d{2}|\\d{4})$")) {
+                    if (!dateString.matches("^\\d{1,2}\\.\\d{1,2}\\.(\\d{2}|\\d{4})$") || !hoursSending.matches("^\\d{1,2}$") || !minutesSending.matches("^\\d{1,2}$")) {
                         valid = false;
                     } else {
                         String[] dayAndMonthAndYear = dateString.split("\\.");
                         dateSending = new Date(dayAndMonthAndYear[1] + "/" + dayAndMonthAndYear[0] + "/" + dayAndMonthAndYear[2]);
                         if (!(Integer.parseInt(dayAndMonthAndYear[1]) == dateSending.getMonth() + 1
                                 && Integer.parseInt(dayAndMonthAndYear[0]) == dateSending.getDate()
-                                && Integer.parseInt(dayAndMonthAndYear[2]) == dateSending.getYear() + 1900)) {
+                                && Integer.parseInt(dayAndMonthAndYear[2]) == dateSending.getYear() + 1900
+                                && Integer.parseInt(hoursSending) < 24 && Integer.parseInt(minutesSending) < 60)) {
                             valid = false;
+                        } else {
+                            dateSending.setHours(Integer.parseInt(hoursSending));
+                            dateSending.setMinutes(Integer.parseInt(minutesSending));
                         }
                     }
 
