@@ -255,19 +255,8 @@ public class MainActivity extends AppCompatActivity
             } else if(nowConnectionState == ConnectionState.CONNECT && fragment  instanceof MyTicketsFragment) {
                 context.setEnterFragment();
             } else if (!stackFragments.isEmpty()) {
-//                boolean error = false;
-//                if (fragment instanceof ItemListRaysFragment) {
-//                    try {
-//                        connection.send(new Message(MessageType.BOOK_PLACES_CANCEL));
-//                    } catch (IOException e) {
-//                        connectError();
-//                        error = true;
-//                    }
-//                }
-//                if (!error) {
                     fragment = stackFragments.pop();
                     getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
-                //}
             } else super.onBackPressed();
         }
     }
