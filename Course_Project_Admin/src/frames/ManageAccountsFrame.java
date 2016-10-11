@@ -86,7 +86,7 @@ public class ManageAccountsFrame extends AbstractFrame{
         userJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         userJList.addListSelectionListener(event -> {
             if(!userJList.isSelectionEmpty()){
-                nameSelectedUserLabel.setText("<html><h2 style = 'color: red;'>" + userJList.getSelectedValue().getName() + "</h2></html>");
+                nameSelectedUserLabel.setText("<html><div style = 'border: 2px double black; color: red; font-size: 21px; width: 190; text-align: center;'>" + userJList.getSelectedValue().getName() + "</div></html>");
                 comboBox.setSelectedIndex(userJList.getSelectedValue().getAccess());
                 editPanel.setVisible(true);
             }
@@ -138,9 +138,11 @@ public class ManageAccountsFrame extends AbstractFrame{
         switch (type){
             case LIST_USERS: {
                 if(object != null && object instanceof ArrayList) {
-                    listModelUsers.clear();
-                    ((ArrayList<User>) object).stream().filter(user -> user.getAccess() >= 0).forEach(listModelUsers::addElement);
-                    SwingUtilities.invokeLater(this::revalidate);
+                    SwingUtilities.invokeLater(() -> {
+                        listModelUsers.clear();
+                        ((ArrayList<User>) object).stream().filter(user -> user.getAccess() >= 0).forEach(listModelUsers::addElement);
+                        SwingUtilities.invokeLater(this::revalidate);
+                    });
                 }
                 break;
             }

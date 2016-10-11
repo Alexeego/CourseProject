@@ -43,19 +43,22 @@ public class Ray {
         initPlaces();
     }
 
-    public Ray(Coordinates coordinates, StateRay stateRay, Date timeSending, long timeInWay, String numberRay, Place[] places) {
+    public Ray(Coordinates coordinates, Date timeSending, long timeInWay, String numberRay, Place[] places) {
         this.coordinates = coordinates;
-        this.stateRay = stateRay;
         this.timeSending = timeSending;
         this.timeInWay = timeInWay * 60000;
         this.numberRay = numberRay;
         this.numberPlaces = places.length;
         this.places = places;
     }
-    public Ray(Coordinates coordinates, Date timeSending, long timeInWay, String numberRay, Place[] places) {
+
+    //// for Edit
+    public Ray(double id, Coordinates coordinates, StateRay stateRay, Date timeSending, long timeInWay, String numberRay, Place[] places) {
+        this.id = id;
         this.coordinates = coordinates;
+        this.stateRay = stateRay;
         this.timeSending = timeSending;
-        this.timeInWay = timeInWay * 60000;
+        this.timeInWay = timeInWay;
         this.numberRay = numberRay;
         this.numberPlaces = places.length;
         this.places = places;

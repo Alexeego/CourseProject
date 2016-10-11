@@ -32,6 +32,7 @@ public enum MessageType {
     // Edit Rays
     ADD_NEW_RAY,
     NEW_RAY_ADDED,
+    EDIT_RAY,
     // Book places
     BOOK_PLACES_TRY,
     BOOK_PLACES_OK,

@@ -159,10 +159,16 @@ public class ClientModel {
     }
 
     void addNewInitRay(Ray ray) {
-        System.out.println(ray.id);
         try {
             connection.send(new Message(MessageType.ADD_NEW_RAY, transformToJson(ray)));
         } catch (IOException ignored) {
+            connectError();
+        }
+    }
+    public void editRay(Ray ray) {
+        try{
+            connection.send(new Message(MessageType.EDIT_RAY, transformToJson(ray)));
+        } catch (IOException e) {
             connectError();
         }
     }
@@ -187,7 +193,6 @@ public class ClientModel {
     void openWindowForManageAccounts() {
         try {
             view.updateWindow(ConnectionState.SYS_ADMIN_MANAGE_USERS);
-            Thread.sleep(100);
             connection.send(new Message(MessageType.GET_LIST_USERS));
         } catch (Exception e) {
             connectError();

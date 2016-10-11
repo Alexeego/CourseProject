@@ -86,6 +86,6 @@ public class ClientView extends JFrame {
         }
         nowPanel = frame;
         add(frame);
-        revalidate();
+        SwingUtilities.invokeLater(this::revalidate);
     }
 }

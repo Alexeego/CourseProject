@@ -69,4 +69,8 @@ public class ClientController {
     public static void main(String[] args) {
         new ClientController();
     }
+
+    public void editRay(Ray ray) {
+        model.editRay(ray);
+    }
 }

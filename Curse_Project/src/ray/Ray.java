@@ -67,7 +67,7 @@ public class Ray {
         this.coordinates = ray.coordinates;
         this.stateRay = ray.stateRay;
         this.timeSending = ray.timeSending;
-        this.timeInWay = ray.timeInWay * 60000;
+        this.timeInWay = ray.timeInWay;
         this.numberRay = ray.numberRay;
         this.numberPlaces = ray.numberPlaces;
         this.places = ray.places;
@@ -89,13 +89,19 @@ public class Ray {
 
         Ray ray = (Ray) o;
 
-        return Double.compare(ray.id, id) == 0;
+        if(Double.compare(ray.id, id) == 0) return true;
+        return coordinates.equals(ray.coordinates) && timeSending.compareTo(ray.timeSending) == 0
+                && timeInWay == ray.timeInWay && numberRay.equals(ray.numberRay) && numberPlaces == ray.numberPlaces;
 
     }
 
     @Override
     public int hashCode() {
-        long temp = Double.doubleToLongBits(id);
-        return (int) (temp ^ (temp >>> 32));
+        int result = coordinates != null ? coordinates.hashCode() : 0;
+        //result = 31 * result + (timeSending != null ? timeSending.hashCode() : 0);
+        result = 31 * result + (int) (timeInWay ^ (timeInWay >>> 32));
+        result = 31 * result + (numberRay != null ? numberRay.hashCode() : 0);
+        result = 31 * result + numberPlaces;
+        return result;
     }
 }

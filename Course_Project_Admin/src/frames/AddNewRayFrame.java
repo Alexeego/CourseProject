@@ -162,26 +162,13 @@ public class AddNewRayFrame extends AbstractFrame {
                     valid = false;
 
                 // DateSending
-                String dateString = textFieldNewRayTimeSending.getText();
                 String hoursSending = textFieldNewRaySendingHours.getText().trim().equals("") ? "0" : textFieldNewRaySendingHours.getText();
                 String minutesSending = textFieldNewRaySendingMinutes.getText().trim().equals("") ? "0" : textFieldNewRaySendingMinutes.getText();
                 Date dateSending = null;
-                if (valid)
-                    if (!dateString.matches("^\\d{1,2}\\.\\d{1,2}\\.(\\d{2}|\\d{4})$") || !hoursSending.matches("^\\d{1,2}$") || !minutesSending.matches("^\\d{1,2}$")) {
-                        valid = false;
-                    } else {
-                        String[] dayAndMonthAndYear = dateString.split("\\.");
-                        dateSending = new Date(dayAndMonthAndYear[1] + "/" + dayAndMonthAndYear[0] + "/" + dayAndMonthAndYear[2]);
-                        if (!(Integer.parseInt(dayAndMonthAndYear[1]) == dateSending.getMonth() + 1
-                                && Integer.parseInt(dayAndMonthAndYear[0]) == dateSending.getDate()
-                                && Integer.parseInt(dayAndMonthAndYear[2]) == dateSending.getYear() + 1900
-                                && Integer.parseInt(hoursSending) < 24 && Integer.parseInt(minutesSending) < 60)) {
-                            valid = false;
-                        } else {
-                            dateSending.setHours(Integer.parseInt(hoursSending));
-                            dateSending.setMinutes(Integer.parseInt(minutesSending));
-                        }
-                    }
+                if (valid) {
+                    dateSending = validateDate(textFieldNewRayTimeSending.getText(), hoursSending, minutesSending);
+                    valid = dateSending != null;
+                }
 
                 // TimeInWay
                 String timeInWay = textFieldNewRayTimeInWay.getText();
@@ -190,7 +177,7 @@ public class AddNewRayFrame extends AbstractFrame {
 
                 // NumberRay
                 String numberRay = textFieldNewRayNumberRay.getText();
-                if(valid && numberRay.isEmpty())
+                if (valid && numberRay.isEmpty())
                     valid = false;
 
                 // Places
@@ -229,6 +216,29 @@ public class AddNewRayFrame extends AbstractFrame {
         buttonCancel.addActionListener(event -> {
             controller.toBackPressed(this);
         });
+    }
+
+    static Date validateDate(String dateString, String hoursSending, String minutesSending) {
+        Date dateSending;
+        if (!dateString.matches("^\\d{1,2}\\.\\d{1,2}\\.(\\d{2}|\\d{4})$") || !hoursSending.matches("^\\d{1,2}$") || !minutesSending.matches("^\\d{1,2}$")) {
+            return null;
+        } else {
+            String[] dayAndMonthAndYear = dateString.split("\\.");
+            dateSending = new Date(dayAndMonthAndYear[1] + "/" + dayAndMonthAndYear[0] + "/" + dayAndMonthAndYear[2]);
+            if (!(Integer.parseInt(dayAndMonthAndYear[1]) == dateSending.getMonth() + 1
+                    && Integer.parseInt(dayAndMonthAndYear[0]) == dateSending.getDate()
+                    && Integer.parseInt(dayAndMonthAndYear[2]) == dateSending.getYear() + 1900
+                    && Integer.parseInt(hoursSending) < 24 && Integer.parseInt(minutesSending) < 60)) {
+                return null;
+            } else {
+                dateSending.setHours(Integer.parseInt(hoursSending));
+                dateSending.setMinutes(Integer.parseInt(minutesSending));
+                if (dateSending.getTime() <= new Date().getTime())
+                    return null;
+                return dateSending;
+            }
+        }
+
     }
 
     @Override

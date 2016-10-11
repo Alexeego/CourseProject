@@ -58,10 +58,22 @@ public class ConnectionAdmin extends Connection {
                     Ray ray = transformFromJson(new TypeReference<Ray>() {
                     }, message.getData());
                     synchronized (rays) {
-                        System.out.println(ray.id);
-                        rays.add(ray);
+                        Ray rayNew = new Ray(ray);
+                        rays.add(rayNew);
                         send(new Message(MessageType.NEW_RAY_ADDED));
-                        sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rays)));
+                        rays.notify();
+                    }
+                    break;
+                }
+                case EDIT_RAY: {
+                    Ray ray = transformFromJson(new TypeReference<Ray>() {
+                    }, message.getData());
+                    synchronized (rays) {
+                        if (rays.contains(ray)) {
+                            rays.remove(ray);
+                            rays.add(ray);
+                        }
+                        rays.notify();
                     }
                     break;
                 }
