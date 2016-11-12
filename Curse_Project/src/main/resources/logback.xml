@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--Аппендеры -->
+    <!--Файловый аппендер -->
+    <appender name="file" class="ch.qos.logback.core.FileAppender">
+        <file>log.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%date %level [%thread] %logger [%file:%line] %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--Консольный аппендер -->
+    <appender name="sout" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger) - %msg%n</Pattern>
+        </encoder>
+    </appender>
+    <!-- Логгеры -->
+    <!-- Корневой логгер -->
+    <root level="info">
+        <appender-ref ref="file" />
+        <appender-ref ref="sout" />
+    </root>
+</configuration>

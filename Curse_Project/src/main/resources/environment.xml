@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="server_port">1329</entry>
+    <entry key="db_host">localhost</entry>
+    <entry key="db_port">3306</entry>
+    <entry key="db_user">root</entry>
+    <entry key="db_password">root</entry>
+    <entry key="db_name">air_ticket_by</entry>
+    <entry key="db_useSSL">false</entry>
+</properties>
