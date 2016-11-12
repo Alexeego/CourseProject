@@ -4,9 +4,10 @@ package user;
  * Created by Alexey on 19.09.2016.
  */
 public class User {
+    private Long id;
     private String name;
     private String password;
-    private byte access;
+    private Byte access;
 
     public User(){}
     public User(String name, String password) {
@@ -14,11 +15,19 @@ public class User {
         this.password = password;
     }
 
-    public byte getAccess() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Byte getAccess() {
         return access;
     }
 
-    public void setAccess(byte access) {
+    public void setAccess(Byte access) {
         this.access = access;
     }
 

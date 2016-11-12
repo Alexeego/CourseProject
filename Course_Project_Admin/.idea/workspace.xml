@@ -2,36 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0e171ce3-0583-42e8-afe8-09b9b4d337af" name="Default" comment="Admin + Server">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientController.class" afterPath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientController.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientModel$1.class" afterPath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientModel$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientModel$2.class" afterPath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientModel$2.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientModel.class" afterPath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientModel.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientView.class" afterPath="$PROJECT_DIR$/out/production/Course_Project_Admin/client/ClientView.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Course_Project_Admin/connection/MessageType.class" afterPath="$PROJECT_DIR$/out/production/Course_Project_Admin/connection/MessageType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Course_Project_Admin/frames/MainFrame.class" afterPath="$PROJECT_DIR$/out/production/Course_Project_Admin/frames/MainFrame.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Course_Project_Admin/ray/Ray.class" afterPath="$PROJECT_DIR$/out/production/Course_Project_Admin/ray/Ray.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAdmin.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAdmin.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAndroid$2.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAndroid$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAndroid.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/ConnectionAndroid.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/MessageType.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/connection/MessageType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/ray/Coordinates.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/ray/Coordinates.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/ray/Ray.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/ray/Ray.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/server/Server.class" afterPath="$PROJECT_DIR$/../Curse_Project/out/production/Curse_Project/server/Server.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Course_Project_Admin/user/User.class" afterPath="$PROJECT_DIR$/out/production/Course_Project_Admin/user/User.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/user/User.java" afterPath="$PROJECT_DIR$/../ByAviaBilet/app/src/main/java/com/example/alexey/airticketby/user/User.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/ClientController.java" afterPath="$PROJECT_DIR$/src/client/ClientController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/ClientModel.java" afterPath="$PROJECT_DIR$/src/client/ClientModel.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/client/ClientView.java" afterPath="$PROJECT_DIR$/src/client/ClientView.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/connection/MessageType.java" afterPath="$PROJECT_DIR$/src/connection/MessageType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/frames/AddNewRayFrame.java" afterPath="$PROJECT_DIR$/src/frames/AddNewRayFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/frames/MainFrame.java" afterPath="$PROJECT_DIR$/src/frames/MainFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/frames/ManageAccountsFrame.java" afterPath="$PROJECT_DIR$/src/frames/ManageAccountsFrame.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ray/Ray.java" afterPath="$PROJECT_DIR$/src/ray/Ray.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/user/User.java" afterPath="$PROJECT_DIR$/src/user/User.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/.idea/misc.xml" afterPath="$PROJECT_DIR$/../Curse_Project/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/.idea/workspace.xml" afterPath="$PROJECT_DIR$/../Curse_Project/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/src/connection/ConnectionAdmin.java" afterPath="$PROJECT_DIR$/../Curse_Project/src/connection/ConnectionAdmin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/src/connection/MessageType.java" afterPath="$PROJECT_DIR$/../Curse_Project/src/connection/MessageType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/src/ray/Coordinates.java" afterPath="$PROJECT_DIR$/../Curse_Project/src/ray/Coordinates.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/src/ray/Ray.java" afterPath="$PROJECT_DIR$/../Curse_Project/src/ray/Ray.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../Curse_Project/src/server/Server.java" afterPath="$PROJECT_DIR$/../Curse_Project/src/server/Server.java" />
     </list>
     <ignored path="Course_Project_Admin.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -64,54 +41,18 @@
       <file leaf-file-name="ClientView.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/client/ClientView.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
+            <state relative-caret-position="551">
               <caret line="87" column="19" selection-start-line="87" selection-start-column="19" selection-end-line="87" selection-end-column="19" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ClientController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/client/ClientController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="72" column="31" selection-start-line="72" selection-start-column="31" selection-end-line="72" selection-end-column="31" />
-              <folding>
-                <element signature="e#1696#1697#0" expanded="true" />
-                <element signature="e#1730#1731#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainFrame.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/frames/MainFrame.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="204" column="59" selection-start-line="204" selection-start-column="59" selection-end-line="204" selection-end-column="59" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="class#4211:5990" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Ray.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ray/Ray.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="55" column="136" selection-start-line="55" selection-start-column="136" selection-end-line="55" selection-end-column="136" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ClientModel.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ClientModel.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/client/ClientModel.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="167" column="31" selection-start-line="167" selection-start-column="31" selection-end-line="167" selection-end-column="31" />
+            <state relative-caret-position="126">
+              <caret line="235" column="38" selection-start-line="235" selection-start-column="38" selection-end-line="235" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#connectError#0;class#ClientModel#0" expanded="false" />
@@ -129,7 +70,7 @@
       <file leaf-file-name="MessageType.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/connection/MessageType.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
+            <state relative-caret-position="578">
               <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
               <folding />
             </state>
@@ -139,7 +80,7 @@
       <file leaf-file-name="AddNewRayFrame.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/frames/AddNewRayFrame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
+            <state relative-caret-position="3366">
               <caret line="208" column="16" selection-start-line="208" selection-start-column="16" selection-end-line="208" selection-end-column="16" />
               <folding />
             </state>
@@ -180,7 +121,6 @@
         <option value="$PROJECT_DIR$/src/frames/ConnectionFrame.java" />
         <option value="$PROJECT_DIR$/src/resources/item_list_rays.html" />
         <option value="$PROJECT_DIR$/src/frames/AuthorizationFrame.java" />
-        <option value="$PROJECT_DIR$/src/user/User.java" />
         <option value="$PROJECT_DIR$/src/example.html" />
         <option value="$PROJECT_DIR$/src/frames/RegistrationFrame.java" />
         <option value="$PROJECT_DIR$/src/client/ClientView.java" />
@@ -191,6 +131,7 @@
         <option value="$PROJECT_DIR$/src/connection/MessageType.java" />
         <option value="$PROJECT_DIR$/src/frames/AddNewRayFrame.java" />
         <option value="$PROJECT_DIR$/src/frames/MainFrame.java" />
+        <option value="$PROJECT_DIR$/src/user/User.java" />
       </list>
     </option>
   </component>
@@ -231,8 +172,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -357,7 +297,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -840,7 +781,10 @@
       <workItem from="1475923132612" duration="22204000" />
       <workItem from="1476016603988" duration="6811000" />
       <workItem from="1476093419741" duration="26891000" />
-      <workItem from="1476180370328" duration="9074000" />
+      <workItem from="1476180370328" duration="9215000" />
+      <workItem from="1476275351261" duration="160000" />
+      <workItem from="1476525587560" duration="1158000" />
+      <workItem from="1478964088315" duration="2440000" />
     </task>
     <task id="LOCAL-00001" summary="Server + Admin + Android">
       <created>1475358819374</created>
@@ -881,14 +825,15 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="157258000" />
+    <option name="totallyTimeSpent" value="161157000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="FindBugs-IDEA" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32843137" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1174,10 +1119,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2240">
           <caret line="81" column="61" selection-start-line="81" selection-start-column="61" selection-end-line="81" selection-end-column="61" />
-          <folding>
-            <element signature="e#3039#3040#0" expanded="false" />
-            <element signature="e#3065#3066#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1210,7 +1151,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="34" column="27" selection-start-line="34" selection-start-column="27" selection-end-line="34" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1218,7 +1158,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
           <caret line="28" column="65" selection-start-line="28" selection-start-column="65" selection-end-line="28" selection-end-column="65" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1241,19 +1180,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/user/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-439">
-          <caret line="11" column="31" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/frames/AbstractFrame.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="23" column="16" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1293,23 +1223,59 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="262">
           <caret line="142" column="65" selection-start-line="142" selection-start-column="65" selection-end-line="142" selection-end-column="65" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/frames/AddNewRayFrame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3366">
+          <caret line="208" column="16" selection-start-line="208" selection-start-column="16" selection-end-line="208" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/connection/MessageType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ray/Ray.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-350">
+          <caret line="55" column="136" selection-start-line="55" selection-start-column="136" selection-end-line="55" selection-end-column="136" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/user/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="25" selection-start-line="17" selection-start-column="25" selection-end-line="17" selection-end-column="25" />
           <folding>
-            <element signature="class#3860:5423" expanded="false" />
+            <element signature="e#364#365#0" expanded="true" />
+            <element signature="e#398#399#0" expanded="true" />
+            <element signature="e#426#427#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/client/ClientView.java">
+    <entry file="file://$PROJECT_DIR$/src/frames/MainFrame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="87" column="19" selection-start-line="87" selection-start-column="19" selection-end-line="87" selection-end-column="19" />
-          <folding />
+        <state relative-caret-position="518">
+          <caret line="284" column="40" selection-start-line="284" selection-start-column="40" selection-end-line="284" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#4211:5990" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/ClientController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
+        <state relative-caret-position="551">
           <caret line="72" column="31" selection-start-line="72" selection-start-column="31" selection-end-line="72" selection-end-column="31" />
           <folding>
             <element signature="e#1696#1697#0" expanded="true" />
@@ -1318,26 +1284,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/frames/AddNewRayFrame.java">
+    <entry file="file://$PROJECT_DIR$/src/client/ClientView.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="208" column="16" selection-start-line="208" selection-start-column="16" selection-end-line="208" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/connection/MessageType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="34" column="13" selection-start-line="34" selection-start-column="13" selection-end-line="34" selection-end-column="13" />
+        <state relative-caret-position="551">
+          <caret line="87" column="19" selection-start-line="87" selection-start-column="19" selection-end-line="87" selection-end-column="19" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/client/ClientModel.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="167" column="31" selection-start-line="167" selection-start-column="31" selection-end-line="167" selection-end-column="31" />
+        <state relative-caret-position="126">
+          <caret line="235" column="38" selection-start-line="235" selection-start-column="38" selection-end-line="235" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#connectError#0;class#ClientModel#0" expanded="false" />
@@ -1347,25 +1305,6 @@
             <element signature="method#sendInfoMessage#0;class#ClientModel#0" expanded="false" />
             <element signature="method#deleteUser#0;class#ClientModel#0" expanded="false" />
             <element signature="method#openWindowForRegistration#0;class#ClientModel#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ray/Ray.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="55" column="136" selection-start-line="55" selection-start-column="136" selection-end-line="55" selection-end-column="136" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/frames/MainFrame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="204" column="59" selection-start-line="204" selection-start-column="59" selection-end-line="204" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#4211:5990" expanded="false" />
           </folding>
         </state>
       </provider>
