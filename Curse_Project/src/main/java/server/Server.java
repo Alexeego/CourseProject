@@ -5,6 +5,7 @@ import connection.Connection;
 import connection.ConnectionAdmin;
 import connection.Message;
 import connection.MessageType;
+import dao.RayDAO;
 import dao.UserDAO;
 import db.AwareExecutor;
 import exceptions.GenericDAOException;
@@ -31,37 +32,18 @@ public class Server {
 
     public static Map<User, Connection> connectionMap = new ConcurrentHashMap<>();
 
-    public static final Set<Ray> rays = Collections.synchronizedSet(new TreeSet<>((o1, o2) -> o1.equals(o2) ? 0 : Double.compare(o2.hashCode(), o1.hashCode())));
+
+    public static final Object lock_rays = new Object();
+
+
     public static final Set<Ticket> boughtOrBookTickets = Collections.synchronizedSet(new TreeSet<Ticket>((o1, o2) -> {
         int result = o1.userName.compareTo(o2.userName);
         if (result != 0) return result;
-        result = o1.ray.coordinates.toString().compareTo(o2.ray.coordinates.toString());
+        result = o1.ray.getCoordinates().toString().compareTo(o2.ray.getCoordinates().toString());
         if (result != 0) return result;
         return Integer.compare(o1.numberPlace, o2.numberPlace);
     }));
 
-    static {
-
-        rays.add(new Ray(new Coordinates("Italy", "Venetian"), new Date("12/15/2016"), 120, "F30I", 15));
-        rays.add(new Ray(new Coordinates("Italy", "Rim"), StateRay.NEW, new Date("09/21/2016"), 140, "A32", 25));
-        rays.add(new Ray(new Coordinates("Italy", "Rim"), StateRay.CANCEL, new Date("09/20/2016"), 140, "A32", 25));
-        rays.add(new Ray(new Coordinates("Italy", "Vatican"), StateRay.SENDING, new Date("09/11/2016"), 140, "X12", 10));
-        rays.add(new Ray(new Coordinates("USA", "New-York"), StateRay.COMPLETED, new Date("08/13/2016"), 300, "AD1", 30));
-        rays.add(new Ray(new Coordinates("Russia", "Moscow"), StateRay.NEW, new Date("10/10/2016"), 30, "0LH", 100));
-        rays.add(new Ray(new Coordinates("Australia", "Sidney"), new Date("03/15/2017"), 250, "TY14", 50));
-        Place[] places = new Place[5];
-        places[0] = new Place(TypeClass.BUSINESS, 300, 0);
-        places[1] = new Place(TypeClass.BUSINESS, 300, 1);
-        places[2] = new Place(TypeClass.PRIME, 500, 2);
-        places[3] = new Place(40, 3);
-        places[4] = new Place(TypeClass.PRIME, 500, 4);
-        Ray ray = new Ray(new Coordinates("Japan", "Tokio"), new Date("10/10/2016"), 250, "JL13", places);
-        ray.timeSending.setHours(7);
-        ray.timeSending.setMinutes(8);
-        rays.add(ray);
-
-
-    }
 
     private static class Handler extends Thread {
         private Socket clientSocket;
@@ -163,42 +145,48 @@ public class Server {
     public static Thread validateThread = new Thread() {
         {
             setDaemon(true);
-            start();
         }
+
+        private RayDAO rayDAO = new RayDAO();
 
         @Override
         public void run() {
             try {
-                synchronized (rays) {
+                synchronized (lock_rays) {
                     while (!isInterrupted()) {
                         Date nowDate = new Date();
-                        rays.stream().forEach(ray -> {
-                            if (ray.stateRay != StateRay.CANCEL) {
-                                if (ray.timeSending.getTime() + ray.timeInWay < nowDate.getTime())
-                                    ray.stateRay = StateRay.COMPLETED;
-                                else if (ray.timeSending.getTime() < nowDate.getTime())
-                                    ray.stateRay = StateRay.SENDING;
-                                else if (ray.timeSending.getTime() - 36000000 < nowDate.getTime()) {
-                                    ray.stateRay = StateRay.READY;
-                                    Set<Ticket> tickets = new LinkedHashSet<Ticket>();
-                                    Arrays.stream(ray.places).filter(place -> place.statePlace == StatePlace.BOOK)
-                                            .forEach(place -> {
-                                                tickets.add(new Ticket(ray, place.name, place.number));
-                                                place.name = null;
-                                                place.statePlace = StatePlace.FREE;
-                                            });
-                                    boughtOrBookTickets.removeAll(tickets);
-                                } else ray.stateRay = StateRay.NEW;
+                        rayDAO.findAll().forEach(ray -> {
+                            try {
+                                if (ray.getStateRay() != StateRay.CANCEL) {
+                                    if (ray.getTimeSending().getTime() + ray.getTimeInWay() < nowDate.getTime())
+                                        ray.setStateRay(StateRay.COMPLETED);
+                                    else if (ray.getTimeSending().getTime() < nowDate.getTime())
+                                        ray.setStateRay(StateRay.SENDING);
+                                    else if (ray.getTimeSending().getTime() - 36000000 < nowDate.getTime()) {
+                                        ray.setStateRay(StateRay.READY);
+                                        Set<Ticket> tickets = new LinkedHashSet<Ticket>();
+                                        ray.getPlaces().stream().filter(place -> place.getStatePlace() == StatePlace.BOOK)
+                                                .forEach(place -> {
+                                                    tickets.add(new Ticket(ray, place.getName(), place.getNumber()));
+                                                    place.setName(null);
+                                                    place.setStatePlace(StatePlace.FREE);
+                                                });
+                                        boughtOrBookTickets.removeAll(tickets);
+                                    } else ray.setStateRay(StateRay.NEW);
+                                    rayDAO.updateById(ray.getId(), ray);
+                                }
+                            } catch (GenericDAOException e) {
+                                e.printStackTrace();
                             }
                         });
                         try {
-                            sendBroadcastMessage(new Message(MessageType.RAY_LIST, Connection.transformToJson(rays)));
+                            sendBroadcastMessage(new Message(MessageType.RAY_LIST, Connection.transformToJson(rayDAO.findAll())));
                         } catch (IOException e) {
                         }
-                        rays.wait(60000);
+                        lock_rays.wait(60000);
                     }
                 }
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | GenericDAOException ignored) {
             }
         }
     };
@@ -236,6 +224,7 @@ public class Server {
         int port = Integer.parseInt(AwareExecutor.getEnvironmentProperties().getProperty("server_port"));
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             AwareExecutor.initializationDataBase();
+            validateThread.start();
             do {
                 Socket clientSocket = serverSocket.accept();
                 LOG.info("new connect");

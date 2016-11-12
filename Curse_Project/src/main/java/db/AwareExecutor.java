@@ -1,6 +1,9 @@
 package db;
 
 
+import dao.CoordinatesDAO;
+import dao.PlaceDAO;
+import dao.RayDAO;
 import dao.UserDAO;
 import exceptions.GenericDAOException;
 import org.hibernate.HibernateException;
@@ -11,6 +14,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ray.*;
 import user.User;
 
 import java.io.BufferedReader;
@@ -21,10 +25,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 import java.util.stream.Collector;
 
 /**
@@ -145,9 +146,81 @@ public class AwareExecutor {
             if (!userDAO.findByField(user.getName()).isPresent())
                 userDAO.insert(user);
 
+
+            fillingRays();
         } catch (Exception ignored) {
+            LOG.error(ignored.getMessage());
+            ignored.printStackTrace();
         }
     }
+
+
+    public static void fillingRays() throws GenericDAOException {
+        CoordinatesDAO coordinatesDAO = new CoordinatesDAO();
+        RayDAO rayDAO = new RayDAO();
+        PlaceDAO placeDAO = new PlaceDAO();
+
+        Coordinates coordinates = new Coordinates("Italy", "Venetian");
+        coordinatesDAO.insert(coordinates);
+        Ray ray = new Ray(coordinates, new Date("12/15/2016"), 120, "F30I", 5);
+        rayDAO.insert(ray);
+
+//        System.out.println();
+//        rayDAO.findAll().forEach(System.out::println);
+//        System.out.println();
+//
+//        ray = rayDAO.findAll().get(0);
+//
+//        ray.getPlaces().get(0).setStatePlace(StatePlace.BOOK);
+//        rayDAO.updateById(ray.getId(), ray);
+//
+//        System.out.println();
+//        rayDAO.findAll().forEach(System.out::println);
+//        System.out.println();
+
+//        coordinates = new Coordinates("Italy", "Rim");
+//        coordinatesDAO.insert(coordinates);
+//        ray = new Ray(coordinates, StateRay.NEW, new Date("09/21/2016"), 140, "A32", 25);
+//        rayDAO.insert(ray);
+//
+//        ray = new Ray(coordinates, StateRay.CANCEL, new Date("09/20/2016"), 140, "A32", 25);
+//        rayDAO.insert(ray);
+//
+//        coordinates = new Coordinates("Italy", "Vatican");
+//        coordinatesDAO.insert(coordinates);
+//        ray = new Ray(coordinates, StateRay.SENDING, new Date("09/11/2016"), 140, "X12", 10);
+//        rayDAO.insert(ray);
+//
+//        coordinates = new Coordinates("USA", "New-York");
+//        coordinatesDAO.insert(coordinates);
+//        ray = new Ray(coordinates, StateRay.COMPLETED, new Date("08/13/2016"), 300, "AD1", 30);
+//        rayDAO.insert(ray);
+//
+//        coordinates = new Coordinates("Russia", "Moscow");
+//        coordinatesDAO.insert(coordinates);
+//        ray = new Ray(coordinates, StateRay.NEW, new Date("10/10/2016"), 30, "0LH", 100);
+//        rayDAO.insert(ray);
+
+//        coordinates = new Coordinates("Australia", "Sidney");
+//        coordinatesDAO.insert(coordinates);
+//        ray = new Ray(coordinates, new Date("03/15/2017"), 250, "TY14", 3);
+//        rayDAO.insert(ray);
+
+//        coordinates = new Coordinates("Japan", "Tokyo");
+//        coordinatesDAO.insert(coordinates);
+//        Place[] places = new Place[5];
+//        places[0] = new Place(TypeClass.BUSINESS, 300, 0);
+//        places[1] = new Place(TypeClass.BUSINESS, 300, 1);
+//        places[2] = new Place(TypeClass.PRIME, 500, 2);
+//        places[3] = new Place(40, 3);
+//        places[4] = new Place(TypeClass.PRIME, 500, 4);
+//        ray = new Ray(coordinates, new Date("12/10/2016"), 250, "JL13", places);
+//        ray.getTimeSending().setHours(7);
+//        ray.getTimeSending().setMinutes(8);
+//        rayDAO.insert(ray);
+
+    }
+
     /*
     *   Method for primary initialization DataBase:
     *   - Create DB if not exists
@@ -171,7 +244,7 @@ public class AwareExecutor {
         try {
             session.beginTransaction();
             return task.execute(session);
-        } catch (HibernateException e) {
+        } catch (HibernateException | GenericDAOException e) {
             if (session.getTransaction() != null) session.getTransaction().rollback();
             throw e;
         } finally {

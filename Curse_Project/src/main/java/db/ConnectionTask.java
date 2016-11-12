@@ -1,5 +1,6 @@
 package db;
 
+import exceptions.GenericDAOException;
 import org.hibernate.Session;
 
 /**
@@ -7,5 +8,5 @@ import org.hibernate.Session;
  */
 @FunctionalInterface
 public interface ConnectionTask<T> {
-    T execute(Session session);
+    T execute(Session session) throws GenericDAOException;
 }

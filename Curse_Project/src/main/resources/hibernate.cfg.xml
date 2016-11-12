@@ -13,6 +13,8 @@
         <property name="hbm2ddl.auto">update</property>
 
         <mapping class="user.User"/>
-
+        <mapping class="ray.Place"/>
+        <mapping class="ray.Ray"/>
+        <mapping class="ray.Coordinates"/>
     </session-factory>
 </hibernate-configuration>

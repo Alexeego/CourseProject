@@ -32,4 +32,12 @@ public enum StateRay {
             }
         return null;
     }
+
+    public String getS() {
+        return s;
+    }
+
+    public void setS(String s) {
+        this.s = s;
+    }
 }

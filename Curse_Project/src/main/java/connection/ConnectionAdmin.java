@@ -1,6 +1,8 @@
 package connection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import dao.CoordinatesDAO;
+import dao.RayDAO;
 import dao.UserDAO;
 import exceptions.GenericDAOException;
 import org.slf4j.Logger;
@@ -45,15 +47,14 @@ public class ConnectionAdmin extends Connection {
     private static final Logger LOG = LoggerFactory.getLogger(ConnectionAdmin.class);
 
     private User user;
-    private UserDAO userDAO;
+    private UserDAO userDAO = new UserDAO();
+    private RayDAO rayDAO = new RayDAO();
+    private CoordinatesDAO coordinatesDAO = new CoordinatesDAO();
 
     @Override
     public void serverMainLoop(User user) throws IOException, ClassNotFoundException, GenericDAOException {
-        synchronized (rays) {
-            send(new Message(MessageType.RAY_LIST, transformToJson(rays)));
-        }
+        send(new Message(MessageType.RAY_LIST, transformToJson(rayDAO.findAll())));
         this.user = user;
-        userDAO = new UserDAO();
         do {
             Message message = receive();
             switch (message.getMessageType()) {
@@ -65,23 +66,23 @@ public class ConnectionAdmin extends Connection {
                 case ADD_NEW_RAY: {
                     Ray ray = transformFromJson(new TypeReference<Ray>() {
                     }, message.getData());
-                    synchronized (rays) {
-                        Ray rayNew = new Ray(ray);
-                        rays.add(rayNew);
+                    synchronized (lock_rays) {
+                        coordinatesDAO.insert(ray.getCoordinates());
+                        rayDAO.insert(ray);
                         send(new Message(MessageType.NEW_RAY_ADDED));
-                        rays.notify();
+                        lock_rays.notify();
                     }
                     break;
                 }
                 case EDIT_RAY: {
                     Ray ray = transformFromJson(new TypeReference<Ray>() {
                     }, message.getData());
-                    synchronized (rays) {
-                        if (rays.contains(ray)) {
-                            rays.remove(ray);
-                            rays.add(ray);
+                    synchronized (lock_rays) {
+                        Optional<? extends Ray> result = rayDAO.findById(ray.getId());
+                        if (result.isPresent()) {
+                            rayDAO.updateById(result.get().getId(), result.get());
                         }
-                        rays.notify();
+                        lock_rays.notify();
                     }
                     break;
                 }

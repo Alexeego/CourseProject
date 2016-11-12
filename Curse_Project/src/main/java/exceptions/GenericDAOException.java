@@ -3,7 +3,7 @@ package exceptions;
 /**
  * Created by Alexey on 29.10.2016.
  */
-public class GenericDAOException extends Exception {
+public class GenericDAOException extends RuntimeException {
     public GenericDAOException(Exception e) {
         super("The exception occurred in DAO", e);
     }

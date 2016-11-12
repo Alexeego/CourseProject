@@ -1,31 +1,107 @@
 package ray;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import dao.PlaceDAO;
+import exceptions.GenericDAOException;
 
+import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.List;
 
 /**
  * Created by Alexey on 09.09.2016.
  */
 @JsonAutoDetect
+@Entity
 public class Ray {
-    @JsonIgnore
-    static volatile AtomicLong id0 = new AtomicLong(0);
 
-    public final double id = id0.incrementAndGet();
-    public Coordinates coordinates;
-    public StateRay stateRay = StateRay.NEW;
-    public Date timeSending;
-    public long timeInWay;
-    public String numberRay;
-    public int numberPlaces;
-    public Place[] places;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id ;
 
+    @ManyToOne
+    @JoinColumn(name = "coordinates_id")
+    private Coordinates coordinates;
+
+    private StateRay stateRay = StateRay.NEW;
+    private Date timeSending;
+    private long timeInWay;
+    private String numberRay;
+    private int numberPlaces;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    public List<Place> places;
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public StateRay getStateRay() {
+        return stateRay;
+    }
+
+    public void setStateRay(StateRay stateRay) {
+        this.stateRay = stateRay;
+    }
+
+    public Date getTimeSending() {
+        return timeSending;
+    }
+
+    public void setTimeSending(Date timeSending) {
+        this.timeSending = timeSending;
+    }
+
+    public long getTimeInWay() {
+        return timeInWay;
+    }
+
+    public void setTimeInWay(long timeInWay) {
+        this.timeInWay = timeInWay;
+    }
+
+    public String getNumberRay() {
+        return numberRay;
+    }
+
+    public void setNumberRay(String numberRay) {
+        this.numberRay = numberRay;
+    }
+
+    public int getNumberPlaces() {
+        return numberPlaces;
+    }
+
+    public void setNumberPlaces(int numberPlaces) {
+        this.numberPlaces = numberPlaces;
+    }
+
+    public List<Place> getPlaces() {
+        return places;
+    }
+
+    public void setPlaces(List<Place> places) {
+        this.places = places;
+    }
 
     public Ray(){}
-    public Ray(Coordinates coordinates, Date timeSending, long timeInWay, String numberRay, int numberPlaces) {
+    public Ray(Coordinates coordinates, Date timeSending, long timeInWay, String numberRay, int numberPlaces) throws GenericDAOException {
         this.coordinates = coordinates;
         this.timeSending = timeSending;
         this.timeInWay = timeInWay * 60000;
@@ -34,14 +110,13 @@ public class Ray {
         initPlaces();
     }
 
-    public Ray(Coordinates coordinates, StateRay stateRay, Date timeSending, long timeInWay, String numberRay, int numberPlaces) {
+    public Ray(Coordinates coordinates, StateRay stateRay, Date timeSending, long timeInWay, String numberRay, int numberPlaces) throws GenericDAOException {
         this.coordinates = coordinates;
         this.stateRay = stateRay;
         this.timeSending = timeSending;
         this.timeInWay = timeInWay * 60000;
         this.numberRay = numberRay;
         this.numberPlaces = numberPlaces;
-        this.places = new Place[numberPlaces];
         initPlaces();
     }
 
@@ -52,7 +127,7 @@ public class Ray {
         this.timeInWay = timeInWay * 60000;
         this.numberRay = numberRay;
         this.numberPlaces = places.length;
-        this.places = places;
+        this.places = Arrays.asList(places);
     }
     public Ray(Coordinates coordinates, Date timeSending, long timeInWay, String numberRay, Place[] places) {
         this.coordinates = coordinates;
@@ -60,7 +135,7 @@ public class Ray {
         this.timeInWay = timeInWay * 60000;
         this.numberRay = numberRay;
         this.numberPlaces = places.length;
-        this.places = places;
+        this.places = Arrays.asList(places);
     }
 
     public Ray(Ray ray) {
@@ -74,12 +149,28 @@ public class Ray {
     }
 
 
-    private void initPlaces(){
-        this.places = new Place[numberPlaces];
+
+    private void initPlaces() throws GenericDAOException {
+        Place[] places = new Place[numberPlaces];
         double cost = (double) ((int) ((Math.random() * 101) * 100)) / 100d;
         for(int i = 0; i < numberPlaces;) {
-            this.places[i] = new Place(cost, i++);
+            places[i] = new Place(cost, i++);
         }
+        this.places = Arrays.asList(places);
+    }
+
+    @Override
+    public String toString() {
+        return "Ray{" +
+                "id=" + id +
+                ", coordinates=" + coordinates +
+                ", stateRay=" + stateRay +
+                ", timeSending=" + timeSending +
+                ", timeInWay=" + timeInWay +
+                ", numberRay='" + numberRay + '\'' +
+                ", numberPlaces=" + numberPlaces +
+                ", places=" + places +
+                '}';
     }
 
     @Override
@@ -103,5 +194,21 @@ public class Ray {
         result = 31 * result + (numberRay != null ? numberRay.hashCode() : 0);
         result = 31 * result + numberPlaces;
         return result;
+    }
+
+    public void copy(Ray ray) throws GenericDAOException {
+        PlaceDAO placeDAO = new PlaceDAO();
+        this.coordinates = ray.coordinates;
+        this.stateRay = ray.stateRay;
+        this.timeSending = ray.timeSending;
+        this.timeInWay = ray.timeInWay;
+        this.numberRay = ray.numberRay;
+        this.numberPlaces = ray.numberPlaces;
+        for (int i = 0; i < places.size(); i++){
+            Place place = this.places.get(i);
+            place.setName(ray.places.get(i).getName());
+            place.setStatePlace(ray.places.get(i).getStatePlace());
+            placeDAO.updateById(place.getId(), place);
+        }
     }
 }
