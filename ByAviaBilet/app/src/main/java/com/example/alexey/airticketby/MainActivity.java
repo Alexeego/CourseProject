@@ -8,9 +8,9 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,7 +24,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.alexey.airticketby.connection.Connection;
-import com.example.alexey.airticketby.connection.Message;
 import com.example.alexey.airticketby.connection.MessageType;
 import com.example.alexey.airticketby.ray.Ray;
 
@@ -196,7 +195,7 @@ public class MainActivity extends AppCompatActivity
                 if (connection != null) {
                     try {
                         connection.close();
-                    } catch (IOException ignore) {
+                    } catch (Exception ignore) {
                     }
                 }
                 connection = null;

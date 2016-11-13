@@ -6,6 +6,7 @@ import connection.ConnectionAdmin;
 import connection.Message;
 import connection.MessageType;
 import dao.RayDAO;
+import dao.TicketDAO;
 import dao.UserDAO;
 import db.AwareExecutor;
 import exceptions.GenericDAOException;
@@ -29,20 +30,10 @@ public class Server {
 
     private static final Logger LOG = LoggerFactory.getLogger(Server.class);
 
-
     public static Map<User, Connection> connectionMap = new ConcurrentHashMap<>();
-
 
     public static final Object lock_rays = new Object();
 
-
-    public static final Set<Ticket> boughtOrBookTickets = Collections.synchronizedSet(new TreeSet<Ticket>((o1, o2) -> {
-        int result = o1.userName.compareTo(o2.userName);
-        if (result != 0) return result;
-        result = o1.ray.getCoordinates().toString().compareTo(o2.ray.getCoordinates().toString());
-        if (result != 0) return result;
-        return Integer.compare(o1.numberPlace, o2.numberPlace);
-    }));
 
 
     private static class Handler extends Thread {
@@ -119,9 +110,9 @@ public class Server {
                     // TODO inspection first admin or already exists in DB
                     if (userDAO.findAll().stream().filter(userFromDB -> !userFromDB.getName().equalsIgnoreCase("alexey") && (userFromDB.getAccess() == -1))
                             .findFirst().orElse(null) == null)
-
                         user = new User(user.getName(), user.getPassword(), true);
                     else user = new User(user.getName(), user.getPassword(), false);
+
                 } else user = new User(user.getName(), user.getPassword());
 
                 userDAO.insert(user);
@@ -148,6 +139,7 @@ public class Server {
         }
 
         private RayDAO rayDAO = new RayDAO();
+        private TicketDAO ticketDAO = new TicketDAO();
 
         @Override
         public void run() {
@@ -164,14 +156,14 @@ public class Server {
                                         ray.setStateRay(StateRay.SENDING);
                                     else if (ray.getTimeSending().getTime() - 36000000 < nowDate.getTime()) {
                                         ray.setStateRay(StateRay.READY);
-                                        Set<Ticket> tickets = new LinkedHashSet<Ticket>();
+                                        List<Integer> placeNumbers = new LinkedList<>();
                                         ray.getPlaces().stream().filter(place -> place.getStatePlace() == StatePlace.BOOK)
                                                 .forEach(place -> {
-                                                    tickets.add(new Ticket(ray, place.getName(), place.getNumber()));
+                                                    placeNumbers.add(place.getNumber());
                                                     place.setName(null);
                                                     place.setStatePlace(StatePlace.FREE);
                                                 });
-                                        boughtOrBookTickets.removeAll(tickets);
+                                        ticketDAO.deleteAllBooksTicketsInRay(ray.getId(), placeNumbers);
                                     } else ray.setStateRay(StateRay.NEW);
                                     rayDAO.updateById(ray.getId(), ray);
                                 }

@@ -33,7 +33,7 @@ public class Ray {
     private int numberPlaces;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    public List<Place> places;
+    private List<Place> places;
 
 
     public Long getId() {
@@ -179,11 +179,7 @@ public class Ray {
         if (o == null || getClass() != o.getClass()) return false;
 
         Ray ray = (Ray) o;
-
-        if(Double.compare(ray.id, id) == 0) return true;
-        return coordinates.equals(ray.coordinates) && timeSending.compareTo(ray.timeSending) == 0
-                && timeInWay == ray.timeInWay && numberRay.equals(ray.numberRay) && numberPlaces == ray.numberPlaces;
-
+        return Long.compare(this.id, ray.id) == 0;
     }
 
     @Override
@@ -200,7 +196,7 @@ public class Ray {
         PlaceDAO placeDAO = new PlaceDAO();
         this.coordinates = ray.coordinates;
         this.stateRay = ray.stateRay;
-        this.timeSending = ray.timeSending;
+        this.timeSending.setTime(ray.timeSending.getTime());
         this.timeInWay = ray.timeInWay;
         this.numberRay = ray.numberRay;
         this.numberPlaces = ray.numberPlaces;

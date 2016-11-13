@@ -8,7 +8,7 @@ import java.util.Date;
  */
 @JsonAutoDetect
 public class Ray {
-    public double id;
+    public long id;
     public Coordinates coordinates;
     public StateRay stateRay = StateRay.NEW;
     public Date timeSending;
@@ -54,7 +54,7 @@ public class Ray {
 
         Ray ray = (Ray) o;
 
-        return Double.compare(ray.id, id) == 0;
+        return ray.id == id;
 
     }
 

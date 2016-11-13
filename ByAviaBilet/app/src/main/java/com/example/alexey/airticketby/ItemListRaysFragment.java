@@ -149,7 +149,7 @@ public class ItemListRaysFragment extends Fragment {
 
 
                 final CheckBox checkBox = (CheckBox) item.findViewById(R.id.checkBoxChoosePlace);
-                if(MainWindowFragment.selectedRay.stateRay == StateRay.NEW || MainWindowFragment.selectedRay.stateRay == StateRay.READY) {
+                if (MainWindowFragment.selectedRay.stateRay == StateRay.NEW || MainWindowFragment.selectedRay.stateRay == StateRay.READY) {
 
                     boolean bookMe = MainWindowFragment.selectedRay.places[position].statePlace == StatePlace.BOOK
                             && MainWindowFragment.selectedRay.places[position].name.equalsIgnoreCase(MainActivity.userName);
@@ -233,7 +233,7 @@ public class ItemListRaysFragment extends Fragment {
         MainWindowFragment.selectedRay = null;
         try {
             MainActivity.connection.send(new Message(MessageType.BOOK_PLACES_CANCEL));
-        } catch (IOException e) {
+        } catch (Exception e) {
             MainActivity.connectError();
         }
     }

@@ -2,6 +2,7 @@ package connection;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import dao.RayDAO;
+import dao.TicketDAO;
 import exceptions.GenericDAOException;
 import ray.Place;
 import ray.Ray;
@@ -53,6 +54,7 @@ class ConnectionAndroid extends Connection {
     private Set<Ticket> readyBookTickets = new LinkedHashSet<>();
     private User user;
     private RayDAO rayDAO = new RayDAO();
+    private TicketDAO ticketDAO = new TicketDAO();
 
     @Override
     public void serverMainLoop(User user) throws IOException, ClassNotFoundException, GenericDAOException {
@@ -98,9 +100,7 @@ class ConnectionAndroid extends Connection {
     }
 
     private void sendUserTicketsList() throws IOException {
-        send(new Message(MessageType.MY_TICKETS_LIST,
-                transformToJson(boughtOrBookTickets.stream().filter(ticket -> ticket.userName.equalsIgnoreCase(user.getName()))
-                        .collect(Collectors.toCollection(LinkedList::new)))));
+        send(new Message(MessageType.MY_TICKETS_LIST, transformToJson(ticketDAO.findAll())));
     }
 
     private void bookNumberPlaceTry(String json) throws IOException, GenericDAOException {
@@ -114,13 +114,14 @@ class ConnectionAndroid extends Connection {
             boolean ok = false;
             synchronized (lock_rays) {
                 for (Ray ray : rayDAO.findAll()) {
-                    if (ray.equals(ticket.ray)) {
-                        Place place = ray.getPlaces().get(ticket.numberPlace);
+                    if (ray.equals(ticket.getRay())) {
+                        Place place = ray.getPlaces().get(ticket.getNumberPlace());
                         if (place.getStatePlace() == StatePlace.FREE) {
                             place.setStatePlace(StatePlace.BOOK);
                             place.setName(user.getName());
                             rayDAO.updateById(ray.getId(), ray);
-                            ticket.ray = ray;
+
+                            ticket.setRay(ray);
                             readyBookTickets.add(ticket);
                             send(new Message(MessageType.BOOK_NUMBER_PLACE_OK, json));
                             ok = true;
@@ -146,16 +147,18 @@ class ConnectionAndroid extends Connection {
         if (ticket != null) {
             synchronized (lock_rays) {
                 for (Ray ray : rayDAO.findAll()) {
-                    if (ray.equals(ticket.ray)) {
-                        Place place = ray.getPlaces().get(ticket.numberPlace);
+                    if (ray.equals(ticket.getRay())) {
+                        Place place = ray.getPlaces().get(ticket.getNumberPlace());
                         if (place.getStatePlace() == StatePlace.BOOK && place.getName() != null && place.getName().equals(user.getName())) {
                             place.setStatePlace(StatePlace.FREE);
                             place.setName(null);
                             rayDAO.updateById(ray.getId(), ray);
+
                             if (readyBookTickets.contains(ticket))
                                 readyBookTickets.remove(ticket);
                             else
-                                boughtOrBookTickets.remove(ticket);
+                                ticketDAO.deleteById(ticket.getId());
+
                             sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rayDAO.findAll())));
                         }
                         break;
@@ -173,15 +176,14 @@ class ConnectionAndroid extends Connection {
                     boolean foundRay = false;
                     while (iterator.hasNext()) {
                         Ticket ticket = iterator.next();
-                        if (ray.equals(ticket.ray)) {
-                            Place place = ray.getPlaces().get(ticket.numberPlace);
-                            if (place.getName() != null
-                                    && place.getName().equalsIgnoreCase(user.getName())
+                        if (ray.equals(ticket.getRay())) {
+                            Place place = ray.getPlaces().get(ticket.getNumberPlace());
+                            if (place.getName() != null && place.getName().equalsIgnoreCase(user.getName())
                                     && place.getStatePlace() == StatePlace.BOOK) {
-                                boughtOrBookTickets.add(ticket);
+                                ticketDAO.insert(ticket);
                             }
                             foundRay = true;
-                        }
+                        } else break;
                     }
                     if (foundRay)
                         break;
@@ -197,11 +199,21 @@ class ConnectionAndroid extends Connection {
         synchronized (lock_rays) {
             for (Ray ray : rayDAO.findAll()) {
                 if (ray.getId() == idRay) {
-                    for (Place place : ray.places) {
-                        if (place.getName() != null && place.getName().equalsIgnoreCase(user.getName()) && place.getStatePlace() == StatePlace.BOOK) {
+
+                    for (Place place : ray.getPlaces()) {
+                        if (place.getName() != null && place.getName().equalsIgnoreCase(user.getName())
+                                && place.getStatePlace() == StatePlace.BOOK) {
                             buy = true;
                             place.setStatePlace(StatePlace.SAILED);
-                            boughtOrBookTickets.add(new Ticket(ray, user.getName(), place.getNumber()));
+                            Iterator<Ticket> iterator = readyBookTickets.iterator();
+                            while (iterator.hasNext()){
+                                Ticket ticket = iterator.next();
+                                if(ticket.getNumberPlace() == place.getNumber()){
+                                    ticketDAO.insert(ticket);
+                                    iterator.remove();
+                                    break;
+                                }
+                            }
                         }
                     }
                     rayDAO.updateById(ray.getId(), ray);
@@ -223,12 +235,13 @@ class ConnectionAndroid extends Connection {
                     boolean foundRay = false;
                     while (iterator.hasNext()) {
                         Ticket ticket = iterator.next();
-                        if (ray.equals(ticket.ray)) {
-                            if (ray.getPlaces().get(ticket.numberPlace).getName() != null
-                                    && ray.getPlaces().get(ticket.numberPlace).getName().equalsIgnoreCase(user.getName())
-                                    && ray.getPlaces().get(ticket.numberPlace).getStatePlace() == StatePlace.BOOK) {
-                                ray.getPlaces().get(ticket.numberPlace).setStatePlace(StatePlace.FREE);
-                                ray.getPlaces().get(ticket.numberPlace).setName(null);
+                        if (ray.equals(ticket.getRay())) {
+
+                            Place place = ray.getPlaces().get(ticket.getNumberPlace());
+                            if (place.getName() != null && place.getName().equalsIgnoreCase(user.getName())
+                                    && place.getStatePlace() == StatePlace.BOOK) {
+                                place.setStatePlace(StatePlace.FREE);
+                                place.setName(null);
                                 rayDAO.updateById(ray.getId(), ray);
                             }
                             foundRay = true;

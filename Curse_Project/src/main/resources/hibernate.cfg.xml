@@ -16,5 +16,6 @@
         <mapping class="ray.Place"/>
         <mapping class="ray.Ray"/>
         <mapping class="ray.Coordinates"/>
+        <mapping class="ticket.Ticket"/>
     </session-factory>
 </hibernate-configuration>

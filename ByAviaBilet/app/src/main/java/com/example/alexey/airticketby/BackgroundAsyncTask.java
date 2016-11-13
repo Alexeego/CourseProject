@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.example.alexey.airticketby.connection.Connection;
 import com.example.alexey.airticketby.connection.Message;
+import com.example.alexey.airticketby.connection.MessageType;
 import com.example.alexey.airticketby.ray.Place;
 import com.example.alexey.airticketby.ray.Ray;
 import com.example.alexey.airticketby.ray.StatePlace;
@@ -56,12 +57,14 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
     }
 
     // AUTHORIZATION
-    private void communicationAuthorization(Message message){
+    private void communicationAuthorization(Message message) {
         switch (message.getMessageType()) {
             case USER_ACCEPTED: {
                 try {
-                    MainActivity.userName = Connection.transformFromJson(new TypeReference<User>() {}, message.getData()).getName();
-                } catch (IOException ignored) {}
+                    MainActivity.userName = Connection.transformFromJson(new TypeReference<User>() {
+                    }, message.getData()).getName();
+                } catch (IOException ignored) {
+                }
                 Toast.makeText(MainActivity.context, "Авторизация прошла успешно.", Toast.LENGTH_SHORT).show();
                 Toast.makeText(MainActivity.context, "Добро пожаловать " + MainActivity.userName, Toast.LENGTH_SHORT).show();
                 MainActivity.connectSuccess();
@@ -86,12 +89,14 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
 
 
     // REGISTRATION
-    private void communicationRegistration(Message message){
-        switch (message.getMessageType()){
-            case USER_REGISTERED:{
+    private void communicationRegistration(Message message) {
+        switch (message.getMessageType()) {
+            case USER_REGISTERED: {
                 try {
-                    MainActivity.userName = Connection.transformFromJson(new TypeReference<User>() {}, message.getData()).getName();
-                } catch (IOException ignored) {}
+                    MainActivity.userName = Connection.transformFromJson(new TypeReference<User>() {
+                    }, message.getData()).getName();
+                } catch (IOException ignored) {
+                }
                 Toast.makeText(MainActivity.context, "Регистрация успешно прошла.\n" +
                         "Теперь вы зарегистрированы", Toast.LENGTH_SHORT).show();
                 Toast.makeText(MainActivity.context, "Добро пожаловать " + MainActivity.userName, Toast.LENGTH_SHORT).show();
@@ -99,7 +104,7 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
                 MainActivity.context.setEnterFragment();
                 break;
             }
-            case USER_ALREADY_EXIST:{
+            case USER_ALREADY_EXIST: {
                 Toast.makeText(MainActivity.context, "Регистрация не прошла.\n" +
                         "Пользователь с таким именем уже существует", Toast.LENGTH_SHORT).show();
                 break;
@@ -110,7 +115,7 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
 
 
     // CONNECT
-    private void communicationConnect(Message message){
+    private void communicationConnect(Message message) {
         switch (message.getMessageType()) {
             case DATA: {
                 MainWindowFragment.textReceive.setText(message.getData());
@@ -162,9 +167,9 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
                         ItemListRaysFragment.numbersCheckedPlaces = new boolean[MainWindowFragment.selectedRay.places.length];
                         ItemListRaysFragment.simpleAdapterForPlaces.notifyDataSetChanged();
 
-                        if(ray.stateRay != StateRay.NEW){
+                        if (ray.stateRay != StateRay.NEW) {
                             ItemListRaysFragment.buttonBookPlaces.setVisibility(View.INVISIBLE);
-                            if(ray.stateRay != StateRay.READY)
+                            if (ray.stateRay != StateRay.READY)
                                 ItemListRaysFragment.buttonBuyPlaces.setVisibility(View.INVISIBLE);
                         }
 
@@ -193,16 +198,21 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
                 MainWindowFragment.data.add(new HashMap<String, Object>());
             }
             MainWindowFragment.simpleAdapterForRays.notifyDataSetChanged();
+
+            if (MainActivity.fragment instanceof MyTicketsFragment) {
+                MainActivity.connection.send(new Message(MessageType.GET_TICKETS_LIST));
+            }
         } catch (Exception ignored) {
         }
     }
 
     private void myTicketsList(String json) {
-        try{
-            MyTicketsFragment.tickets = Connection.transformFromJson(new TypeReference<ArrayList<Ticket>>() {}, json);
+        try {
+            MyTicketsFragment.tickets = Connection.transformFromJson(new TypeReference<ArrayList<Ticket>>() {
+            }, json);
 
             MyTicketsFragment.myTicketsItems.clear();
-            for (Ticket ticket : MyTicketsFragment.tickets){
+            for (Ticket ticket : MyTicketsFragment.tickets) {
                 MyTicketsFragment.myTicketsItems.add(new HashMap<String, Object>());
             }
             MyTicketsFragment.simpleAdapterTickets.notifyDataSetChanged();
@@ -218,8 +228,10 @@ public class BackgroundAsyncTask extends AsyncTask<Void, Message, Void> {
             Toast.makeText(MainActivity.context, "Место №"
                     + (numberPlace + 1)
                     + " забронировано", Toast.LENGTH_SHORT).show();
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
     }
+
     private void bookNumberPlaceError(String json) {
         try {
             Ticket ticket = Connection.transformFromJson(new TypeReference<Ticket>() {

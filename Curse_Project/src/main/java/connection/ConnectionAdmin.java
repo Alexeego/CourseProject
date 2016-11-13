@@ -80,6 +80,8 @@ public class ConnectionAdmin extends Connection {
                     synchronized (lock_rays) {
                         Optional<? extends Ray> result = rayDAO.findById(ray.getId());
                         if (result.isPresent()) {
+                            result.get().setStateRay(ray.getStateRay());
+                            result.get().setTimeSending(ray.getTimeSending());
                             rayDAO.updateById(result.get().getId(), result.get());
                         }
                         lock_rays.notify();
