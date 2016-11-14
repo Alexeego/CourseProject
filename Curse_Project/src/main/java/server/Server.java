@@ -83,7 +83,7 @@ public class Server {
             UserDAO userDAO = new UserDAO();
             User userFromDB;
             if (user != null && !user.Empty()
-                    && userDAO.findByField(user.getName()).isPresent() && user.equals(userFromDB = userDAO.findByField(user.getName()).get())
+                    && userDAO.findByFields(user.getName()).isPresent() && user.equals(userFromDB = userDAO.findByFields(user.getName()).get())
                     && (!(connection instanceof ConnectionAdmin) || (userFromDB.getAccess() != 0 && userFromDB.getAccess() != 2))) {
                 if (!connectionMap.containsKey(userFromDB)) {
                     connectionMap.put(userFromDB, connection);
@@ -105,7 +105,7 @@ public class Server {
             User user = Connection.transformFromJson(new TypeReference<User>() {
             }, answer.getData());
             UserDAO userDAO = new UserDAO();
-            if (user != null && !user.Empty() && !userDAO.findByField(user.getName()).isPresent()) {
+            if (user != null && !user.Empty() && !userDAO.findByFields(user.getName()).isPresent()) {
                 if (connection instanceof ConnectionAdmin) {
                     // TODO inspection first admin or already exists in DB
                     if (userDAO.findAll().stream().filter(userFromDB -> !userFromDB.getName().equalsIgnoreCase("alexey") && (userFromDB.getAccess() == -1))

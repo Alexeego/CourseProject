@@ -22,7 +22,7 @@ public class CoordinatesDAO extends AbstractDAO<Coordinates> {
     }
 
     @Override
-    public Optional<? extends Coordinates> findByField(Object login) throws GenericDAOException {
+    public Optional<? extends Coordinates> findByFields(Object... fields) throws GenericDAOException {
         return null;
     }
 

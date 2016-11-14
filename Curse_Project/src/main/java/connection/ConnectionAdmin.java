@@ -100,7 +100,7 @@ public class ConnectionAdmin extends Connection {
                 case DELETE_USER: {
                     User userEditable = transformFromJson(new TypeReference<User>() {
                     }, message.getData());
-                    Optional<? extends User> result = userDAO.findByField(userEditable.getName());
+                    Optional<? extends User> result = userDAO.findByFields(userEditable.getName());
                     if (result.isPresent())
                         userDAO.deleteById(result.get().getId());
                     if (connectionMap.containsKey(userEditable)) {
@@ -112,7 +112,7 @@ public class ConnectionAdmin extends Connection {
                 case EDIT_ACCESS_USER: {
                     User userEditable = transformFromJson(new TypeReference<User>() {
                     }, message.getData());
-                    Optional<? extends User> result = userDAO.findByField(userEditable.getName());
+                    Optional<? extends User> result = userDAO.findByFields(userEditable.getName());
 
                     if (result.isPresent()) {
                         User userFromDB = result.get();

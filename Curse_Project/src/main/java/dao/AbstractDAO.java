@@ -16,7 +16,7 @@ public abstract class AbstractDAO<T> {
 
     public abstract Optional<? extends T> findById(Long id) throws GenericDAOException ;
 
-    public abstract Optional<? extends T> findByField(Object login) throws GenericDAOException ;
+    public abstract Optional<? extends T> findByFields(Object... fields) throws GenericDAOException ;
 
     public abstract Long updateById(Long id, T entity) throws GenericDAOException ;
 

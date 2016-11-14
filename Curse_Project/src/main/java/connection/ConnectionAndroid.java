@@ -14,10 +14,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static server.Server.*;
@@ -156,8 +153,12 @@ class ConnectionAndroid extends Connection {
 
                             if (readyBookTickets.contains(ticket))
                                 readyBookTickets.remove(ticket);
-                            else
-                                ticketDAO.deleteById(ticket.getId());
+                            else {
+                                Optional<? extends Ticket> result = ticketDAO.findByFields(ray.getId(),
+                                        ticket.getNumberPlace(), ticket.getUserName());
+                                if (result.isPresent())
+                                    ticketDAO.deleteById(result.get().getId());
+                            }
 
                             sendBroadcastMessage(new Message(MessageType.RAY_LIST, transformToJson(rayDAO.findAll())));
                         }
@@ -206,9 +207,9 @@ class ConnectionAndroid extends Connection {
                             buy = true;
                             place.setStatePlace(StatePlace.SAILED);
                             Iterator<Ticket> iterator = readyBookTickets.iterator();
-                            while (iterator.hasNext()){
+                            while (iterator.hasNext()) {
                                 Ticket ticket = iterator.next();
-                                if(ticket.getNumberPlace() == place.getNumber()){
+                                if (ticket.getNumberPlace() == place.getNumber()) {
                                     ticketDAO.insert(ticket);
                                     iterator.remove();
                                     break;

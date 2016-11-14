@@ -18,7 +18,7 @@ import java.util.Optional;
 public class TicketDAO extends AbstractDAO<Ticket> {
     @Override
     public List<Ticket> findAll() throws GenericDAOException {
-        return new AwareExecutor().submit(session -> (List<Ticket>) session.createQuery("FROM Ticket ").list());
+        return awareExecutor.submit(session -> (List<Ticket>) session.createQuery("FROM Ticket ").list());
     }
 
     @Override
@@ -27,8 +27,15 @@ public class TicketDAO extends AbstractDAO<Ticket> {
     }
 
     @Override
-    public Optional<? extends Ticket> findByField(Object login) throws GenericDAOException {
-        return null;
+    public Optional<? extends Ticket> findByFields(Object... fields) throws GenericDAOException {
+        if (fields.length >= 3 && fields[0] instanceof Long && fields[1] instanceof Integer && fields[2] instanceof String)
+            return awareExecutor.submit(session -> Optional.ofNullable((Ticket) session
+                    .createQuery("from Ticket where ray=:ray and numberPlace=:numberPlace and userName=:userName")
+                    .setLong("ray", (Long) fields[0])
+                    .setInteger("numberPlace", (Integer) fields[1])
+                    .setString("userName", (String) fields[2])
+                    .uniqueResult()));
+        return Optional.empty();
     }
 
     @Override
@@ -66,13 +73,13 @@ public class TicketDAO extends AbstractDAO<Ticket> {
     }
 
     public void deleteAllBooksTicketsInRay(Long id, List<Integer> placeNumbers) {
-        if(id != null){
+        if (id != null) {
             awareExecutor.submit(session -> {
                 Query query = session.createQuery("from Ticket where ray=:ray").setLong("ray", id);
-                for (Ticket ticket: (List<Ticket>)query.list()){
+                for (Ticket ticket : (List<Ticket>) query.list()) {
                     Iterator<Integer> iterator = placeNumbers.iterator();
-                    while (iterator.hasNext()){
-                        if(ticket.getNumberPlace() == iterator.next()) {
+                    while (iterator.hasNext()) {
+                        if (ticket.getNumberPlace() == iterator.next()) {
                             session.delete(ticket);
                             iterator.remove();
                             break;

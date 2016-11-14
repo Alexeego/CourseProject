@@ -130,24 +130,24 @@ public class AwareExecutor {
             UserDAO userDAO = new UserDAO();
 
             User systemAdmin = new User("Alexey", "alexeego", true);
-            if (!userDAO.findByField(systemAdmin.getName()).isPresent())
+            if (!userDAO.findByFields(systemAdmin.getName()).isPresent())
                 userDAO.insert(systemAdmin);
 
             User user = new User("a", "a", true);
-            if (!userDAO.findByField(user.getName()).isPresent())
+            if (!userDAO.findByFields(user.getName()).isPresent())
                 userDAO.insert(user);
 
             user = new User("ale", "a");
             user.setAccess((byte) 1);
-            if (!userDAO.findByField(user.getName()).isPresent())
+            if (!userDAO.findByFields(user.getName()).isPresent())
                 userDAO.insert(user);
 
             user = new User("w", "a");
-            if (!userDAO.findByField(user.getName()).isPresent())
+            if (!userDAO.findByFields(user.getName()).isPresent())
                 userDAO.insert(user);
 
             user = new User("q", "a", false);
-            if (!userDAO.findByField(user.getName()).isPresent())
+            if (!userDAO.findByFields(user.getName()).isPresent())
                 userDAO.insert(user);
 
 

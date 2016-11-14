@@ -22,7 +22,7 @@ public class RayDAO extends AbstractDAO<Ray> {
     }
 
     @Override
-    public Optional<? extends Ray> findByField(Object login) throws GenericDAOException {
+    public Optional<? extends Ray> findByFields(Object... fields) throws GenericDAOException {
         return null;
     }
 

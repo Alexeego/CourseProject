@@ -22,7 +22,7 @@ public class PlaceDAO extends AbstractDAO<Place> {
     }
 
     @Override
-    public Optional<? extends Place> findByField(Object login) throws GenericDAOException {
+    public Optional<? extends Place> findByFields(Object... fields) throws GenericDAOException {
         return null;
     }
 

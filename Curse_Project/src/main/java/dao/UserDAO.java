@@ -24,11 +24,11 @@ public class UserDAO extends AbstractDAO<User> {
     }
 
     @Override
-    public Optional<? extends User> findByField(Object name) throws GenericDAOException {
-        if (name != null)
+    public Optional<? extends User> findByFields(Object... fields) throws GenericDAOException {
+        if (fields.length >= 1 && fields[0] != null)
             return awareExecutor.submit(session -> {
                 Query query = session.createQuery("FROM User where name=:name");
-                query.setString("name", (String) name);
+                query.setString("name", (String) fields[0]);
                 List list = query.list();
                 if (!list.isEmpty())
                     return Optional.of((User) list.get(0));
