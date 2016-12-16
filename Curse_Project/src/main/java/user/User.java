@@ -21,7 +21,8 @@ public class User {
     private String password;
     private Byte access;
 
-    public User(){}
+    public User() {
+    }
 
     public User(String name, String password) {
         this.name = name;
@@ -32,7 +33,7 @@ public class User {
     public User(String name, String password, boolean admin) {
         this.name = name;
         this.password = password;
-        this.access = (byte)(admin ? -1 : 2);
+        this.access = (byte) (admin ? -1 : 2);
     }
 
     public Long getId() {
@@ -51,21 +52,20 @@ public class User {
         this.name = name;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public Byte getAccess() {
+        return access;
     }
 
     public void setAccess(Byte access) {
         this.access = access;
     }
 
-    public Byte getAccess() {
-        return access;
-    }
-
-
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

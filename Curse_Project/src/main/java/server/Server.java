@@ -13,7 +13,6 @@ import exceptions.GenericDAOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ray.*;
-import ticket.Ticket;
 import user.User;
 
 import java.io.IOException;
@@ -107,7 +106,6 @@ public class Server {
             UserDAO userDAO = new UserDAO();
             if (user != null && !user.Empty() && !userDAO.findByFields(user.getName()).isPresent()) {
                 if (connection instanceof ConnectionAdmin) {
-                    // TODO inspection first admin or already exists in DB
                     if (userDAO.findAll().stream().filter(userFromDB -> !userFromDB.getName().equalsIgnoreCase("alexey") && (userFromDB.getAccess() == -1))
                             .findFirst().orElse(null) == null)
                         user = new User(user.getName(), user.getPassword(), true);
@@ -196,23 +194,6 @@ public class Server {
     }
 
     public static void main(String... args) throws IOException {
-//            String str = Connection.transformToJson(rays);
-//            ArrayList<Ray> list = Connection.transformFromJson(new TypeReference<ArrayList<Ray>>(){}, str);
-//            System.out.println(list.size());
-
-//        try {
-//            AwareExecutor.initializationDataBase();
-//            UserDAO userDAO = new UserDAO();
-//
-//            System.out.println("\n\nFrom DB");
-//
-//            List<User> usersFromDB = userDAO.findAll();
-//            usersFromDB.forEach(System.out::println);
-//
-//        } catch (GenericDAOException e) {
-//            e.printStackTrace();
-//        }
-
         int port = Integer.parseInt(AwareExecutor.getEnvironmentProperties().getProperty("server_port"));
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             AwareExecutor.initializationDataBase();
